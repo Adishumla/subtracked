@@ -25,6 +25,11 @@ export default function TabOneScreen() {
     </View>
   );
 }
+/* log if user can use face id */
+LocalAuthentication.hasHardwareAsync().then((res) => console.log(res));
+/* log if user has face id enrolled */
+LocalAuthentication.isEnrolledAsync().then((res) => console.log(res));
+console.log("HELLO");
 
 const styles = StyleSheet.create({
   container: {

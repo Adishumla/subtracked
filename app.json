@@ -14,7 +14,10 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSFaceIDUsageDescription": "We use Face ID to secure your account."
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -39,6 +42,6 @@
         "projectId": "fdb7f1b0-741c-4e34-9f35-6f58032d840f"
       }
     },
-    "owner": "adishumla"
+    "owner": "subtracked"
   }
 }
