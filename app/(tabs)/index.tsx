@@ -1,39 +1,31 @@
 import { StyleSheet } from "react-native";
 import tw from "tailwind-react-native-classnames";
 import * as LocalAuthentication from "expo-local-authentication";
-import { createClient } from "@supabase/supabase-js";
+import Auth from "../../components/Auth"
 
+import { supabase } from "../../lib/supabase";
 import EditScreenInfo from "../../components/EditScreenInfo";
 import { Text, View } from "../../components/Themed";
 import { SafeAreaView, Alert, Button } from "react-native";
 
-const supabase = createClient("SUPABASE_URL", "SUPABASE_ANON_KEY");
-const { auth } = supabase;
 
 export default function TabOneScreen() {
   return (
     <View style={styles.container}>
-      <Text style={[tw`text-2xl italic`, styles.title]} lightColor="#000">
-        Tab One
+      <Text style={[tw`text-2xl italic`]} lightColor="#000">
+        Welcome to Subtracked 
       </Text>
+      <Button title="Login"/>
+
       <View
         style={styles.separator}
         lightColor="#eee"
         darkColor="rgba(255,255,255,0.1)"
       />
       <EditScreenInfo path="app/(tabs)/index.tsx" />
-      <Button
-        title="Authenticate with Face ID"
-        onPress={handleAuthentication}
-      />
     </View>
   );
 }
-/* log if user can use face id */
-LocalAuthentication.hasHardwareAsync().then((res) => console.log(res));
-/* log if user has face id enrolled */
-LocalAuthentication.isEnrolledAsync().then((res) => console.log(res));
-console.log("HELLO");
 
 const styles = StyleSheet.create({
   container: {
