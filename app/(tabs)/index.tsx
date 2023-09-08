@@ -1,10 +1,14 @@
 import { StyleSheet } from "react-native";
 import tw from "tailwind-react-native-classnames";
 import * as LocalAuthentication from "expo-local-authentication";
+import { createClient } from "@supabase/supabase-js";
 
 import EditScreenInfo from "../../components/EditScreenInfo";
 import { Text, View } from "../../components/Themed";
 import { SafeAreaView, Alert, Button } from "react-native";
+
+const supabase = createClient("SUPABASE_URL", "SUPABASE_ANON_KEY");
+const { auth } = supabase;
 
 export default function TabOneScreen() {
   return (
