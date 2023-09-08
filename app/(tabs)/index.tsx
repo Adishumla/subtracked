@@ -1,19 +1,22 @@
 import { StyleSheet } from "react-native";
 import tw from "tailwind-react-native-classnames";
-import Auth from "../../components/Auth"
-
 import EditScreenInfo from "../../components/EditScreenInfo";
 import { Text, View } from "../../components/Themed";
 import { Button } from "react-native";
 
+/* show if database is connected */
+import supabase from "../../lib/supabaseStore";
+import { useEffect } from "react";
+
+console.log(supabase);
 
 export default function TabOneScreen() {
   return (
     <View style={styles.container}>
       <Text style={[tw`text-2xl italic`]} lightColor="#000">
-        Welcome to Subtracked 
+        Welcome to Subtracked
       </Text>
-      <Button title="Login"/>
+      <Button title="Login" />
 
       <View
         style={styles.separator}
