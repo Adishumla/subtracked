@@ -1,6 +1,5 @@
 import { StyleSheet } from "react-native";
 import tw from "tailwind-react-native-classnames";
-import EditScreenInfo from "../../components/EditScreenInfo";
 import { Text, View } from "../../components/Themed";
 import { Button } from "react-native";
 
@@ -23,7 +22,6 @@ export default function TabOneScreen() {
         lightColor="#eee"
         darkColor="rgba(255,255,255,0.1)"
       />
-      <EditScreenInfo path="app/(tabs)/index.tsx" />
     </View>
   );
 }
