@@ -1,6 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
 import supabase from "./supabaseStore";
 import "react-native-url-polyfill/auto";
+import * as WebBrowser from "expo-web-browser";
 
 // Authenticate using the Google provider with email scope
 async function signInWithGoogle() {

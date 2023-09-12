@@ -2,6 +2,24 @@ import React, { useEffect, useState } from "react";
 import { Text, View, Button, Image } from "react-native";
 import supabase from "../../lib/supabaseStore";
 import * as Crypto from "expo-crypto";
+import {
+  GoogleSignin,
+  GoogleSigninButton,
+  statusCodes,
+} from "@react-native-google-signin/google-signin";
+
+import * as WebBrowser from "expo-web-browser";
+import * as AuthSession from "expo-auth-session";
+
+import GoogleAuth from "../../components/Auth/GoogleAuth";
+import GoogleAuth2 from "../../components/Auth/GoogleAuth2";
+import { Buffer } from "buffer";
+
+import {
+  makeRedirectUri,
+  useAuthRequest,
+  ResponseType,
+} from "expo-auth-session";
 
 import {
   signInWithGoogle,
@@ -14,6 +32,8 @@ import * as AppleAuthentication from "expo-apple-authentication";
 import { signInWithSupabaseUsingApple } from "../../lib/authentication";
 import EmailAuth from "../../components/Auth/EmailAuth";
 import { randomUUID } from "crypto";
+
+WebBrowser.maybeCompleteAuthSession();
 
 export default function TabOneScreen() {
   const [user, setUser] = useState({ data: null, error: null });
@@ -38,16 +58,26 @@ export default function TabOneScreen() {
   const handleLogin = async () => {
     setLoginInProgress(true);
     try {
-      const { user, error } = (await signInWithGoogle()) as any;
-      if (user) {
-        const userMetadata = user.user_metadata;
-        setName(userMetadata.full_name);
-        setProfilePic(userMetadata.avatar_url);
-        setUser({ data: user, error: null });
+      // Your code for signing in with Google
+      // @ts-ignore
+      const { url, error } = await signInWithGoogle(); // Replace with your Google sign-in function
+
+      if (url) {
+        // Open the Google sign-in URL in the Expo Web Browser
+        const result = await WebBrowser.openAuthSessionAsync(url);
+
+        // Handle the result if needed
+        if (result.type === "success") {
+          // User signed in successfully
+          // You can process the response here
+        } else {
+          // Handle the error or cancelation
+        }
       } else {
         setUser({ data: null, error });
       }
     } catch (error) {
+      // Handle other errors if necessary
     } finally {
       setLoginInProgress(false);
     }
@@ -64,8 +94,14 @@ export default function TabOneScreen() {
     }
   };
 
+  global.Buffer = require("buffer").Buffer;
+  // Or (depending on your preference / project)
+  global.Buffer = Buffer;
+
   return (
     <View style={[tw`flex-1 items-center justify-center`]}>
+      <GoogleAuth />
+      <GoogleAuth2 />
       {profilePic && (
         <Image
           source={{ uri: profilePic }}
@@ -82,7 +118,37 @@ export default function TabOneScreen() {
           disabled={loginInProgress} // Disable the button during login
         />
       )}
+      <Button
+        title="Sign in with Google"
+        onPress={async () => {
+          setLoginInProgress(true);
 
+          try {
+            // Your code for signing in with Google
+            // @ts-ignore
+            const { url, error } = await signInWithGoogle(); // Replace with your Google sign-in function
+
+            if (url) {
+              // Open the Google sign-in URL in the Expo Web Browser
+              const result = await WebBrowser.openAuthSessionAsync(url);
+
+              // Handle the result if needed
+              if (result.type === "success") {
+                // User signed in successfully
+                // You can process the response here
+              } else {
+                // Handle the error or cancelation
+              }
+            } else {
+              setUser({ data: null, error });
+            }
+          } catch (error) {
+            // Handle other errors if necessary
+          } finally {
+            setLoginInProgress(false);
+          }
+        }}
+      />
       <Button
         title="Sign in with Apple"
         onPress={async () => {
@@ -159,13 +225,26 @@ export default function TabOneScreen() {
           }
         }}
       />
-
+      {/* sign in with discord */}
+      <Button
+        title="Sign in with Discord"
+        onPress={async () => {
+          console.log("DID IT WORK?");
+          const { user, error } = (await signInWithDiscord()) as any;
+          if (user) {
+            const userMetadata = user.user_metadata;
+            setName(userMetadata.full_name);
+            setProfilePic(userMetadata.avatar_url);
+            setUser({ data: user, error: null });
+          } else {
+            setUser({ data: null, error });
+          }
+        }}
+      />
       {/* get name from user */}
       <Text style={[tw`text-2xl text-white`]}>{name}</Text>
-
       {/* emailAuth */}
       <EmailAuth />
-
       <View />
     </View>
   );
