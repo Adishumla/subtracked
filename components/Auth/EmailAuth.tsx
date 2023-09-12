@@ -1,38 +1,88 @@
-import { signInWithEmail } from "../../lib/authentication";
-import tw from "tailwind-react-native-classnames";
-import { useState } from "react";
-import { View, Text, TextInput, Button } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import React, { useState } from 'react'
+import { Alert, StyleSheet, View } from 'react-native'
+import { supabase } from '../../lib/supabase'
+import { Button, Input } from 'react-native-elements'
 
-export default function EmailAuth() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const navigation = useNavigation();
+export default function Auth() {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [loading, setLoading] = useState(false)
 
-  const handleLogin = async () => {
-    const { user, error } = (await signInWithEmail(email, password)) as any;
-    if (user) {
-      const userMetadata = user.user_metadata;
-      console.log(userMetadata);
-    } else {
-      console.log(error);
-    }
-  };
+  async function signInWithEmail() {
+    setLoading(true)
+    const { error } = await supabase.auth.signInWithPassword({
+      email: email,
+      password: password,
+    })
+
+    if (error) Alert.alert(error.message)
+    setLoading(false)
+  }
+
+  async function signUpWithEmail() {
+    setLoading(true)
+    const { error } = await supabase.auth.signUp({
+      email: email,
+      password: password,
+    })
+
+    if (error) Alert.alert(error.message)
+    setLoading(false)
+  }
 
   return (
-    <View style={tw`flex-1 justify-center items-center`}>
-      <Text style={tw`text-2xl font-bold mb-4`}>Login</Text>
-      <TextInput
-        style={tw`border-2 border-gray-300 w-3/4 mb-4 p-2 rounded-md text-white`}
-        placeholder="Email"
-        onChangeText={(text) => setEmail(text)}
-      />
-      <TextInput
-        style={tw`border-2 border-gray-300 w-3/4 mb-4 p-2 rounded-md`}
-        placeholder="Password"
-        onChangeText={(text) => setPassword(text)}
-      />
-      <Button title="Login" onPress={handleLogin} />
+    <View style={styles.container}>
+      <View style={[styles.verticallySpaced, styles.mt20]}>
+        <Input
+          label="Email"
+          leftIcon={{ type: 'font-awesome', name: 'envelope' }}
+          onChangeText={(text) => setEmail(text)}
+          value={email}
+          placeholder="email@address.com"
+          autoCapitalize={'none'}
+        />
+      </View>
+      <View style={styles.verticallySpaced}>
+        <Input
+          label="Password"
+          leftIcon={{ type: 'font-awesome', name: 'lock' }}
+          onChangeText={(text) => setPassword(text)}
+          value={password}
+          secureTextEntry={true}
+          placeholder="Password"
+          autoCapitalize={'none'}
+        />
+      </View>
+      <View style={[styles.verticallySpaced, styles.mt20]}>
+        <Button title="Logga in" disabled={loading} onPress={
+          () => {signInWithEmail();
+          //@ts-ignore
+          const { data, error } =  supabase
+.from('login')
+.insert([
+  { email: email, Users: "1"},
+])
+.select()
+console.log(error)}
+        } />
+      </View>
+      <View style={styles.verticallySpaced}>
+        <Button title="Registrera" disabled={loading} onPress={() => signUpWithEmail()} />
+      </View>
     </View>
-  );
+  )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 40,
+  },
+  verticallySpaced: {
+    paddingTop: 4,
+    paddingBottom: 4,
+    alignSelf: 'stretch',
+  },
+  mt20: {
+    marginTop: 20,
+  },
+})
