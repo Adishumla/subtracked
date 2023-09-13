@@ -1,4 +1,5 @@
 import { View, StyleSheet, Text } from "react-native";
+import {Link} from 'expo-router';
 import supabase from "../../lib/supabaseStore";
 import tw from "tailwind-react-native-classnames";
 import { Button } from "react-native-elements";
@@ -29,6 +30,7 @@ export default function App() {
     <View style={tw`flex-1 items-center justify-center`}>
       <Text style={tw`text-2xl font-bold text-white`}>Dumle: {dumle}</Text>
       <Button title="Get Dumle" onPress={getDumle} />
+      <Link href="/manageProductPage">Hantera</Link>
     </View>
   );
 }
