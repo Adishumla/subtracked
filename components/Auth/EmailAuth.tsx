@@ -56,7 +56,7 @@ export default function Auth() {
       console.log("NAME", storedName);
       setId(data[0]?.id.toString());
       setName(data[0]?.name);
-      router.push("/add");
+      router.push("/overview");
     } else {
       console.log(error);
     }
