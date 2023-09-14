@@ -5,10 +5,13 @@ import supabase from "../../lib/supabaseStore";
 import Auth from "../../components/Auth/EmailAuth";
 import { View, Text, Button } from "react-native";
 import { Session } from "@supabase/supabase-js";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function App() {
   const [session, setSession] = useState<Session | null>(null);
   const [email, setEmail] = useState<String | undefined>("");
+  const [id, setId] = useState<String | undefined>("");
+  const [name, setName] = useState<String | undefined>("");
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -29,13 +32,14 @@ export default function App() {
   }, []);
 
   return (
-    <View>
+    <View style={tw`flex-1 items-center justify-center mt-8`}>
       <Auth />
       <Button
         title="Sign Out"
         onPress={() => {
           supabase.auth.signOut();
           console.log(session);
+          AsyncStorage.removeItem("id");
         }}
       />
     </View>

@@ -1,12 +1,12 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Link, Tabs } from "expo-router";
 import { Pressable, useColorScheme } from "react-native";
+import supabase from "../../lib/supabaseStore";
+import { useEffect, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import Colors from "../../constants/Colors";
 
-/**
- * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
- */
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>["name"];
   color: string;
@@ -16,6 +16,39 @@ function TabBarIcon(props: {
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const [userLoggedIn, setUserLoggedIn] = useState(false);
+  const [id, setId] = useState("");
+
+  async function checkSessionStorage() {
+    if (typeof window !== "undefined") {
+      const { data, error } = await supabase
+        .from("login")
+        .select("id")
+        //.eq("id", sessionStorage.getItem("id") || "");
+        .eq("id", AsyncStorage.getItem("id") || "");
+
+      if (data && data.length > 0) {
+        console.log(data);
+        console.log(AsyncStorage.getItem("id"));
+        setUserLoggedIn(true);
+      }
+    }
+  }
+
+  useEffect(() => {
+    async function setIdFromStorage() {
+      console.log("ID", await AsyncStorage.getItem("id"));
+      const storedId = await AsyncStorage.getItem("id");
+      setId(storedId || "");
+    }
+
+    setIdFromStorage();
+    checkSessionStorage(); // Check the user's login status whenever the component mounts
+  }, []);
+
+  useEffect(() => {
+    checkSessionStorage(); // Check the user's login status whenever the component updates
+  }, []); // Empty dependency array to run the check once when the component mounts
 
   return (
     <Tabs
@@ -49,6 +82,7 @@ export default function TabLayout() {
         options={{
           title: "Tab Two",
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          href: userLoggedIn ? "/two" : null, // Set href conditionally based on user login status
         }}
       />
       <Tabs.Screen

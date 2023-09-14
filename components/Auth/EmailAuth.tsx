@@ -1,14 +1,20 @@
-import React, { useState } from "react";
-import { Alert, StyleSheet, View } from "react-native";
+import React, { useState, useEffect } from "react";
+import { Alert, StyleSheet, View, Text } from "react-native";
 import supabase from "../../lib/supabaseStore";
 import { Button, Input } from "react-native-elements";
+import { Session } from "@supabase/supabase-js";
+import tw from "tailwind-react-native-classnames";
+import { Link } from "@react-navigation/native";
+import AppleAuth from "./AppleAuth";
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Auth() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [name, setName] = useState<string>("");
-  const [id, setId] = useState<string>("");
+  const [name, setName] = useState("");
+  const [id, setId] = useState("");
 
   async function signInWithEmail() {
     setLoading(true);
@@ -31,11 +37,44 @@ export default function Auth() {
     if (error) Alert.alert(error.message);
     setLoading(false);
   }
-
+  async function getInfo() {
+    const { data, error } = await supabase
+      .from("login")
+      .select("id, name")
+      .eq("email", email)
+      .limit(1);
+    console.log(data);
+    if (data && data.length > 0) {
+      // Set the item in AsyncStorage
+      await AsyncStorage.setItem("id", data[0]?.id.toString());
+      await AsyncStorage.setItem("name", data[0]?.name);
+      // Retrieve the item from AsyncStorage and log it
+      const storedId = await AsyncStorage.getItem("id");
+      const storedName = await AsyncStorage.getItem("name");
+      console.log("ID", storedId);
+      console.log("NAME", storedName);
+      setId(data[0]?.id.toString());
+      setName(data[0]?.name);
+    } else {
+      console.log(error);
+    }
+  }
+  useEffect(() => {
+    const getId = async () => {
+      const storedId = await AsyncStorage.getItem("id");
+      const storedName = await AsyncStorage.getItem("name");
+      setId(storedId || "");
+      setName(storedName || "");
+    };
+    getId();
+  }, []);
   return (
     <View style={styles.container}>
-      <View style={[styles.verticallySpaced, styles.mt20]}>
+      <Text style={tw`text-4xl text-white`}>{id}</Text>
+      <Text style={tw`text-4xl text-white`}>{name}</Text>
+      <View style={tw`flex-1 items-center justify-center`}>
         <Input
+          style={tw`text-2xl text-white`}
           label="Email"
           leftIcon={{ type: "font-awesome", name: "envelope" }}
           onChangeText={(text) => setEmail(text)}
@@ -46,6 +85,7 @@ export default function Auth() {
       </View>
       <View style={styles.verticallySpaced}>
         <Input
+          style={tw`text-2xl text-white`}
           label="Password"
           leftIcon={{ type: "font-awesome", name: "lock" }}
           onChangeText={(text) => setPassword(text)}
@@ -62,15 +102,8 @@ export default function Auth() {
           onPress={async () => {
             await signInWithEmail();
 
-            const { data, error } = await supabase
-              .from("login")
-              .select(" id, name")
-              .eq("email", email);
-            console.log(data);
-            if (data && data.length > 0) {
-              setId(data[0]?.id);
-              setName(data[0]?.name);
-            }
+            getInfo();
+            //reload the page
           }}
         />
       </View>
@@ -92,6 +125,25 @@ export default function Auth() {
           }}
         />
       </View>
+      <View style={tw`flex-1 items-center justify-center mt-8`}>
+        <Button
+          title="Sign Out"
+          onPress={() => {
+            supabase.auth.signOut();
+            AsyncStorage.removeItem("id");
+            AsyncStorage.removeItem("name");
+          }}
+        />
+      </View>
+      <View style={tw`flex-1 items-center justify-center mt-8`}>
+        <Button
+          title="Reload"
+          onPress={() => {
+            window.location.reload();
+          }}
+        />
+      </View>
+      {/* <AppleAuth /> */}
     </View>
   );
 }
