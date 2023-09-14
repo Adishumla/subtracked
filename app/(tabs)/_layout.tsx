@@ -1,6 +1,8 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import '../../assets/images/overview.png';
 import { Link, Tabs } from "expo-router";
-import { Pressable, useColorScheme } from "react-native";
+import tw from "tailwind-react-native-classnames"
+import { Pressable, useColorScheme, Image } from "react-native";
 import supabase from "../../lib/supabaseStore";
 import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -52,59 +54,87 @@ export default function TabLayout() {
 
   return (
     <>
-      <Tabs
-        screenOptions={{
-          tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
-          headerShown: false,
+        <Tabs
+      screenOptions={{
+        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint, headerShown: false
+      }}
+    >
+      <Tabs.Screen
+        name="overview"
+        options={{
+          href: userLoggedIn ? "/overview" : null,
+          title: 'Översikt',
+          tabBarIcon: ({size,focused,color}) => {
+            return (
+              <Image
+                style={tw``}
+                source={require('../../assets/images/overview.svg')}
+              />
+            );
+          },
         }}
-      >
-        <Tabs.Screen
-          name="overview"
-          options={{
-            title: "Översikt",
-            tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-            href: userLoggedIn ? "/overview" : null,
-            // headerRight: () => (
-            //   <Link href="/modal" asChild>
-            //     <Pressable>
-            //       {({ pressed }) => (
-            //         <FontAwesome
-            //           name="info-circle"
-            //           size={25}
-            //           color={Colors[colorScheme ?? "light"].text}
-            //           style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-            //         />
-            //       )}
-            //     </Pressable>
-            //   </Link>
-            // ),
-          }}
-        />
-        <Tabs.Screen
-          name="add"
-          options={{
-            title: "Lägg till ny",
-            tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-            href: userLoggedIn ? "/add" : null,
-          }}
-        />
-        <Tabs.Screen
-          name="payments"
-          options={{
-            title: "Betalningar",
-            tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-            href: userLoggedIn ? "/payments" : null,
-          }}
-        />
-        <Tabs.Screen
-          name="settings"
-          options={{
-            title: "Inställningar",
-            tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-            href: userLoggedIn ? "/settings" : null,
-          }}
-        />
-      </Tabs>
+          // headerRight: () => (
+          //   <Link href="/modal" asChild>
+          //     <Pressable>
+          //       {({ pressed }) => (
+          //         <FontAwesome
+          //           name="info-circle"
+          //           size={25}
+          //           color={Colors[colorScheme ?? "light"].text}
+          //           style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
+          //         />
+          //       )}
+          //     </Pressable>
+          //   </Link>
+          // ),
+        // }}
+      />
+      <Tabs.Screen
+        name="add"
+        options={{
+          title: "Lägg till ny",
+          tabBarIcon: ({size,focused,color}) => {
+            return (
+              <Image
+                style={tw``}
+                source={require('../../assets/images/overview.svg')}
+              />
+            );
+          },          
+          href: userLoggedIn ? "/add" : null,
+        }}
+      />
+      <Tabs.Screen
+        name="payments"
+        options={{
+          title: "Betalningar",
+          tabBarIcon: ({size,focused,color}) => {
+            return (
+              <Image
+                style={tw``}
+                source={require('../../assets/images/overview.svg')}
+              />
+            );
+          },          
+          href: userLoggedIn ? "/payments" : null,
+        }}
+      />
+            <Tabs.Screen
+        name="settings"
+        options={{
+          title: "Inställningar",
+          tabBarIcon: ({size,focused,color}) => {
+            return (
+              <Image
+                style={tw``}
+                source={require('../../assets/images/overview.svg')}
+              />
+            );
+          },          
+          href: userLoggedIn ? "/settings" : null,
+        }}
+      />
+    </Tabs>
     </>
   );
 }
