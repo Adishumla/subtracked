@@ -13,7 +13,7 @@ export default function Auth() {
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState("");
   const [id, setId] = useState("");
-  const [showRegistration, setShowRegistration] = useState(false); // New state
+  const [showRegistration, setShowRegistration] = useState(false);
 
   async function signInWithEmail() {
     setLoading(true);
@@ -29,7 +29,6 @@ export default function Auth() {
   async function signUpWithEmail() {
     setLoading(true);
 
-    // Check if the email already exists in the "login" table
     const { data: existingUser, error: existingUserError } = await supabase
       .from("login")
       .select()
@@ -43,13 +42,11 @@ export default function Auth() {
     }
 
     if (existingUser && existingUser.length > 0) {
-      // Email already exists, show an alert
       Alert.alert("Email already exists.");
       setLoading(false);
       return;
     }
 
-    // If the email is not found, proceed with user registration
     const { error: signUpError } = await supabase.auth.signUp({
       email: email,
       password: password,
@@ -63,8 +60,6 @@ export default function Auth() {
       console.error(signUpError);
       Alert.alert(signUpError.message);
     } else {
-      // Registration was successful
-      // Proceed with getting user info and navigation
       getInfo();
     }
 
@@ -79,10 +74,8 @@ export default function Auth() {
       .limit(1);
 
     if (data && data.length > 0) {
-      // Set the item in AsyncStorage
       await AsyncStorage.setItem("id", data[0]?.id.toString());
       await AsyncStorage.setItem("name", data[0]?.name);
-      // Retrieve the item from AsyncStorage and log it
       const storedId = await AsyncStorage.getItem("id");
       const storedName = await AsyncStorage.getItem("name");
       setId(data[0]?.id.toString());
@@ -108,13 +101,13 @@ export default function Auth() {
       <Text style={tw`text-4xl text-white`}>{id}</Text>
       <Text style={tw`text-4xl text-white`}>{name}</Text>
       <View style={tw`flex-1 items-center justify-center`}>
-        {showRegistration && ( // Conditional rendering based on showRegistration state
+        {showRegistration && (
           <Input
             style={tw`text-2xl text-white`}
             label="Name"
             leftIcon={{ type: "font-awesome", name: "user" }}
-            onChangeText={(text) => setName(text)} // Update the 'name' state
-            value={name} // Bind the value to the 'name' state
+            onChangeText={(text) => setName(text)}
+            value={name}
             placeholder="Your Name"
             autoCapitalize={"none"}
           />
@@ -143,33 +136,41 @@ export default function Auth() {
           autoCapitalize={"none"}
         />
       </View>
-      <View style={[styles.verticallySpaced, styles.mt20]}>
-        <Button
-          title="Logga in"
-          disabled={loading}
-          onPress={async () => {
-            await signInWithEmail();
-
-            getInfo();
-            //reload the page
-          }}
-        />
-      </View>
       {showRegistration ? (
-        <View style={styles.verticallySpaced}>
+        <View>
+          <View style={styles.verticallySpaced}>
+            <Button
+              title="Registrera"
+              disabled={loading}
+              onPress={async () => {
+                await signUpWithEmail();
+              }}
+            />
+          </View>
+          <View style={styles.verticallySpaced}>
+            <Button
+              title="Have an account? Login"
+              onPress={() => setShowRegistration(false)}
+            />
+          </View>
+        </View>
+      ) : (
+        <View style={[styles.verticallySpaced, styles.mt20]}>
           <Button
-            title="Registrera"
+            title="Logga in"
             disabled={loading}
             onPress={async () => {
-              await signUpWithEmail();
+              await signInWithEmail();
+              getInfo();
             }}
           />
         </View>
-      ) : (
+      )}
+      {!showRegistration && (
         <View style={styles.verticallySpaced}>
           <Button
             title="Don't have an account? Register"
-            onPress={() => setShowRegistration(true)} // Show registration fields
+            onPress={() => setShowRegistration(true)}
           />
         </View>
       )}
@@ -187,11 +188,10 @@ export default function Auth() {
         <Button
           title="Reload"
           onPress={() => {
-            router.push("/"); // Redirect to the initial page
+            router.push("/");
           }}
         />
       </View>
-      {/* <AppleAuth /> */}
     </View>
   );
 }

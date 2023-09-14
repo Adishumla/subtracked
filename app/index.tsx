@@ -6,6 +6,7 @@ import Auth from "../components/Auth/EmailAuth";
 import { View, Text, Button } from "react-native";
 import { Session } from "@supabase/supabase-js";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import AppleAuth from "../components/Auth/AppleAuth";
 
 export default function App() {
   const [session, setSession] = useState<Session | null>(null);
@@ -34,6 +35,7 @@ export default function App() {
   return (
     <View style={tw`flex-1 items-center justify-center mt-8`}>
       <Auth />
+      <AppleAuth />
       <Button
         title="Sign Out"
         onPress={() => {
