@@ -2,13 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Alert, StyleSheet, View, Text } from "react-native";
 import supabase from "../../lib/supabaseStore";
 import { Button, Input } from "react-native-elements";
-import { Session } from "@supabase/supabase-js";
-import tw from "tailwind-react-native-classnames";
 import { Link } from "@react-navigation/native";
-import AppleAuth from "./AppleAuth";
-
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
+import tw from "tailwind-react-native-classnames";
 
 export default function Auth() {
   const [email, setEmail] = useState("");
@@ -30,21 +27,56 @@ export default function Auth() {
 
   async function signUpWithEmail() {
     setLoading(true);
-    const { error } = await supabase.auth.signUp({
+
+    // Check if the email already exists in the "login" table
+    const { data: existingUser, error: existingUserError } = await supabase
+      .from("login")
+      .select()
+      .eq("email", email);
+
+    if (existingUserError) {
+      console.error(existingUserError);
+      Alert.alert("An error occurred while checking the email.");
+      setLoading(false);
+      return;
+    }
+
+    if (existingUser && existingUser.length > 0) {
+      // Email already exists, show an alert
+      Alert.alert("Email already exists.");
+      setLoading(false);
+      return;
+    }
+
+    // If the email is not found, proceed with user registration
+    const { error: signUpError } = await supabase.auth.signUp({
       email: email,
       password: password,
     });
 
-    if (error) Alert.alert(error.message);
+    const { data, error } = await supabase
+      .from("login")
+      .insert([{ email: email, name: name }]);
+
+    if (signUpError) {
+      console.error(signUpError);
+      Alert.alert(signUpError.message);
+    } else {
+      // Registration was successful
+      // Proceed with getting user info and navigation
+      getInfo();
+    }
+
     setLoading(false);
   }
+
   async function getInfo() {
     const { data, error } = await supabase
       .from("login")
       .select("id, name")
       .eq("email", email)
       .limit(1);
-    console.log(data);
+
     if (data && data.length > 0) {
       // Set the item in AsyncStorage
       await AsyncStorage.setItem("id", data[0]?.id.toString());
@@ -52,8 +84,6 @@ export default function Auth() {
       // Retrieve the item from AsyncStorage and log it
       const storedId = await AsyncStorage.getItem("id");
       const storedName = await AsyncStorage.getItem("name");
-      console.log("ID", storedId);
-      console.log("NAME", storedName);
       setId(data[0]?.id.toString());
       setName(data[0]?.name);
       router.push("/overview");
@@ -61,6 +91,7 @@ export default function Auth() {
       console.log(error);
     }
   }
+
   useEffect(() => {
     const getId = async () => {
       const storedId = await AsyncStorage.getItem("id");
@@ -70,10 +101,22 @@ export default function Auth() {
     };
     getId();
   }, []);
+
   return (
     <View style={styles.container}>
       <Text style={tw`text-4xl text-white`}>{id}</Text>
       <Text style={tw`text-4xl text-white`}>{name}</Text>
+      <View style={tw`flex-1 items-center justify-center`}>
+        <Input
+          style={tw`text-2xl text-white`}
+          label="Name"
+          leftIcon={{ type: "font-awesome", name: "user" }}
+          onChangeText={(text) => setName(text)} // Update the 'name' state
+          value={name} // Bind the value to the 'name' state
+          placeholder="Your Name"
+          autoCapitalize={"none"}
+        />
+      </View>
       <View style={tw`flex-1 items-center justify-center`}>
         <Input
           style={tw`text-2xl text-white`}
@@ -114,16 +157,7 @@ export default function Auth() {
           title="Registrera"
           disabled={loading}
           onPress={async () => {
-            signUpWithEmail();
-            const { data, error } = await supabase
-              .from("login")
-              .insert([{ email: email, users: "1" }])
-              .select();
-            if (error) {
-              console.error(error);
-            } else {
-              console.log(data);
-            }
+            await signUpWithEmail();
           }}
         />
       </View>
@@ -141,7 +175,7 @@ export default function Auth() {
         <Button
           title="Reload"
           onPress={() => {
-            window.location.reload();
+            router.push("/"); // Redirect to the initial page
           }}
         />
       </View>

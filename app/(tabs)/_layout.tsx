@@ -52,58 +52,59 @@ export default function TabLayout() {
 
   return (
     <>
-        <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint, headerShown: false
-      }}
-    >
-      <Tabs.Screen
-        name="overview"
-        options={{
-          title: "Översikt",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          href: userLoggedIn ? "/overview" : null,
-          // headerRight: () => (
-          //   <Link href="/modal" asChild>
-          //     <Pressable>
-          //       {({ pressed }) => (
-          //         <FontAwesome
-          //           name="info-circle"
-          //           size={25}
-          //           color={Colors[colorScheme ?? "light"].text}
-          //           style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-          //         />
-          //       )}
-          //     </Pressable>
-          //   </Link>
-          // ),
+      <Tabs
+        screenOptions={{
+          tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
+          headerShown: false,
         }}
-      />
-      <Tabs.Screen
-        name="add"
-        options={{
-          title: "Lägg till ny",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          href: userLoggedIn ? "/add" : null,
-        }}
-      />
-      <Tabs.Screen
-        name="payments"
-        options={{
-          title: "Betalningar",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          href: userLoggedIn ? "/payments" : null,
-        }}
-      />
-            <Tabs.Screen
-        name="settings"
-        options={{
-          title: "Inställningar",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          href: userLoggedIn ? "/settings" : null,
-        }}
-      />
-    </Tabs>
+      >
+        <Tabs.Screen
+          name="overview"
+          options={{
+            title: "Översikt",
+            tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+            href: userLoggedIn ? "/overview" : null,
+            // headerRight: () => (
+            //   <Link href="/modal" asChild>
+            //     <Pressable>
+            //       {({ pressed }) => (
+            //         <FontAwesome
+            //           name="info-circle"
+            //           size={25}
+            //           color={Colors[colorScheme ?? "light"].text}
+            //           style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
+            //         />
+            //       )}
+            //     </Pressable>
+            //   </Link>
+            // ),
+          }}
+        />
+        <Tabs.Screen
+          name="add"
+          options={{
+            title: "Lägg till ny",
+            tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+            href: userLoggedIn ? "/add" : null,
+          }}
+        />
+        <Tabs.Screen
+          name="payments"
+          options={{
+            title: "Betalningar",
+            tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+            href: userLoggedIn ? "/payments" : null,
+          }}
+        />
+        <Tabs.Screen
+          name="settings"
+          options={{
+            title: "Inställningar",
+            tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+            href: userLoggedIn ? "/settings" : null,
+          }}
+        />
+      </Tabs>
     </>
   );
 }
