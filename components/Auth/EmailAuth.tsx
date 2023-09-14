@@ -13,6 +13,7 @@ export default function Auth() {
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState("");
   const [id, setId] = useState("");
+  const [showRegistration, setShowRegistration] = useState(false); // New state
 
   async function signInWithEmail() {
     setLoading(true);
@@ -107,15 +108,17 @@ export default function Auth() {
       <Text style={tw`text-4xl text-white`}>{id}</Text>
       <Text style={tw`text-4xl text-white`}>{name}</Text>
       <View style={tw`flex-1 items-center justify-center`}>
-        <Input
-          style={tw`text-2xl text-white`}
-          label="Name"
-          leftIcon={{ type: "font-awesome", name: "user" }}
-          onChangeText={(text) => setName(text)} // Update the 'name' state
-          value={name} // Bind the value to the 'name' state
-          placeholder="Your Name"
-          autoCapitalize={"none"}
-        />
+        {showRegistration && ( // Conditional rendering based on showRegistration state
+          <Input
+            style={tw`text-2xl text-white`}
+            label="Name"
+            leftIcon={{ type: "font-awesome", name: "user" }}
+            onChangeText={(text) => setName(text)} // Update the 'name' state
+            value={name} // Bind the value to the 'name' state
+            placeholder="Your Name"
+            autoCapitalize={"none"}
+          />
+        )}
       </View>
       <View style={tw`flex-1 items-center justify-center`}>
         <Input
@@ -152,15 +155,24 @@ export default function Auth() {
           }}
         />
       </View>
-      <View style={styles.verticallySpaced}>
-        <Button
-          title="Registrera"
-          disabled={loading}
-          onPress={async () => {
-            await signUpWithEmail();
-          }}
-        />
-      </View>
+      {showRegistration ? (
+        <View style={styles.verticallySpaced}>
+          <Button
+            title="Registrera"
+            disabled={loading}
+            onPress={async () => {
+              await signUpWithEmail();
+            }}
+          />
+        </View>
+      ) : (
+        <View style={styles.verticallySpaced}>
+          <Button
+            title="Don't have an account? Register"
+            onPress={() => setShowRegistration(true)} // Show registration fields
+          />
+        </View>
+      )}
       <View style={tw`flex-1 items-center justify-center mt-8`}>
         <Button
           title="Sign Out"
