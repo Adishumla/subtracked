@@ -25,12 +25,12 @@ export default function TabLayout() {
         .from("login")
         .select("id")
         //.eq("id", sessionStorage.getItem("id") || "");
-        .eq("id", AsyncStorage.getItem("id") || "");
-
+        .eq("id", (await AsyncStorage.getItem("id")) || "");
       if (data && data.length > 0) {
         console.log(data);
         console.log(AsyncStorage.getItem("id"));
         setUserLoggedIn(true);
+        console.log("User is logged in");
       }
     }
   }
@@ -82,7 +82,7 @@ export default function TabLayout() {
         options={{
           title: "Tab Two",
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          href: userLoggedIn ? "/two" : null, // Set href conditionally based on user login status
+          href: userLoggedIn ? "/two" : null,
         }}
       />
       <Tabs.Screen
