@@ -51,16 +51,18 @@ export default function TabLayout() {
   }, []); // Empty dependency array to run the check once when the component mounts
 
   return (
-    <Tabs
+    <>
+        <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
       }}
     >
       <Tabs.Screen
-        name="index"
+        name="overview"
         options={{
-          title: "Tab One",
+          title: "Översikt",
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          href: userLoggedIn ? "/index" : null,
           headerRight: () => (
             <Link href="/modal" asChild>
               <Pressable>
@@ -78,20 +80,30 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="two"
+        name="add"
         options={{
-          title: "Tab Two",
+          title: "Lägg till ny",
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          href: userLoggedIn ? "/two" : null,
+          href: userLoggedIn ? "/add" : null,
         }}
       />
       <Tabs.Screen
-        name="three"
+        name="payments"
         options={{
-          title: "Tab Three",
+          title: "Betalningar",
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          href: userLoggedIn ? "/payments" : null,
+        }}
+      />
+            <Tabs.Screen
+        name="settings"
+        options={{
+          title: "Inställningar",
+          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          href: userLoggedIn ? "/settings" : null,
         }}
       />
     </Tabs>
+    </>
   );
 }
