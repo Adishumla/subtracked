@@ -8,6 +8,7 @@ import { Link } from "@react-navigation/native";
 import AppleAuth from "./AppleAuth";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { router } from "expo-router";
 
 export default function Auth() {
   const [email, setEmail] = useState("");
@@ -55,6 +56,7 @@ export default function Auth() {
       console.log("NAME", storedName);
       setId(data[0]?.id.toString());
       setName(data[0]?.name);
+      router.push("/add");
     } else {
       console.log(error);
     }
