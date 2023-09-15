@@ -4,11 +4,13 @@ import { signInWithSupabaseUsingApple } from "../../lib/authentication";
 import supabase from "../../lib/supabaseStore";
 import { useState } from "react";
 import tw from "tailwind-react-native-classnames";
-import Category from "../../components/category";
+import Category from "../../components/Category";
+import SubscriptionType from "../../components/SubscriptionType";
 
 export default function App() {
   const [name, setName] = useState(""); // State variable to store the user's name
   const categories = ["Marabout", "Voyant", "Cartomancien", "Astrologue"];
+  const subscriptionTypes = ["own", "duo", "family"];
 
   const handleAppleSignIn = async () => {
     try {
@@ -95,6 +97,19 @@ export default function App() {
         <View style={tw`flex-1 items-center justify-center`}>
           {categories.map((category) => (
             <Category key={category} name={category} />
+          ))}
+        </View>
+        <View style={tw`flex-1 items-center justify-center flex-row`}>
+          {subscriptionTypes.map((subscriptionType, index) => (
+            <View
+              key={subscriptionType}
+              style={[
+                tw`flex-1`,
+                index !== subscriptionTypes.length - 1 && tw`mr-4`,
+              ]}
+            >
+              <SubscriptionType name={subscriptionType} />
+            </View>
           ))}
         </View>
       </View>
