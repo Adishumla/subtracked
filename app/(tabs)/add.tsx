@@ -74,31 +74,28 @@ export default function App() {
 
       <View style={tw`mt-12`}>
         <H2 content={"Abonnemangstyp"}></H2>
-        <View style={tw`mt-12`}>
-          <H2 content={"Abonnemangstyp"}></H2>
-          <View style={tw`flex-1 items-center justify-center flex-row`}>
-            {subscriptionTypes.map((subscriptionType, index) => (
-              <View
-                key={subscriptionType}
-                style={[
-                  tw`flex-1 p-2`, // Adjust padding to control the size of SubscriptionType components
-                  index !== subscriptionTypes.length - 1 && tw`mr-2`, // Adjust margin between components
-                ]}
-              >
-                <SubscriptionType
-                  name={subscriptionType}
-                  onPress={() => {
-                    if (selectedSubscriptionType === subscriptionType) {
-                      setSelectedSubscriptionType(""); // Deselect if already selected
-                    } else {
-                      setSelectedSubscriptionType(subscriptionType); // Select the current one
-                    }
-                  }}
-                  selected={selectedSubscriptionType === subscriptionType}
-                />
-              </View>
-            ))}
-          </View>
+        <View style={tw`flex-1 items-center justify-center flex-row`}>
+          {subscriptionTypes.map((subscriptionType, index) => (
+            <View
+              key={subscriptionType}
+              style={[
+                tw`flex-1 p-2`, // Adjust padding to control the size of SubscriptionType components
+                index !== subscriptionTypes.length - 1 && tw`mr-2`, // Adjust margin between components
+              ]}
+            >
+              <SubscriptionType
+                name={subscriptionType}
+                onPress={() => {
+                  if (selectedSubscriptionType === subscriptionType) {
+                    setSelectedSubscriptionType(""); // Deselect if already selected
+                  } else {
+                    setSelectedSubscriptionType(subscriptionType); // Select the current one
+                  }
+                }}
+                selected={selectedSubscriptionType === subscriptionType}
+              />
+            </View>
+          ))}
         </View>
       </View>
 
