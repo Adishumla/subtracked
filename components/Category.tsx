@@ -1,30 +1,24 @@
 import tw from "twrnc";
 import { useState, useEffect } from "react";
-import { Text, View } from "react-native";
+import { Text, View, TouchableOpacity } from "react-native";
 
 interface CategoryProps {
   name: string;
+  onPress?: () => void; // Add the onPress prop
+  selected?: boolean; // Add the selected prop
 }
 
-export default function Category({ name }: CategoryProps) {
-  //set the state of the category to false
-  const [category, setCategory] = useState<boolean>(false);
+export default function Category({ name, onPress, selected }: CategoryProps) {
+  // Use the 'selected' prop to determine if the category is selected
+  const isSelected = selected || false;
 
-  //useEffect to set the state of the category to true
-  useEffect(() => {
-    setCategory(true);
-  }, []);
-
-  //if the category is true, return the category name
-  if (category) {
-    return (
-      <View style={tw`rounded-xl bg-white m-1`}>
+  return (
+    <TouchableOpacity onPress={onPress}>
+      <View
+        style={[tw`rounded-xl bg-white m-1`, isSelected && tw`bg-blue-500`]}
+      >
         <Text style={tw`p-2 `}>{name}</Text>
       </View>
-    );
-  }
-  //otherwise, return nothing
-  else {
-    return null;
-  }
+    </TouchableOpacity>
+  );
 }
