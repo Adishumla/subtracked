@@ -19,7 +19,7 @@ export default function Category({ name }: CategoryProps) {
   if (category) {
     return (
       <>
-        <Text style={tw`rounded-xl p-2 bg-white w-max`}>{name}</Text>
+        <Text style={tw`rounded-xl p-2 bg-white m-1`}>{name}</Text>
       </>
     );
   }

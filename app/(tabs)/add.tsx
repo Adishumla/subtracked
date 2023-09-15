@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text, ScrollView } from "react-native";
 import supabase from "../../lib/supabaseStore";
 import { useState } from "react";
 import tw from "twrnc";
@@ -14,7 +14,7 @@ export default function App() {
   const subscriptionTypes = ["Eget", "Delat", "Familj"];
 
   return (
-      <View style={tw`px-4 pt-8`}>
+      <ScrollView style={tw`px-4 pt-8`}>
         <H4 content="<-- Tillbaka ska den här ens vara här?"></H4>
         <H1 content={"Lägg till abonnemang"}></H1>
         
@@ -69,6 +69,6 @@ export default function App() {
         </View>
 
         <Button disabled></Button>
-      </View>
+      </ScrollView>
   );
 }

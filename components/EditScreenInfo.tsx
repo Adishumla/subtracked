@@ -1,13 +1,13 @@
-import React from 'react';
+// import React from 'react';
 
-import { Text, View } from './Themed';
+// import { Text, View } from './Themed';
 
 
-export default function EditScreenInfo({ path }: { path: string }) {
-  return (
-    <View>
+// export default function EditScreenInfo({ path }: { path: string }) {
+//   return (
+//     <View>
   
-    </View>
-  );
-}
+//     </View>
+//   );
+// }
 
