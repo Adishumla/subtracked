@@ -6,6 +6,9 @@ import { useState } from "react";
 import tw from "tailwind-react-native-classnames";
 import Category from "../../components/Category";
 import SubscriptionType from "../../components/SubscriptionType";
+import H1 from "../../components/H1";
+import H2 from "../../components/H2";
+import { Button } from "react-native-elements";
 
 export default function App() {
   const [name, setName] = useState(""); // State variable to store the user's name
@@ -83,7 +86,7 @@ export default function App() {
   }
 
   return (
-    <View style={styles.container}>
+    <View>
       <AppleAuthentication.AppleAuthenticationButton
         buttonType={AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN}
         buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.BLACK}
@@ -91,13 +94,17 @@ export default function App() {
         style={styles.button}
         onPress={handleAppleSignIn}
       />
-      <View style={styles.container}>
-        <Text style={tw`text-2xl font-bold mb-4 text-white`}>Welcome</Text>
-        <Text style={tw`text-2xl font-bold mb-4 text-white`}>{name}</Text>
-        <View style={tw`flex-1 items-center justify-center`}>
-          {categories.map((category) => (
-            <Category key={category} name={category} />
-          ))}
+      <View style={tw`px-4 pt-8`}>
+        <H2 content="<-- Tillbaka ska den här ens vara här?"></H2>
+        <H1 content={"Lägg till abonnemang"}></H1>
+        
+        <View>
+          <H2 content="Kategori"></H2>
+          <View style={tw`flex-1 gap-2`}>
+            {categories.map((category) => (
+              <Category key={category} name={category} />
+              ))}
+          </View>
         </View>
         <View style={tw`flex-1 items-center justify-center flex-row`}>
           {subscriptionTypes.map((subscriptionType, index) => (
@@ -112,17 +119,45 @@ export default function App() {
             </View>
           ))}
         </View>
+
+        <View>
+          <H2 content={"Leverantör"}></H2>
+          {/* inputbox */}
+          {/* Exempeltext */}
+        </View>
+
+        <View style={tw`flex flex-row`}>
+          <View style={tw``}>
+            <H2 content={"Pris/mån"}></H2>
+            {/* inputbox */}
+          </View>
+
+          <View style={tw``}>
+            <H2 content={"Betaldatum"}></H2>
+            {/* inputbox */}
+          </View>
+        </View>
+
+        <View>
+          <H2 content={"Abonnemangstyp"}></H2>
+          {/* inputbox */}
+          {/* Exempeltext */}
+        </View>
+
+        <View>
+          <H2 content={"Notering"}></H2>
+          {/* inputbox */}
+          {/* Exempeltext */}
+        </View>
+
+        <Button disabled></Button>
       </View>
+
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
   button: {
     width: 200,
     height: 44,

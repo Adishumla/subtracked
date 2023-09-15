@@ -18,9 +18,9 @@ export default function Category({ name }: CategoryProps) {
   //if the category is true, return the category name
   if (category) {
     return (
-      <View>
-        <Text style={tw`text-2xl rounded-md p-2 bg-white`}>{name}</Text>
-      </View>
+      <>
+        <Text style={tw`rounded-xl p-2 bg-white w-max`}>{name}</Text>
+      </>
     );
   }
   //otherwise, return nothing
