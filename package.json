@@ -44,6 +44,7 @@
     "react-native-url-polyfill": "^2.0.0",
     "react-native-web": "~0.19.6",
     "tailwind-react-native-classnames": "^1.5.1",
+    "twrnc": "^3.6.4",
     "uuid": "^9.0.1"
   },
   "devDependencies": {
