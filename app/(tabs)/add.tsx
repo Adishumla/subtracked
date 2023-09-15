@@ -12,13 +12,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function App() {
   const categories = [
-    "Exempel",
-    "Diverse",
-    "Kategorier",
-    "Använder",
-    "Försökskanin",
-    "Modell",
-    "kekLeo",
+    "Streaming",
+    "Ljud",
+    "Hälsa",
+    "Hushåll",
+    "Spel",
   ];
   const subscriptionTypes = ["Eget", "Delat", "Familj"];
   const [provider, setProvider] = useState<string>("");

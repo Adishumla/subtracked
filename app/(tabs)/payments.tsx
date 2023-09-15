@@ -1,7 +1,11 @@
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text, ScrollView } from "react-native";
 import {Link} from 'expo-router';
 import supabase from "../../lib/supabaseStore";
 import tw from "twrnc";
+import H1 from "../../components/H1";
+
+import H4 from "../../components/H4";
+
 import { Button } from "react-native-elements";
 import { useState, useEffect } from "react";
 
@@ -29,8 +33,10 @@ export default function App() {
   // };
 
   return (
-    <View style={tw`flex-1 items-center justify-center`}>
+    <ScrollView style={tw`px-4 pt-8`}>
+      <H4 content="< Tillbaka"></H4>
+      <H1 content={"Kommande betalningar"}></H1>
       <Link href="/manageProductPage">Hantera</Link>
-    </View>
+    </ScrollView>
   );
 }

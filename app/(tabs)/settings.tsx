@@ -1,36 +1,58 @@
-import { View, StyleSheet, Text } from "react-native";
+// TO DO : Line 24 && 31 - check line comment.
+
+import { View, StyleSheet, Text, ScrollView } from "react-native";
 import {Link} from 'expo-router';
 import supabase from "../../lib/supabaseStore";
 import tw from "twrnc";
-import { Button } from "react-native-elements";
+import H1 from "../../components/H1";
+import H2 from "../../components/H2";
+import H4 from "../../components/H4";
+import { Button, Input } from "react-native-elements";
 import { useState, useEffect } from "react";
 
 export default function App() {
 
-
-  
-  // const [userId, setUserId] = useState("");
-
-  // useEffect(() => {
-  //   setUserId("df2c0f0b-8af1-4671-9c9f-0eee19ec0606");
-  //   getDumle();
-  // }, []);
-
-  // const getDumle = async () => {
-  //   const { data, error } = await supabase
-  //     .from("test")
-  //     .select("dumle")
-  //     .eq("user_id", userId);
-  //   if (data && data.length > 0) {
-  //     setDumle(data[0]?.dumle);
-  //     console.log(data);
-  //     console.log(dumle);
-  //   }
-  // };
-
   return (
-    <View style={tw`flex-1 items-center justify-center`}>
-      <Link href="/manageProductPage">Hantera</Link>
-    </View>
+    <ScrollView style={tw`px-4 pt-8`}>
+      <Link href="/(tabs)/overview"><H4 content="< Tillbaka"></H4></Link>
+      <H1 content={"Inställningar"}></H1>
+
+      <View style={tw`mt-16 gap-8`}>
+        <View style={tw`flex-row justify-between`}>
+          <H2 content="Dark mode"></H2>
+
+          {/* Handle framemotion toggle switch, save to database as bool */}
+          <H2 content="AV/PÅ"></H2>
+        </View>
+
+        <View style={tw`flex-row justify-between`}>
+          <H2 content="Pushnotiser"></H2>
+
+          {/* Handle framemotion toggle switch, save to database as bool */}
+          <H2 content="AV/PÅ"></H2>
+        </View>
+      </View>
+
+      <View style={tw`mt-16`}>
+        <H2 content="Mejladress"></H2>
+        <Input style={tw`rounded-xl`} placeholder="Ex: throwawayjens@kekleo.tv"></Input>
+      </View>
+
+      <View>
+        <H2 content="Telefon"></H2>
+        <Input style={tw`rounded-xl`} placeholder="Ex: +467 0290 90 90"></Input>
+      </View>
+
+      <View style={tw`bg-[#DAD8D8] flex mt-16 p-4`}>
+        <Text style={tw``}>För mer information gällande GDPR och hur vi använder dina uppgifter. </Text>
+        <Link style={tw`self-end underline`} href="http://www.google.se">Läs mer här</Link>
+      </View>
+
+      <Button
+        style={tw`my-12`}
+        title="Spara"
+      />
+
+    </ScrollView>
   );
 }
