@@ -4,9 +4,11 @@ import { signInWithSupabaseUsingApple } from "../../lib/authentication";
 import supabase from "../../lib/supabaseStore";
 import { useState } from "react";
 import tw from "tailwind-react-native-classnames";
+import Category from "../../components/category";
 
 export default function App() {
   const [name, setName] = useState(""); // State variable to store the user's name
+  const categories = ["Marabout", "Voyant", "Cartomancien", "Astrologue"];
 
   const handleAppleSignIn = async () => {
     try {
@@ -90,6 +92,11 @@ export default function App() {
       <View style={styles.container}>
         <Text style={tw`text-2xl font-bold mb-4 text-white`}>Welcome</Text>
         <Text style={tw`text-2xl font-bold mb-4 text-white`}>{name}</Text>
+        <View style={tw`flex-1 items-center justify-center`}>
+          {categories.map((category) => (
+            <Category key={category} name={category} />
+          ))}
+        </View>
       </View>
     </View>
   );
