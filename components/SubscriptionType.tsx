@@ -31,7 +31,7 @@ export default function SubscriptionType({
   return (
     <TouchableOpacity
       style={[
-        tw`flex h-16 w-24 p-2 flex-col justify-center items-center gap-1 flex-1 rounded-md bg-white`,
+        tw`flex h-16 w-24 p-2 flex-col justify-center items-center flex-1 rounded-md bg-white`,
         active && tw`bg-gray-900`,
       ]}
       onPress={onPress}
