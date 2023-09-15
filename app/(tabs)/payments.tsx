@@ -1,7 +1,7 @@
 import { View, StyleSheet, Text } from "react-native";
 import {Link} from 'expo-router';
 import supabase from "../../lib/supabaseStore";
-import tw from "tailwind-react-native-classnames";
+import tw from "twrnc";
 import { Button } from "react-native-elements";
 import { useState, useEffect } from "react";
 

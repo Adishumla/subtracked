@@ -6,10 +6,10 @@ interface CategoryProps {
     content: string;
   }
 
-export default function H2({content}:CategoryProps)  {
+export default function H4({content}:CategoryProps)  {
     return (
         <>
-          <Text style={tw`font-medium text-2xl text-white`}>{content}</Text>
+          <Text style={tw`font-normal text-md text-white`}>{content}</Text>
         </>
       );
 }

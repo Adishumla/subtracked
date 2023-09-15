@@ -1,4 +1,4 @@
-import tw from "tailwind-react-native-classnames";
+import tw from "twrnc";
 import { Text, View } from "react-native";
 
 interface CategoryProps {

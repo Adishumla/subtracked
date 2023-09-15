@@ -1,5 +1,5 @@
 import "react-native-url-polyfill/auto";
-import tw from "tailwind-react-native-classnames";
+import tw from "twrnc";
 import { useState, useEffect } from "react";
 import supabase from "../lib/supabaseStore";
 import Auth from "../components/Auth/EmailAuth";

@@ -1,4 +1,4 @@
-import tw from "tailwind-react-native-classnames";
+import tw from "twrnc";
 import { useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -10,13 +10,13 @@ interface SubscriptionTypeProps {
 export default function SubscriptionType({ name }: SubscriptionTypeProps) {
   let icon = null;
 
-  if (name === "own") {
+  if (name === "Eget") {
     icon = <MaterialCommunityIcons name="account" size={24} color="black" />;
-  } else if (name === "duo") {
+  } else if (name === "Delat") {
     icon = (
       <MaterialCommunityIcons name="account-multiple" size={24} color="black" />
     );
-  } else if (name === "family") {
+  } else if (name === "Familj") {
     icon = (
       <MaterialCommunityIcons name="account-group" size={24} color="black" />
     );
@@ -27,7 +27,7 @@ export default function SubscriptionType({ name }: SubscriptionTypeProps) {
   return (
     <TouchableOpacity
       style={[
-        tw`flex h-16 w-24 p-2 flex-col justify-center items-center flex-1 rounded-md bg-white`,
+        tw`flex h-16 w-24 p-2 flex-col justify-center items-center flex-1 rounded-xl bg-white`,
         active && tw`bg-gray-300`,
       ]}
       onPress={() => setActive(!active)}

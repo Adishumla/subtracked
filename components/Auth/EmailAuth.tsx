@@ -5,7 +5,7 @@ import { Button, Input } from "react-native-elements";
 import { Link } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
-import tw from "tailwind-react-native-classnames";
+import tw from "twrnc";
 
 export default function Auth() {
   const [email, setEmail] = useState("");

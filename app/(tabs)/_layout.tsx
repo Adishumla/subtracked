@@ -1,7 +1,7 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import '../../assets/images/overview.png';
 import { Link, Tabs } from "expo-router";
-import tw from "tailwind-react-native-classnames"
+import tw from "twrnc";
 import { Pressable, useColorScheme, Image } from "react-native";
 import supabase from "../../lib/supabaseStore";
 import { useEffect, useState } from "react";

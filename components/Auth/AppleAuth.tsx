@@ -3,7 +3,7 @@ import { View, StyleSheet, Text } from "react-native";
 import { signInWithSupabaseUsingApple } from "../../lib/authentication";
 import supabase from "../../lib/supabaseStore";
 import { useState } from "react";
-import tw from "tailwind-react-native-classnames";
+import tw from "twrnc";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 
