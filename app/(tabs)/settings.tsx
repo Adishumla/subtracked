@@ -1,6 +1,13 @@
 // TO DO : Line 24 && 31 - check line comment.
 
-import { View, StyleSheet, Text, ScrollView } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  ScrollView,
+  useColorScheme,
+  Appearance,
+} from "react-native";
 import { Link } from "expo-router";
 import supabase from "../../lib/supabaseStore";
 import tw from "twrnc";
@@ -13,6 +20,15 @@ import { useState, useEffect } from "react";
 export default function App() {
   const [notifications, setNotifications] = useState<boolean>(false);
   const [darkMode, setDarkMode] = useState<boolean>(false);
+  let colorScheme = useColorScheme();
+  useEffect(() => {
+    if (colorScheme === "dark") {
+      setDarkMode(true);
+    } else {
+      setDarkMode(false);
+    }
+  }, [colorScheme]);
+
   return (
     <ScrollView style={[tw`px-4 pt-8`, darkMode ? tw`bg-black` : tw`bg-white`]}>
       <Link href="/(tabs)/overview">

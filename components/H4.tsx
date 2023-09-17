@@ -3,13 +3,13 @@ import { useState, useEffect } from "react";
 import { Text, View } from "react-native";
 
 interface CategoryProps {
-    content: string;
-  }
+  content: string;
+}
 
-export default function H4({content}:CategoryProps)  {
-    return (
-        <>
-          <Text style={tw`font-normal text-md text-white`}>{content}</Text>
-        </>
-      );
+export default function H4({ content }: CategoryProps) {
+  return (
+    <>
+      <Text style={tw`font-normal text-lg text-white`}>{content}</Text>
+    </>
+  );
 }
