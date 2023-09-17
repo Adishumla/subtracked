@@ -14,7 +14,7 @@ export default function App() {
   const [notifications, setNotifications] = useState<boolean>(false);
   const [darkMode, setDarkMode] = useState<boolean>(false);
   return (
-    <ScrollView style={tw`px-4 pt-8`}>
+    <ScrollView style={[tw`px-4 pt-8`, darkMode ? tw`bg-black` : tw`bg-white`]}>
       <Link href="/(tabs)/overview">
         <H4 content="< Tillbaka"></H4>
       </Link>
