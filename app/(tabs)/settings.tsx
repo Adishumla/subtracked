@@ -16,6 +16,7 @@ import H2 from "../../components/H2";
 import H4 from "../../components/H4";
 import { Button, Input, Switch } from "react-native-elements";
 import { useState, useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function App() {
   const [notifications, setNotifications] = useState<boolean>(false);
@@ -24,8 +25,10 @@ export default function App() {
   useEffect(() => {
     if (colorScheme === "dark") {
       setDarkMode(true);
+      AsyncStorage.setItem("darkMode", "true");
     } else {
       setDarkMode(false);
+      AsyncStorage.setItem("darkMode", "false");
     }
   }, [colorScheme]);
 
