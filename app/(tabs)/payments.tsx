@@ -47,7 +47,17 @@ export default function App() {
     });
   }, []);
 
-
+  const groupedSubscriptions = subscriptions.reduce((data:any, subscription:any) => {
+    const billDate = new Date(subscription.bill_date);
+    const month = billDate.toLocaleString('sv-SE', { month: 'long' });
+    const year = billDate.getFullYear();
+    
+    if (!data[month]) {
+      data[month] = [];
+    }
+    data[month].push(subscription);
+    return data;
+  }, {});
 
 
     
@@ -57,20 +67,24 @@ export default function App() {
         <H4 content="< Tillbaka" />
         <H1 content={"Kommande betalningar"} />
       </View>
-      {subscriptions.map((subscription:any) => (
-        <>
-          <H3 content="" />
-            <SubCard
-            key={subscription.id}
-            productName={subscription.provider}
-            icon="Bild"
-            price={subscription.cost}
-            subType={subscription.plan}
-            subId={subscription.id}
-            subStatus="STATUS"
-            />
-            </>
+      <View>
+          {Object.keys(groupedSubscriptions).map((month) => (
+            <View key={month}>
+              <H3 content={month.charAt(0).toUpperCase() + month.slice(1)} />
+              {groupedSubscriptions[month].map((subscription:any) => (
+                <SubCard
+                  key={subscription.id}
+                  productName={subscription.provider}
+                  icon="Bild"
+                  price={subscription.cost}
+                  subType={subscription.plan}
+                  subId={subscription.id}
+                  subStatus="STATUS"
+                />
+              ))}
+            </View>
           ))}
+        </View>
       <View>
         
       </View>
