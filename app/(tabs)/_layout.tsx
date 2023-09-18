@@ -97,7 +97,7 @@ export default function TabLayout() {
             return (
               <Image
                 style={tw``}
-                source={require('../../assets/images/overview.svg')}
+                source={require('../../assets/images/add.svg')}
               />
             );
           },          
@@ -112,7 +112,7 @@ export default function TabLayout() {
             return (
               <Image
                 style={tw``}
-                source={require('../../assets/images/overview.svg')}
+                source={require('../../assets/images/payments.svg')}
               />
             );
           },          
@@ -127,7 +127,7 @@ export default function TabLayout() {
             return (
               <Image
                 style={tw``}
-                source={require('../../assets/images/overview.svg')}
+                source={require('../../assets/images/settings.svg')}
               />
             );
           },          

@@ -17,6 +17,8 @@ export default function App() {
     "Hälsa",
     "Hushåll",
     "Spel",
+    "Molntjänst",
+    
   ];
   const subscriptionTypes = ["Eget", "Delat", "Familj"];
   const [provider, setProvider] = useState<string>("");
