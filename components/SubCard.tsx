@@ -40,9 +40,9 @@ export default function SubCard({
   const renderSubTypeIcon = () => {
     let icon = null;
 
-    if (subType === "eget") {
+    if (subType === "Eget") {
       icon = <MaterialCommunityIcons name="account" size={20} color="black" />;
-    } else if (subType === "delat") {
+    } else if (subType === "Delat") {
       icon = (
         <MaterialCommunityIcons
           name="account-multiple"
@@ -50,7 +50,7 @@ export default function SubCard({
           color="black"
         />
       );
-    } else if (subType === "familj") {
+    } else if (subType === "Familj") {
       icon = (
         <MaterialCommunityIcons name="account-group" size={20} color="black" />
       );

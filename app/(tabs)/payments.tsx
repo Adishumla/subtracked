@@ -3,6 +3,7 @@ import {Link} from 'expo-router';
 import supabase from "../../lib/supabaseStore";
 import tw from "twrnc";
 import H1 from "../../components/H1";
+import H3 from "../../components/H3";
 import H4 from "../../components/H4";
 import SubCard from "../../components/SubCard";
 import { Button } from "react-native-elements";
@@ -13,31 +14,8 @@ import { subtle } from "crypto";
 
 export default function App() {
 
-  // AsyncStorage.getItem('id').then((id) => {
-  //   if(!id){
-  //     console.error('User not found.');
-  //     return;
-  //   }
-
-
-  //   const subscriptions = supabase
-  //   .channel('custom-all-channel')
-  //   .on(
-  //     'postgres_changes',
-  //     { event: '*', schema: 'public', table: 'subscriptions' },
-  //     (payload) => {
-  //       //@ts-ignore
-  //       if(payload.new && payload.new.id === id){
-  //         console.log('Change recieved for the logged-in user.')
-  //       }
-  //       console.log('Change received!', payload)
-  //     }
-  //   )
-  //   .subscribe();
-  //   console.log(subscriptions);
-  // });
-
-  useEffect(() => {
+  const [subscriptions, setSubscriptions] = useState<any>([]);
+    useEffect(() => {
 
     AsyncStorage.getItem('id').then((id) => {
       if (!id) {
@@ -56,7 +34,8 @@ export default function App() {
             console.error('Error fetching data:', error.message);
           } else {
             console.log('Fetched data:', subscriptions);
-            // Process the fetched data here
+
+            setSubscriptions(subscriptions);
           }
         } catch (error) {
           //@ts-ignore
@@ -78,7 +57,9 @@ export default function App() {
         <H4 content="< Tillbaka" />
         <H1 content={"Kommande betalningar"} />
       </View>
-      {subscriptions.map((subscription) => (
+      {subscriptions.map((subscription:any) => (
+        <>
+          <H3 content="" />
             <SubCard
             key={subscription.id}
             productName={subscription.provider}
@@ -88,6 +69,7 @@ export default function App() {
             subId={subscription.id}
             subStatus="STATUS"
             />
+            </>
           ))}
       <View>
         
