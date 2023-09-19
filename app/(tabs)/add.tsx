@@ -18,7 +18,6 @@ export default function App() {
     "Hushåll",
     "Spel",
     "Molntjänst",
-    
   ];
   const subscriptionTypes = ["Eget", "Delat", "Familj"];
   const [provider, setProvider] = useState<string>("");
@@ -57,7 +56,7 @@ export default function App() {
         <H4 content="Ex. Spotify"></H4>
       </View>
 
-      <View style={tw`grid grid-rows-2 mt-12`}>
+      <View style={tw`mt-12`}>
         <View style={tw``}>
           <H2 content={"Pris/mån"}></H2>
           <Input
