@@ -1,5 +1,5 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import '../../assets/images/overview.png';
+import "../../assets/images/overview.png";
 import { Link, Tabs } from "expo-router";
 import tw from "twrnc";
 import { Pressable, useColorScheme, Image } from "react-native";
@@ -54,25 +54,26 @@ export default function TabLayout() {
 
   return (
     <>
-        <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint, headerShown: false
-      }}
-    >
-      <Tabs.Screen
-        name="overview"
-        options={{
-          href: userLoggedIn ? "/overview" : null,
-          title: 'Översikt',
-          tabBarIcon: ({size,focused,color}) => {
-            return (
-              <Image
-                style={tw``}
-                source={require('../../assets/images/overview.svg')}
-              />
-            );
-          },
+      <Tabs
+        screenOptions={{
+          tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
+          headerShown: false,
         }}
+      >
+        <Tabs.Screen
+          name="overview"
+          options={{
+            href: userLoggedIn ? "/overview" : null,
+            title: "Översikt",
+            tabBarIcon: ({ size, focused, color }) => {
+              return (
+                <Image
+                  style={tw``}
+                  source={require("../../assets/images/overview.svg")}
+                />
+              );
+            },
+          }}
           // headerRight: () => (
           //   <Link href="/modal" asChild>
           //     <Pressable>
@@ -87,54 +88,66 @@ export default function TabLayout() {
           //     </Pressable>
           //   </Link>
           // ),
-        // }}
-      />
-      <Tabs.Screen
-        name="add"
-        options={{
-          title: "Lägg till ny",
-          tabBarIcon: ({size,focused,color}) => {
-            return (
-              <Image
-                style={tw``}
-                source={require('../../assets/images/add.svg')}
-              />
-            );
-          },          
-          href: userLoggedIn ? "/add" : null,
-        }}
-      />
-      <Tabs.Screen
-        name="payments"
-        options={{
-          title: "Betalningar",
-          tabBarIcon: ({size,focused,color}) => {
-            return (
-              <Image
-                style={tw``}
-                source={require('../../assets/images/payments.svg')}
-              />
-            );
-          },          
-          href: userLoggedIn ? "/payments" : null,
-        }}
-      />
-            <Tabs.Screen
-        name="settings"
-        options={{
-          title: "Inställningar",
-          tabBarIcon: ({size,focused,color}) => {
-            return (
-              <Image
-                style={tw``}
-                source={require('../../assets/images/settings.svg')}
-              />
-            );
-          },          
-          href: userLoggedIn ? "/settings" : null,
-        }}
-      />
-    </Tabs>
+          // }}
+        />
+        <Tabs.Screen
+          name="add"
+          options={{
+            title: "Lägg till ny",
+            tabBarIcon: ({ size, focused, color }) => {
+              return (
+                <Image
+                  style={tw``}
+                  source={require("../../assets/images/add.svg")}
+                />
+              );
+            },
+            href: userLoggedIn ? "/add" : null,
+          }}
+        />
+        <Tabs.Screen
+          name="payments"
+          options={{
+            title: "Betalningar",
+            tabBarIcon: ({ size, focused, color }) => {
+              return (
+                <Image
+                  style={tw``}
+                  source={require("../../assets/images/payments.svg")}
+                />
+              );
+            },
+            href: userLoggedIn ? "/payments" : null,
+          }}
+        />
+        <Tabs.Screen
+          name="settings"
+          options={{
+            title: "Inställningar",
+            tabBarIcon: ({ size, focused, color }) => {
+              return (
+                <Image
+                  style={tw``}
+                  source={require("../../assets/images/settings.svg")}
+                />
+              );
+            },
+            href: userLoggedIn ? "/settings" : null,
+          }}
+        />
+        <Tabs.Screen
+          name="manageSub/:subId"
+          options={{
+            href: null,
+          }}
+        />
+        <Tabs.Screen
+          name="editSub/:subId"
+          options={{
+            href: null,
+          }}
+        />
+      </Tabs>
     </>
   );
 }

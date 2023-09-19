@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, useColorScheme } from "react-native";
+import { Pressable, Text, View, useColorScheme } from "react-native";
 import { Button } from "react-native-elements";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import H2 from "./H2";
 import tw from "twrnc";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Link } from "expo-router";
 
 interface SubCardProps {
   productName: string;
@@ -82,6 +83,18 @@ export default function SubCard({
                 titleStyle={tw`text-black font-medium text-lg`}
                 onPress={() => console.log("hej")}
               />
+              <Link href={`/manageSub/${subId}`} asChild>
+                <Pressable>
+                  {({ pressed }) => (
+                    <MaterialCommunityIcons
+                      name="information"
+                      size={24}
+                      color="black"
+                      style={{ opacity: pressed ? 0.5 : 1 }}
+                    />
+                  )}
+                </Pressable>
+              </Link>
               <MaterialCommunityIcons
                 name="chevron-right"
                 size={24}
