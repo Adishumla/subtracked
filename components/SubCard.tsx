@@ -62,7 +62,7 @@ export default function SubCard({
   return (
     <View
       style={[
-        tw`flex-row justify-between items-center px-4 py-4 rounded-full mt-4 bg-slate-500`,
+        tw`flex-row justify-between items-center px-4 py-4 rounded-full mt-4  bg-slate-500`,
         darkMode ? tw`bg-black` : tw`bg-white`,
       ]}
     >
@@ -77,7 +77,7 @@ export default function SubCard({
             <H2 content={productName} />
             <View style={tw`flex flex-row justify-between items-center`}>
               <Button
-                title="Hantera"
+                title="Mer info"
                 buttonStyle={tw`p-0 m-0 bg-transparent`}
                 titleStyle={tw`text-black font-medium text-lg`}
                 onPress={() => console.log("hej")}
