@@ -26,7 +26,7 @@ export default function TabLayout() {
         }}
       >
         <Tabs.Screen
-          name="egg"
+          name="egg" // This has to be here otherwise overview breaks...
           options={{
             title: "ins",
             href: null,
