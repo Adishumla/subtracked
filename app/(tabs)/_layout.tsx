@@ -26,6 +26,35 @@ export default function TabLayout() {
         }}
       >
         <Tabs.Screen
+          name="egg"
+          options={{
+            title: "ins",
+            href: null,
+            tabBarIcon: ({ size, focused, color }) => {
+              return (
+                <Image
+                  style={tw``}
+                  source={require("../../assets/images/settings.svg")}
+                />
+              );
+            },
+          }}
+        />
+        <Tabs.Screen
+          name="profile"
+          options={{
+            title: "Profil",
+            tabBarIcon: ({ size, focused, color }) => {
+              return (
+                <Image
+                  style={tw``}
+                  source={require("../../assets/images/overview.svg")}
+                />
+              );
+            },
+          }}
+        />
+        <Tabs.Screen
           name="overview"
           options={{
             title: "Översikt",
@@ -106,20 +135,6 @@ export default function TabLayout() {
           name="editSub/:subId"
           options={{
             href: null,
-          }}
-        />
-        <Tabs.Screen
-          name="profile"
-          options={{
-            title: "Profil",
-            tabBarIcon: ({ size, focused, color }) => {
-              return (
-                <Image
-                  style={tw``}
-                  source={require("../../assets/images/overview.svg")}
-                />
-              );
-            },
           }}
         />
       </Tabs>

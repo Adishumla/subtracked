@@ -1,19 +1,10 @@
 import React, { useState, useEffect } from "react";
-import {
-  Alert,
-  StyleSheet,
-  View,
-  Text,
-  Linking,
-  Pressable,
-} from "react-native";
+import { Alert, StyleSheet, View, Text } from "react-native";
 import supabase from "../../lib/supabaseStore";
 import { Button, Input } from "react-native-elements";
-import { Link } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { router, useNavigation, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import tw from "twrnc";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default function Auth() {
   const [email, setEmail] = useState("");
@@ -95,15 +86,7 @@ export default function Auth() {
       const storedName = await AsyncStorage.getItem("name");
       setId(data[0]?.id.toString());
       setName(data[0]?.name);
-
-      /* router.push({
-        pathname: "/overview",
-        state: { id: storedId, name: storedName },
-      } as any); */
-      //another way to do it instead of using router.push
-      //Linking.openURL("exp://overview");
-      //router.push("/overview");
-      router.push("/profile");
+      router.push("/overview");
       if (error) {
         console.error(error);
       }
@@ -190,60 +173,6 @@ export default function Auth() {
                 await signInWithEmail();
               }}
             />
-            {/* <Pressable
-              style={tw`bg-blue-500 p-2 rounded-md`}
-              onPress={async () => {
-                await signInWithEmail();
-              }}
-            >
-              <Text style={tw`text-white text-xl`}>Logga in</Text>
-            </Pressable> */}
-            {/* <Link href={"/(tabs)/overview"} asChild>
-              <Pressable
-                style={tw`bg-blue-500 p-2 rounded-md`}
-                onPress={async () => {
-                  await signInWithEmail();
-                }}
-                disabled={loading} // Disable the button while loading
-              >
-                <Text style={tw`text-white text-xl`}>Logga in</Text>
-              </Pressable>
-            </Link> */}
-            {/* {signInSuccess ? (
-              <Link href="/overview" asChild>
-                <Pressable
-                  style={tw`bg-blue-500 p-2 rounded-md`}
-                  onPress={() => {
-                    // Directly navigate to "/overview"
-                    router.push("/overview");
-                  }}
-                >
-                  <Text style={tw`text-white text-xl`}>Logga in</Text>
-                </Pressable>
-              </Link>
-            ) : (
-              <Pressable
-                style={tw`bg-blue-500 p-2 rounded-md`}
-                onPress={async () => {
-                  await signInWithEmail();
-                }}
-              >
-                <Text style={tw`text-white text-xl`}>Logga in</Text>
-              </Pressable>
-            )} */}
-
-            {/* <Pressable
-              style={tw`bg-blue-500 p-2 rounded-md`}
-              onPress={async () => {
-                await signInWithEmail();
-                if (signInSuccess) {
-                  router.push("/overview");
-                }
-              }}
-              disabled={loading} // Disable the button while loading
-            >
-              <Text style={tw`text-white text-xl`}>Logga in</Text>
-            </Pressable> */}
           </View>
         </View>
       )}
