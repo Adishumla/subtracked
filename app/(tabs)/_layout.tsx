@@ -40,20 +40,7 @@ export default function TabLayout() {
             },
           }}
         />
-        <Tabs.Screen
-          name="profile"
-          options={{
-            title: "Profil",
-            tabBarIcon: ({ size, focused, color }) => {
-              return (
-                <Image
-                  style={tw``}
-                  source={require("../../assets/images/overview.svg")}
-                />
-              );
-            },
-          }}
-        />
+
         <Tabs.Screen
           name="overview"
           options={{
@@ -67,21 +54,6 @@ export default function TabLayout() {
               );
             },
           }}
-          // headerRight: () => (
-          //   <Link href="/modal" asChild>
-          //     <Pressable>
-          //       {({ pressed }) => (
-          //         <FontAwesome
-          //           name="info-circle"
-          //           size={25}
-          //           color={Colors[colorScheme ?? "light"].text}
-          //           style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-          //         />
-          //       )}
-          //     </Pressable>
-          //   </Link>
-          // ),
-          // }}
         />
         <Tabs.Screen
           name="add"
