@@ -3,6 +3,7 @@ import {Link} from 'expo-router';
 import supabase from "../../lib/supabaseStore";
 import tw from "twrnc";
 import H1 from "../../components/H1";
+import H2 from "../../components/H2";
 import H3 from "../../components/H3";
 import H4 from "../../components/H4";
 import SubCard from "../../components/SubCard";
@@ -14,6 +15,7 @@ import { subtle } from "crypto";
 
 export default function App() {
 
+  // Fetch and save subscription data. Remove data not connected to the logged in user.
   const [subscriptions, setSubscriptions] = useState<any>([]);
     useEffect(() => {
 
@@ -23,13 +25,13 @@ export default function App() {
         return;
       }
       
-      // Fetch data from the "subscriptions" table
+      // Fetch all data from the "subscriptions" table containing correct user id.
       const fetchData = async () => {
         try {
           const { data: subscriptions, error } = await supabase
-          .from('subscriptions') // Replace 'subscriptions' with your actual table name
-          .select('*') // You can specify the columns you want to retrieve here, or use '*' to fetch all columns
-          .eq('user_id', id); // Adjust the condition as needed
+          .from('subscriptions')
+          .select('*')
+          .eq('user_id', id);
           if (error) {
             console.error('Error fetching data:', error.message);
           } else {
@@ -43,10 +45,12 @@ export default function App() {
         }
       };
       
-      fetchData(); // Call the fetchData function to execute the query
+      fetchData();
     });
   }, []);
 
+  // Sort the subscriptions by date. Save year, month and day so that we're able 
+  // to show the cards in correct order. January 2024 is placed above December 2023 for example.
   const groupedSubscriptions = subscriptions.reduce((data:any, subscription:any) => {
     const billDate = new Date(subscription.bill_date);
     const month = billDate.toLocaleString('sv-SE', { month: 'long' });
@@ -63,6 +67,7 @@ export default function App() {
     return data;
   }, {});
 
+
   const sortedGroupedSubscriptions = Object.keys(groupedSubscriptions)
   .sort()
   .reduce((sortedData:any, key) => {
@@ -71,7 +76,6 @@ export default function App() {
   }, {});
   let currentMonth = '';
 
-
     
   return (
     <ScrollView style={tw`px-4 pt-8`}>
@@ -79,49 +83,48 @@ export default function App() {
         <H4 content="< Tillbaka" />
         <H1 content={"Kommande betalningar"} />
       </View>
+
       <View>
-
-{Object.keys(sortedGroupedSubscriptions).map((data) => {
-  const monthLabel = data.slice(8, 9).toUpperCase() + data.slice(9);
+        {Object.keys(sortedGroupedSubscriptions).map((data) => {
+        const monthLabel = data.slice(8, 9).toUpperCase() + data.slice(9);
   
-  if (monthLabel !== currentMonth) {
-    currentMonth = monthLabel;
-    return (
-      <View key={data}>
-        <H3 content={monthLabel} />
-        {sortedGroupedSubscriptions[data].subscriptions.map((subscription:any) => (
-          <SubCard
-            key={subscription.id}
-            productName={subscription.provider}
-            icon="Bild"
-            price={subscription.cost}
-            subType={subscription.plan}
-            subId={subscription.id}
-            subStatus="STATUS"
-          />
-        ))}
+          if (monthLabel !== currentMonth) {
+            currentMonth = monthLabel;
+            return (
+              <View key={data}>
+                <H2 content={monthLabel} />
+                {sortedGroupedSubscriptions[data].subscriptions.map((subscription:any) => (
+                  <SubCard
+                    key={subscription.id}
+                    productName={subscription.provider}
+                    icon="Bild"
+                    price={subscription.cost}
+                    subType={subscription.plan}
+                    subId={subscription.id}
+                    subStatus="STATUS"
+                  />
+                ))}
+              </View>
+          );
+          } else {
+            return (
+              <View key={data}>
+                {sortedGroupedSubscriptions[data].subscriptions.map((subscription:any) => (
+                  <SubCard
+                    key={subscription.id}
+                    productName={subscription.provider}
+                    icon="Bild"
+                    price={subscription.cost}
+                    subType={subscription.plan}
+                    subId={subscription.id}
+                    subStatus="STATUS"
+                  />
+                ))}
+              </View>
+          );
+        }
+      })}
       </View>
-    );
-  } else {
-    return (
-      <View key={data}>
-        {sortedGroupedSubscriptions[data].subscriptions.map((subscription:any) => (
-          <SubCard
-            key={subscription.id}
-            productName={subscription.provider}
-            icon="Bild"
-            price={subscription.cost}
-            subType={subscription.plan}
-            subId={subscription.id}
-            subStatus="STATUS"
-          />
-        ))}
-      </View>
-    );
-  }
-})}
-      </View>
-
     </ScrollView>
   );
 }

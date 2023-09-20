@@ -22,14 +22,12 @@ export default function App() {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
       setEmail(session?.user.email);
-      // console.log(session);
 
-      // @ts-ignore
+
       const { data, error } = supabase
         .from("login")
         .insert([{ email: email, Users: session?.user.id }])
         .select();
-      // console.log(error);
     });
 
     supabase.auth.onAuthStateChange((_event, session) => {
@@ -56,61 +54,15 @@ export default function App() {
           if (error) {
             console.error('Error fetching data:', error.message);
           } else {
-            // console.log('Fetched data:', login);
 
             setName(login[0].name);
           }
         } catch (error) {
-          //@ts-ignore
+
           console.error('An error occurred:', error.message);
         }
       };
       fetchData(); // Call the fetchData function to execute the query
-    });
-  }, []);
-
-  //Handle fetch of the logged in users subscriptions to map the
-  //data into components below.
-  // Also group the subscriptions by category type.
-  const [subscriptions, setSubscriptions] = useState<any>([]);
-  const [groupedSubscriptions, setGroupedSubscriptions] = useState<any>({});
-    useEffect(() => {
-
-    AsyncStorage.getItem('id').then((id) => {
-      if (!id) {
-        console.error('User not found.');
-        return;
-      }
-      
-      // Fetch data from the "subscriptions" table where user uuid is logged in.
-      const fetchData = async () => {
-        try {
-          const { data: subscriptions, error } = await supabase
-          .from('subscriptions')
-          .select('*') 
-          .eq('user_id', id);
-          if (error) {
-            console.error('Error fetching data:', error.message);
-          } else {
-            setSubscriptions(subscriptions);
-            // Push category into array to make it sortable.
-            const groupedData = subscriptions.reduce((groups: any, subscription: any) => {
-            const category = subscription.category;
-            if (!groups[category]) {
-              groups[category] = [];
-            }
-            groups[category].push(subscription);
-            return groups;
-          }, {});
-          setGroupedSubscriptions(groupedData);
-          }
-        } catch (error) {
-          //@ts-ignore
-          console.error('An error occurred:', error.message);
-        }
-      };
-      
-      fetchData();
     });
   }, []);
 
@@ -147,16 +99,97 @@ export default function App() {
     });
   }, []);
 
+  //Handle fetch of the logged in users subscriptions to map the
+  // data into SubCard components below.
+  // Also group the subscriptions by category type.
+  const [subscriptions, setSubscriptions] = useState<any>([]);
+  const [groupedSubscriptions, setGroupedSubscriptions] = useState<any>({});
+  const subscriptionTypes = ["Alla", "Eget", "Delat", "Familj"];
+  const [selectedSubscriptionType, setSelectedSubscriptionType] = useState<string>("Eget");
+
+    useEffect(() => {
+    AsyncStorage.getItem('id').then((id) => {
+      if (!id) {
+        console.error('User not found.');
+        return;
+      }
+      
+      // Fetch data from the "subscriptions" table where user uuid is logged in.
+      const fetchData = async () => {
+        try {
+          const { data: subscriptions, error } = await supabase
+          .from('subscriptions')
+          .select('*')
+          .eq('user_id', id);
+          if (error) {
+            console.error('Error fetching data:', error.message);
+          } else {
+            let filteredSubscriptions = selectedSubscriptionType === "Alla"
+            ? subscriptions
+            : subscriptions.filter(subscription => subscription.plan === selectedSubscriptionType);
+
+            setSubscriptions(filteredSubscriptions);
+
+            // Push category into array to make it sortable.
+            let groupedData = filteredSubscriptions.reduce((groups:any, subscription: any) => {
+            const category = subscription.category;
+            if (!groups[category]) {
+              groups[category] = [];
+            }
+            groups[category].push(subscription);
+            return groups;
+          }, {});
+          setGroupedSubscriptions(groupedData);
+        }
+      } catch (error) {
+        //@ts-ignore
+        console.error('An error occurred:', error.message);
+      }
+    };
+
+    fetchData();
+    });
+  }, [selectedSubscriptionType]);
+
     return (
-      <ScrollView style={tw`px-4 pt-8`}>
+      <ScrollView style={tw`w-full px-4 pt-8`}>
         <H1 content={"Hej " + name + "!"} />
-        <View style={tw`mt-4`}>
+        <View style={tw`mt-4 mb-20`}>
           <H2 content={"Din månadskostnad är " + total + "kr / mån"} />
         </View>
+
+        <View style={tw`flex flex-row justify-between`}>
+          {subscriptionTypes.map((subscriptionType, index) => (
+            <View
+              key={subscriptionType}
+              style={[
+                tw``,
+                index !== subscriptionTypes.length - 1 && tw``,
+              ]}
+            >
+              <SubscriptionType
+                name={subscriptionType}
+                onPress={() => {
+                  setSelectedSubscriptionType(subscriptionType);
+                }}
+                selected={selectedSubscriptionType === subscriptionType}
+              />
+            </View>
+          ))}
+        </View>
+
+        {/* Only print category name if category has a corresponding dataset. */}
+        <>
+        </>
+        
         {Object.keys(groupedSubscriptions).map((category: string) => (
-          <View key={category}>
-            <H3 content={category} />
-            {groupedSubscriptions[category].map((subscription: any) => (
+          <View style={tw`mt-8`} key={category}>
+            <H2 content={category} />
+
+
+            {subscriptions
+          .filter((subscription:any) => subscription.category === category)
+          .map((subscription: any) => (
               <SubCard
                 key={subscription.id}
                 productName={subscription.provider}
