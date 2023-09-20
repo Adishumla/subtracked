@@ -18,52 +18,16 @@ function TabBarIcon(props: {
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
-  const [userLoggedIn, setUserLoggedIn] = useState(false);
-  const [id, setId] = useState("");
-
-  async function checkSessionStorage() {
-    if (typeof window !== "undefined") {
-      const { data, error } = await supabase
-        .from("login")
-        .select("id")
-        //.eq("id", sessionStorage.getItem("id") || "");
-        .eq("id", (await AsyncStorage.getItem("id")) || "");
-      if (data && data.length > 0) {
-        console.log(data);
-        console.log(AsyncStorage.getItem("id"));
-        setUserLoggedIn(true);
-        console.log("User is logged in");
-      }
-    }
-  }
-
-  useEffect(() => {
-    async function setIdFromStorage() {
-      console.log("ID", await AsyncStorage.getItem("id"));
-      const storedId = await AsyncStorage.getItem("id");
-      setId(storedId || "");
-    }
-
-    setIdFromStorage();
-    checkSessionStorage(); // Check the user's login status whenever the component mounts
-  }, []);
-
-  useEffect(() => {
-    checkSessionStorage(); // Check the user's login status whenever the component updates
-  }, []); // Empty dependency array to run the check once when the component mounts
-
   return (
     <>
       <Tabs
         screenOptions={{
           tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
-          headerShown: false,
         }}
       >
         <Tabs.Screen
           name="overview"
           options={{
-            href: userLoggedIn ? "/overview" : null,
             title: "Översikt",
             tabBarIcon: ({ size, focused, color }) => {
               return (
@@ -102,7 +66,6 @@ export default function TabLayout() {
                 />
               );
             },
-            href: userLoggedIn ? "/add" : null,
           }}
         />
         <Tabs.Screen
@@ -117,7 +80,6 @@ export default function TabLayout() {
                 />
               );
             },
-            href: userLoggedIn ? "/payments" : null,
           }}
         />
         <Tabs.Screen
@@ -132,7 +94,6 @@ export default function TabLayout() {
                 />
               );
             },
-            href: userLoggedIn ? "/settings" : null,
           }}
         />
         <Tabs.Screen
@@ -145,6 +106,20 @@ export default function TabLayout() {
           name="editSub/:subId"
           options={{
             href: null,
+          }}
+        />
+        <Tabs.Screen
+          name="profile"
+          options={{
+            title: "Profil",
+            tabBarIcon: ({ size, focused, color }) => {
+              return (
+                <Image
+                  style={tw``}
+                  source={require("../../assets/images/overview.svg")}
+                />
+              );
+            },
           }}
         />
       </Tabs>

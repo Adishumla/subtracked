@@ -1,11 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { Alert, StyleSheet, View, Text } from "react-native";
+import {
+  Alert,
+  StyleSheet,
+  View,
+  Text,
+  Linking,
+  Pressable,
+} from "react-native";
 import supabase from "../../lib/supabaseStore";
 import { Button, Input } from "react-native-elements";
-import { Link } from "@react-navigation/native";
+import { Link } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { router } from "expo-router";
+import { router, useNavigation, useRouter } from "expo-router";
 import tw from "twrnc";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default function Auth() {
   const [email, setEmail] = useState("");
@@ -14,6 +22,8 @@ export default function Auth() {
   const [name, setName] = useState("");
   const [id, setId] = useState("");
   const [showRegistration, setShowRegistration] = useState(false);
+  const [signInSuccess, setSignInSuccess] = useState(false); // Track sign-in success
+  const router = useRouter();
 
   async function signInWithEmail() {
     setLoading(true);
@@ -22,7 +32,13 @@ export default function Auth() {
       password: password,
     });
 
-    if (error) Alert.alert(error.message);
+    if (error) {
+      Alert.alert(error.message);
+    } else {
+      console.log("User logged in successfully");
+      await getInfo();
+      setSignInSuccess(true); // Set sign-in success to true
+    }
     setLoading(false);
   }
 
@@ -65,7 +81,6 @@ export default function Auth() {
 
     setLoading(false);
   }
-
   async function getInfo() {
     const { data, error } = await supabase
       .from("login")
@@ -80,7 +95,18 @@ export default function Auth() {
       const storedName = await AsyncStorage.getItem("name");
       setId(data[0]?.id.toString());
       setName(data[0]?.name);
-      router.push("/overview");
+
+      /* router.push({
+        pathname: "/overview",
+        state: { id: storedId, name: storedName },
+      } as any); */
+      //another way to do it instead of using router.push
+      //Linking.openURL("exp://overview");
+      //router.push("/overview");
+      router.push("/profile");
+      if (error) {
+        console.error(error);
+      }
     } else {
       console.log(error);
     }
@@ -156,14 +182,69 @@ export default function Auth() {
         </View>
       ) : (
         <View style={[styles.verticallySpaced, styles.mt20]}>
-          <Button
-            title="Logga in"
-            disabled={loading}
-            onPress={async () => {
-              await signInWithEmail();
-              getInfo();
-            }}
-          />
+          <View style={styles.container}>
+            <Button
+              title="Logga in"
+              disabled={loading}
+              onPress={async () => {
+                await signInWithEmail();
+              }}
+            />
+            {/* <Pressable
+              style={tw`bg-blue-500 p-2 rounded-md`}
+              onPress={async () => {
+                await signInWithEmail();
+              }}
+            >
+              <Text style={tw`text-white text-xl`}>Logga in</Text>
+            </Pressable> */}
+            {/* <Link href={"/(tabs)/overview"} asChild>
+              <Pressable
+                style={tw`bg-blue-500 p-2 rounded-md`}
+                onPress={async () => {
+                  await signInWithEmail();
+                }}
+                disabled={loading} // Disable the button while loading
+              >
+                <Text style={tw`text-white text-xl`}>Logga in</Text>
+              </Pressable>
+            </Link> */}
+            {/* {signInSuccess ? (
+              <Link href="/overview" asChild>
+                <Pressable
+                  style={tw`bg-blue-500 p-2 rounded-md`}
+                  onPress={() => {
+                    // Directly navigate to "/overview"
+                    router.push("/overview");
+                  }}
+                >
+                  <Text style={tw`text-white text-xl`}>Logga in</Text>
+                </Pressable>
+              </Link>
+            ) : (
+              <Pressable
+                style={tw`bg-blue-500 p-2 rounded-md`}
+                onPress={async () => {
+                  await signInWithEmail();
+                }}
+              >
+                <Text style={tw`text-white text-xl`}>Logga in</Text>
+              </Pressable>
+            )} */}
+
+            {/* <Pressable
+              style={tw`bg-blue-500 p-2 rounded-md`}
+              onPress={async () => {
+                await signInWithEmail();
+                if (signInSuccess) {
+                  router.push("/overview");
+                }
+              }}
+              disabled={loading} // Disable the button while loading
+            >
+              <Text style={tw`text-white text-xl`}>Logga in</Text>
+            </Pressable> */}
+          </View>
         </View>
       )}
       {!showRegistration && (
