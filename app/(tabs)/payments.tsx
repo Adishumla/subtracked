@@ -52,28 +52,14 @@ export default function App() {
     const billDate = new Date(subscription.bill_date);
     const month = billDate.toLocaleString("sv-SE", { month: "long" });
     const year = billDate.getFullYear();
-    const day = billDate.getDate();
-    const key = `${year}-${day.toString().padStart(2, "0")}-${month
-      .toString()
-      .padStart(2, "0")}`;
+    const key = `${year}-${month}`;
     if (!data[key]) {
       data[key] = {
-        label: billDate.toLocaleString("sv-SE", {
-          month: "long",
-          year: "numeric",
-          day: "numeric",
-        }),
+        label: `${month} ${year}`,
         subscriptions: [],
         totalCost: 0,
       };
     }
-    const startDate = new Date(subscription.start_date);
-    const endDate = new Date(subscription.end_date);
-    const months =
-      (endDate.getFullYear() - startDate.getFullYear()) * 12 +
-      (endDate.getMonth() - startDate.getMonth());
-    const monthlyCost = subscription.cost / months; // Calculate the monthly cost
-    subscription.monthlyCost = monthlyCost; // Add the monthly cost to the subscription object
     data[key].subscriptions.push(subscription);
     data[key].totalCost += subscription.cost;
     return data;
@@ -97,7 +83,7 @@ export default function App() {
 
       <View>
         {Object.keys(sortedGroupedSubscriptions).map((data) => {
-          const monthLabel = data.slice(8, 9).toUpperCase() + data.slice(9);
+          const monthLabel = data.split("-")[1];
           const totalCost = sortedGroupedSubscriptions[data].totalCost;
 
           if (monthLabel !== currentMonth) {
