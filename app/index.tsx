@@ -7,6 +7,7 @@ import { View, Text, Button } from "react-native";
 import { Session } from "@supabase/supabase-js";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import AppleAuth from "../components/Auth/AppleAuth";
+import { router } from "expo-router";
 
 export default function App() {
   const [session, setSession] = useState<Session | null>(null);
@@ -35,6 +36,13 @@ export default function App() {
   return (
     <View style={tw`flex-1 items-center justify-center mt-8`}>
       <Auth />
+      {/* button router push to test.tsx */}
+      <Button
+        title="test"
+        onPress={() => {
+          router.push("/test");
+        }}
+      />
       <AppleAuth />
       <Button
         title="Sign Out"
