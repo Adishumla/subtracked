@@ -85,15 +85,15 @@ export default function App() {
   const [push_notifications, setNotifications] = useState<boolean>(userSettings.dark_mode);
   const [darkMode, setDarkMode] = useState<boolean>(userSettings.push_notifications);
 
-  let colorScheme = useColorScheme();
-  useEffect(() => {
-    if (darkMode === true){
-      AsyncStorage.setItem("darkMode","true")
-    }
-    else {
-      AsyncStorage.setItem("darkMode","false")
-    }
-  }, [colorScheme]);
+  // let colorScheme = useColorScheme();
+  // useEffect(() => {
+  //   if (darkMode === true){
+  //     AsyncStorage.setItem("darkMode","true")
+  //   }
+  //   else {
+  //     AsyncStorage.setItem("darkMode","false")
+  //   }
+  // }, [colorScheme]);
 
   return (
     <ScrollView style={[tw`px-4 pt-8`, darkMode ? tw`bg-black` : tw`bg-white`]}>
@@ -108,7 +108,7 @@ export default function App() {
           style={tw`rounded-xl`}
           placeholder={userSettings.name}
           onChangeText={(value) => setUsername(value)}
-        ></Input>
+        />
       <Button style={tw`my-6`} title="Spara" onPress={async () => {
           const { data, error } = await supabase
           .from('login')
@@ -127,15 +127,12 @@ export default function App() {
         <Text style={tw`text-white`} >
           Klicka här så skickas en återställningslänk till din registrerade mejladress.
         </Text>
-        <H4 content="" />
         <Button style={tw`my-6`} title="Byt lösenord" />
       </View>
-
 
       <View style={tw`mt-16 gap-8`}>
         <View style={tw`flex-row justify-between`}>
           <H2 content="Dark mode"></H2>
-
           <Switch
             //color="#00FF00"
             value={darkMode}
@@ -145,7 +142,6 @@ export default function App() {
 
         <View style={tw`flex-row justify-between`}>
           <H2 content="Pushnotiser"></H2>
-
           <Switch
             //color="#00FF00"
             value={push_notifications}

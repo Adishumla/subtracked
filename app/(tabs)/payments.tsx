@@ -28,6 +28,7 @@ export default function App() {
           const { data: subscriptions, error } = await supabase
             .from("subscriptions")
             .select("*")
+            .order('bill_date', {ascending:true})
             .eq("user_id", id);
           if (error) {
             console.error("Error fetching data:", error.message);
@@ -48,7 +49,7 @@ export default function App() {
 
   // Sort the subscriptions by date. Save year, month and day so that we're able
   // to show the cards in correct order. January 2024 is placed above December 2023 for example.
-  const groupedSubscriptions = subscriptions.reduce((data, subscription) => {
+  const groupedSubscriptions = subscriptions.reduce((data:any, subscription:any) => {
     const billDate = new Date(subscription.bill_date);
     const month = billDate.toLocaleString("sv-SE", { month: "long" });
     const year = billDate.getFullYear();
@@ -66,7 +67,6 @@ export default function App() {
   }, {});
 
   const sortedGroupedSubscriptions = Object.keys(groupedSubscriptions)
-    .sort()
     .reduce((sortedData: any, key) => {
       sortedData[key] = groupedSubscriptions[key];
       return sortedData;
@@ -118,8 +118,18 @@ export default function App() {
                 {sortedGroupedSubscriptions[data].subscriptions.map(
                   (subscription: any) => (
                     <View key={subscription.id}>
-                      <Text>{subscription.name}</Text>
-                      <Text>{subscription.monthlyCost} kr/mån</Text>{" "}
+                      <View style={tw`flex flex-row justify-between`}>
+                  <H2 content={monthLabel} />
+                  <H2 content={totalCost + "kr"} />
+                </View>
+   <SubCard
+                        productName={subscription.provider}
+                        icon="Bild"
+                        price={subscription.cost + "kr"}
+                        subType={subscription.plan}
+                        subId={subscription.id}
+                        subStatus="active"
+                      />
                       {/* Display the monthly cost */}
                     </View>
                   )

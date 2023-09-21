@@ -128,9 +128,6 @@ export default function App() {
 
           if (error) {
             console.error("Error inserting data:", error);
-          } else {
-            console.log("Data inserted successfully:", data);
-            // Optionally, you can clear the input fields or perform any other actions here
           }
         }}
       />
