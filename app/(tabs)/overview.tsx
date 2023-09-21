@@ -23,7 +23,7 @@ export default function App() {
       setSession(session);
       setEmail(session?.user.email);
 
-      const { data, error } = supabase
+      supabase
         .from("login")
         .insert([{ email: email, Users: session?.user.id }])
         .select();
@@ -55,14 +55,15 @@ export default function App() {
             setName(login[0].name);
           }
         } catch (error) {
-          console.error("An error occurred:", error.message);
+
+          console.error('An error occurred:', (error as Error).message);
         }
       };
       fetchData(); // Call the fetchData function to execute the query
     });
   }, []);
 
-  //Fetch the logged in users total cost by selecting and adding together
+  // Fetch the logged in users total cost by selecting and adding together 
   // each entry from login.cost that matches the id.
   const [total, setTotal] = useState<any>([]);
   useEffect(() => {
@@ -87,22 +88,21 @@ export default function App() {
             setTotal(sum);
           }
         } catch (error) {
-          //@ts-ignore
-          console.error("An error occurred:", error.message);
+
+          console.error('An error occurred:', (error as Error).message);
         }
       };
       fetchData(); // Call the fetchData function to execute the query
     });
   }, []);
 
-  //Handle fetch of the logged in users subscriptions to map the
+  // Handle fetch of the logged in users subscriptions to map the
   // data into SubCard components below.
   // Also group the subscriptions by category type.
   const [subscriptions, setSubscriptions] = useState<any>([]);
   const [groupedSubscriptions, setGroupedSubscriptions] = useState<any>({});
   const subscriptionTypes = ["Alla", "Eget", "Delat", "Familj"];
-  const [selectedSubscriptionType, setSelectedSubscriptionType] =
-    useState<string>("Eget");
+  const [selectedSubscriptionType, setSelectedSubscriptionType] = useState<string>("Alla");
 
   useEffect(() => {
     AsyncStorage.getItem("id").then((id) => {
@@ -132,24 +132,21 @@ export default function App() {
             setSubscriptions(filteredSubscriptions);
 
             // Push category into array to make it sortable.
-            let groupedData = filteredSubscriptions.reduce(
-              (groups: any, subscription: any) => {
-                const category = subscription.category;
-                if (!groups[category]) {
-                  groups[category] = [];
-                }
-                groups[category].push(subscription);
-                return groups;
-              },
-              {}
-            );
-            setGroupedSubscriptions(groupedData);
-          }
-        } catch (error) {
-          //@ts-ignore
-          console.error("An error occurred:", error.message);
+            let groupedData = filteredSubscriptions.reduce((groups:any, subscription: any) => {
+            const category = subscription.category;
+            if (!groups[category]) {
+              groups[category] = [];
+            }
+            groups[category].push(subscription);
+            return groups;
+          }, {});
+          setGroupedSubscriptions(groupedData);
         }
-      };
+      } catch (error) {
+
+        console.error('An error occurred:', (error as Error).message);
+      }
+    };
 
       fetchData();
     });
@@ -162,29 +159,29 @@ export default function App() {
         <H2 content={"Din månadskostnad är " + total + "kr / mån"} />
       </View>
 
-      <View style={tw`flex flex-row justify-between`}>
-        {subscriptionTypes.map((subscriptionType, index) => (
-          <View
-            key={subscriptionType}
-            style={[tw``, index !== subscriptionTypes.length - 1 && tw``]}
-          >
-            <SubscriptionType
-              name={subscriptionType}
-              onPress={() => {
-                setSelectedSubscriptionType(subscriptionType);
-              }}
-              selected={selectedSubscriptionType === subscriptionType}
-            />
-          </View>
-        ))}
-      </View>
-
-      {/* Only print category name if category has a corresponding dataset. */}
-      <></>
-
-      {Object.keys(groupedSubscriptions).map((category: string) => (
-        <View style={tw`mt-8`} key={category}>
-          <H2 content={category} />
+        <View style={tw`flex flex-row justify-between`}>
+          {subscriptionTypes.map((subscriptionType, index) => (
+            <View
+              key={subscriptionType}
+              style={[
+                tw``,
+                index !== subscriptionTypes.length - 1 && tw``,
+              ]}
+            >
+              <SubscriptionType
+                name={subscriptionType}
+                onPress={() => {
+                  setSelectedSubscriptionType(subscriptionType);
+                }}
+                selected={selectedSubscriptionType === subscriptionType}
+              />
+            </View>
+          ))}
+        </View>
+      
+        {Object.keys(groupedSubscriptions).map((category: string) => (
+          <View style={tw`mt-8`} key={category}>
+            <H2 content={category} />
 
           {subscriptions
             .filter((subscription: any) => subscription.category === category)
