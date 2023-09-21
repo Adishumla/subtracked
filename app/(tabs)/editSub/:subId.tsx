@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { View, Text } from "react-native";
-import { useRoute } from "@react-navigation/native";
-import tw from "twrnc";
+import { View, ScrollView } from "react-native";
 import supabase from "../../../lib/supabaseStore";
+import tw from "twrnc";
+import Category from "../../../components/Category";
 import SubscriptionType from "../../../components/SubscriptionType";
-import { Pressable } from "react-native";
-import { Link } from "expo-router";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import H1 from "../../../components/H1";
+import H2 from "../../../components/H2";
+import H4 from "../../../components/H4";
+import { Button, Input } from "react-native-elements";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useRoute } from "@react-navigation/native";
 
-// Define an interface for your subscription data
 interface Subscription {
   bill_date: string;
   category: string;
@@ -21,9 +23,10 @@ interface Subscription {
   plan: string;
 }
 
-const ManageSub = () => {
+export default function App() {
   const route = useRoute();
   const { subId } = route.params as { subId: string };
+
   const [subscription, setSubscription] = useState<Subscription | null>(null);
 
   async function getSub() {
@@ -47,46 +50,125 @@ const ManageSub = () => {
     getSub();
   }, []);
 
+  const categories = [
+    "Streaming",
+    "Ljud",
+    "Hälsa",
+    "Hushåll",
+    "Spel",
+    "Molntjänst",
+  ];
+  const subscriptionTypes = ["Eget", "Delat", "Familj"];
+  const [provider, setProvider] = useState<string>("");
+  const [price, setPrice] = useState<number>(0);
+  const [date, setDate] = useState<string>("");
+  const [note, setNote] = useState<string>("");
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const [selectedSubscriptionType, setSelectedSubscriptionType] =
+    useState<string>("");
+
   return (
-    <View style={tw`flex-1 justify-center items-center bg-blue-500`}>
-      <Text style={tw`font-medium text-3xl text-white`}>Sub ID: {subId}</Text>
+    <ScrollView style={tw`px-4 pt-8`}>
+      <H4 content="<-- Tillbaka ska den här ens vara här?"></H4>
+      <H1 content={"Lägg till abonnemang"}></H1>
 
-      {/* Display the subscription data if available */}
-      {subscription && (
-        <>
-          <Text style={tw`text-2xl text-white`}>Edit Subscription</Text>
-          <View style={tw`border p-2 my-2 rounded-md bg-white`}>
-            <Text>Bill Date: {subscription.bill_date}</Text>
-            <Text>Category: {subscription.plan}</Text>
-            <Text>Cost: {subscription.cost}</Text>
-            <Text>Created At: {subscription.created_at}</Text>
-            <Text>ID: {subscription.id}</Text>
-            <Text>Note: {subscription.note}</Text>
-            <Text>Provider: {subscription.provider}</Text>
-            <Text>User ID: {subscription.user_id}</Text>
-          </View>
-          <Text style={tw`text-4xl text-white`}>{subscription.provider}</Text>
-          <Text style={tw`text-base text-white`}>{subscription.note}</Text>
-          {/* Kunde inte dras eller prishöjning */}
-          <Text style={tw`text-2xl text-white`}>Om abonnemanget</Text>
-          <View style={tw`flex-row justify-between items-center w-26`}>
-            <SubscriptionType
-              name={subscription.plan}
-              onPress={() => {}}
-              selected={false}
+      <View style={tw`mt-16`}>
+        <H2 content="Kategori"></H2>
+        <View style={tw`mt-5 flex flex-row flex-wrap`}>
+          {categories.map((category) => (
+            <Category
+              key={category}
+              name={category}
+              onPress={() => setSelectedCategory(category)} // Update selected category
+              selected={selectedCategory === category} // Pass selected prop
             />
-          </View>
-        </>
-      )}
+          ))}
+        </View>
+      </View>
 
-      {/* Display a message if no subscription data is available */}
-      {!subscription && (
-        <Text style={tw`text-lg text-white`}>
-          No subscription found for ID: {subId}
-        </Text>
-      )}
-    </View>
+      <View style={tw`mt-12`}>
+        <H2 content={"Leverantör"}></H2>
+        <Input
+          placeholder="Ex. Spotify"
+          onChangeText={(value) => setProvider(value)}
+        />
+        <H4 content="Ex. Spotify"></H4>
+      </View>
+
+      <View style={tw`mt-12`}>
+        <View style={tw``}>
+          <H2 content={"Pris/mån"}></H2>
+          <Input
+            placeholder="Ex. 99"
+            onChangeText={(value) => setPrice(parseInt(value))}
+          />
+        </View>
+
+        <View style={tw``}>
+          <H2 content={"Betaldatum"}></H2>
+          <Input placeholder="Ex. 1" onChangeText={(value) => setDate(value)} />
+        </View>
+      </View>
+
+      <View style={tw`mt-12`}>
+        <H2 content={"Abonnemangstyp"}></H2>
+        <View style={tw`flex-1 items-center justify-center flex-row`}>
+          {subscriptionTypes.map((subscriptionType, index) => (
+            <View
+              key={subscriptionType}
+              style={[
+                tw`flex-1 p-2`, // Adjust padding to control the size of SubscriptionType components
+                index !== subscriptionTypes.length - 1 && tw`mr-2`, // Adjust margin between components
+              ]}
+            >
+              <SubscriptionType
+                name={subscriptionType}
+                onPress={() => {
+                  if (selectedSubscriptionType === subscriptionType) {
+                    setSelectedSubscriptionType(""); // Deselect if already selected
+                  } else {
+                    setSelectedSubscriptionType(subscriptionType); // Select the current one
+                  }
+                }}
+                selected={selectedSubscriptionType === subscriptionType}
+              />
+            </View>
+          ))}
+        </View>
+      </View>
+
+      <View style={tw`mt-12`}>
+        <H2 content={"Notering"}></H2>
+        <Input
+          placeholder="Ex. Annas mobil"
+          onChangeText={(value) => setNote(value)}
+        />
+        <H4 content="Ex. Annas mobil"></H4>
+      </View>
+
+      <Button
+        style={tw`mb-12`}
+        title="Uppdatera"
+        onPress={async () => {
+          const { data, error } = await supabase
+            .from("subscriptions")
+            .update({
+              bill_date: date || subscription?.bill_date,
+              category: selectedCategory || subscription?.category,
+              cost: price || subscription?.cost,
+              note: note || subscription?.note,
+              plan: selectedSubscriptionType || subscription?.plan,
+              provider: provider || subscription?.provider,
+            })
+            .eq("id", subId);
+          if (error) {
+            console.error("Error inserting data:", error);
+          } else {
+            console.log("Data inserted successfully:", data);
+            // Optionally, you can clear the input fields or perform any other actions here
+          }
+        }}
+      />
+    </ScrollView>
   );
-};
-
-export default ManageSub;
+}

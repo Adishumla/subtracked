@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+/* import React, { useRef, useEffect } from "react";
 import { Button, StyleSheet, View } from "react-native";
 import LottieView from "lottie-react-native";
 import tw from "twrnc";
@@ -23,3 +23,4 @@ export default function App() {
     </View>
   );
 }
+ */
