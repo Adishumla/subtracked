@@ -1,5 +1,5 @@
 import { View, StyleSheet, Text, ScrollView } from "react-native";
-import {Link} from 'expo-router';
+import { Link } from "expo-router";
 import supabase from "../../lib/supabaseStore";
 import tw from "twrnc";
 import H1 from "../../components/H1";
@@ -10,73 +10,84 @@ import SubCard from "../../components/SubCard";
 import { Button } from "react-native-elements";
 import { useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { subtle } from "crypto";
-
+import { Verify, subtle } from "crypto";
 
 export default function App() {
-
   // Fetch and save subscription data. Remove data not connected to the logged in user.
   const [subscriptions, setSubscriptions] = useState<any>([]);
-    useEffect(() => {
-
-    AsyncStorage.getItem('id').then((id) => {
+  useEffect(() => {
+    AsyncStorage.getItem("id").then((id) => {
       if (!id) {
-        console.error('User not found.');
+        console.error("User not found.");
         return;
       }
-      
+
       // Fetch all data from the "subscriptions" table containing correct user id.
       const fetchData = async () => {
         try {
           const { data: subscriptions, error } = await supabase
-          .from('subscriptions')
-          .select('*')
-          .eq('user_id', id);
+            .from("subscriptions")
+            .select("*")
+            .eq("user_id", id);
           if (error) {
-            console.error('Error fetching data:', error.message);
+            console.error("Error fetching data:", error.message);
           } else {
-            console.log('Fetched data:', subscriptions);
+            console.log("Fetched data:", subscriptions);
 
             setSubscriptions(subscriptions);
           }
         } catch (error) {
           //@ts-ignore
-          console.error('An error occurred:', error.message);
+          console.error("An error occurred:", error.message);
         }
       };
-      
+
       fetchData();
     });
   }, []);
 
-  // Sort the subscriptions by date. Save year, month and day so that we're able 
+  // Sort the subscriptions by date. Save year, month and day so that we're able
   // to show the cards in correct order. January 2024 is placed above December 2023 for example.
-  const groupedSubscriptions = subscriptions.reduce((data:any, subscription:any) => {
+  const groupedSubscriptions = subscriptions.reduce((data, subscription) => {
     const billDate = new Date(subscription.bill_date);
-    const month = billDate.toLocaleString('sv-SE', { month: 'long' });
+    const month = billDate.toLocaleString("sv-SE", { month: "long" });
     const year = billDate.getFullYear();
     const day = billDate.getDate();
-    const key = `${year}-${day.toString().padStart(2, '0')}-${month.toString().padStart(2, '0')}`;
+    const key = `${year}-${day.toString().padStart(2, "0")}-${month
+      .toString()
+      .padStart(2, "0")}`;
     if (!data[key]) {
       data[key] = {
-        label: billDate.toLocaleString('sv-SE', { month: 'long', year: 'numeric', day:'numeric' }),
+        label: billDate.toLocaleString("sv-SE", {
+          month: "long",
+          year: "numeric",
+          day: "numeric",
+        }),
         subscriptions: [],
+        totalCost: 0,
       };
     }
+    const startDate = new Date(subscription.start_date);
+    const endDate = new Date(subscription.end_date);
+    const months =
+      (endDate.getFullYear() - startDate.getFullYear()) * 12 +
+      (endDate.getMonth() - startDate.getMonth());
+    const monthlyCost = subscription.cost / months; // Calculate the monthly cost
+    subscription.monthlyCost = monthlyCost; // Add the monthly cost to the subscription object
     data[key].subscriptions.push(subscription);
+    data[key].totalCost += subscription.cost;
     return data;
   }, {});
 
-
   const sortedGroupedSubscriptions = Object.keys(groupedSubscriptions)
-  .sort()
-  .reduce((sortedData:any, key) => {
-    sortedData[key] = groupedSubscriptions[key];
-    return sortedData;
-  }, {});
-  let currentMonth = '';
+    .sort()
+    .reduce((sortedData: any, key) => {
+      sortedData[key] = groupedSubscriptions[key];
+      return sortedData;
+    }, {});
 
-    
+  let currentMonth = "";
+
   return (
     <ScrollView style={tw`px-4 pt-8`}>
       <View>
@@ -86,44 +97,49 @@ export default function App() {
 
       <View>
         {Object.keys(sortedGroupedSubscriptions).map((data) => {
-        const monthLabel = data.slice(8, 9).toUpperCase() + data.slice(9);
-  
+          const monthLabel = data.slice(8, 9).toUpperCase() + data.slice(9);
+          const totalCost = sortedGroupedSubscriptions[data].totalCost;
+
           if (monthLabel !== currentMonth) {
             currentMonth = monthLabel;
             return (
               <View key={data}>
-                <H2 content={monthLabel} />
-                {sortedGroupedSubscriptions[data].subscriptions.map((subscription:any) => (
-                  <SubCard
-                    key={subscription.id}
-                    productName={subscription.provider}
-                    icon="Bild"
-                    price={subscription.cost}
-                    subType={subscription.plan}
-                    subId={subscription.id}
-                    subStatus="STATUS"
-                  />
-                ))}
+                <View style={tw`flex flex-row justify-between`}>
+                  <H2 content={monthLabel} />
+                  <H2 content={totalCost + "kr"} />
+                </View>
+                {sortedGroupedSubscriptions[data].subscriptions.map(
+                  (subscription: any) => (
+                    <View key={subscription.id}>
+                      <Text>{subscription.name}</Text>
+
+                      <SubCard
+                        productName={subscription.provider}
+                        icon="Bild"
+                        price={subscription.cost + "kr"}
+                        subType={subscription.plan}
+                      />
+                    </View>
+                  )
+                )}
               </View>
-          );
+            );
           } else {
             return (
               <View key={data}>
-                {sortedGroupedSubscriptions[data].subscriptions.map((subscription:any) => (
-                  <SubCard
-                    key={subscription.id}
-                    productName={subscription.provider}
-                    icon="Bild"
-                    price={subscription.cost}
-                    subType={subscription.plan}
-                    subId={subscription.id}
-                    subStatus="STATUS"
-                  />
-                ))}
+                {sortedGroupedSubscriptions[data].subscriptions.map(
+                  (subscription: any) => (
+                    <View key={subscription.id}>
+                      <Text>{subscription.name}</Text>
+                      <Text>{subscription.monthlyCost} kr/mån</Text>{" "}
+                      {/* Display the monthly cost */}
+                    </View>
+                  )
+                )}
               </View>
-          );
-        }
-      })}
+            );
+          }
+        })}
       </View>
     </ScrollView>
   );
