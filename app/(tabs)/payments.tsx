@@ -118,6 +118,8 @@ export default function App() {
                         icon="Bild"
                         price={subscription.cost + "kr"}
                         subType={subscription.plan}
+                        subId={subscription.id}
+                        subStatus="active"
                       />
                     </View>
                   )
