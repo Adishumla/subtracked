@@ -24,12 +24,15 @@ export default function App() {
 
       // Fetch all data from the "subscriptions" table containing correct user id.
       const fetchData = async () => {
+        const currentDate = new Date(); // Get the current date and time
         try {
+          const currentDate = new Date();
           const { data: subscriptions, error } = await supabase
             .from("subscriptions")
             .select("*")
-            .order('bill_date', {ascending:true})
-            .eq("user_id", id);
+            .order("bill_date", { ascending: true })
+            .eq("user_id", id)
+            .gt("bill_date", currentDate.toISOString()); // Filter out dates that have passed
           if (error) {
             console.error("Error fetching data:", error.message);
           } else {
@@ -49,28 +52,33 @@ export default function App() {
 
   // Sort the subscriptions by date. Save year, month and day so that we're able
   // to show the cards in correct order. January 2024 is placed above December 2023 for example.
-  const groupedSubscriptions = subscriptions.reduce((data:any, subscription:any) => {
-    const billDate = new Date(subscription.bill_date);
-    const month = billDate.toLocaleString("sv-SE", { month: "long" });
-    const year = billDate.getFullYear();
-    const key = `${year}-${month}`;
-    if (!data[key]) {
-      data[key] = {
-        label: `${month} ${year}`,
-        subscriptions: [],
-        totalCost: 0,
-      };
-    }
-    data[key].subscriptions.push(subscription);
-    data[key].totalCost += subscription.cost;
-    return data;
-  }, {});
+  const groupedSubscriptions = subscriptions.reduce(
+    (data: any, subscription: any) => {
+      const billDate = new Date(subscription.bill_date);
+      const month = billDate.toLocaleString("sv-SE", { month: "long" });
+      const year = billDate.getFullYear();
+      const key = `${year}-${month}`;
+      if (!data[key]) {
+        data[key] = {
+          label: `${month} ${year}`,
+          subscriptions: [],
+          totalCost: 0,
+        };
+      }
+      data[key].subscriptions.push(subscription);
+      data[key].totalCost += subscription.cost;
+      return data;
+    },
+    {}
+  );
 
-  const sortedGroupedSubscriptions = Object.keys(groupedSubscriptions)
-    .reduce((sortedData: any, key) => {
+  const sortedGroupedSubscriptions = Object.keys(groupedSubscriptions).reduce(
+    (sortedData: any, key) => {
       sortedData[key] = groupedSubscriptions[key];
       return sortedData;
-    }, {});
+    },
+    {}
+  );
 
   let currentMonth = "";
 
@@ -119,10 +127,10 @@ export default function App() {
                   (subscription: any) => (
                     <View key={subscription.id}>
                       <View style={tw`flex flex-row justify-between`}>
-                  <H2 content={monthLabel} />
-                  <H2 content={totalCost + "kr"} />
-                </View>
-   <SubCard
+                        <H2 content={monthLabel} />
+                        <H2 content={totalCost + "kr"} />
+                      </View>
+                      <SubCard
                         productName={subscription.provider}
                         icon="Bild"
                         price={subscription.cost + "kr"}

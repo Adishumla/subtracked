@@ -11,6 +11,10 @@ import { View, Text, Button, ScrollView } from "react-native";
 import { Session } from "@supabase/supabase-js";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import SubCard from "../../components/SubCard";
+import {
+  registerForPushNotificationsAsync,
+  schedulePushNotification,
+} from "../../lib/notificationService";
 
 export default function App() {
   const [session, setSession] = useState<Session | null>(null);
@@ -55,15 +59,14 @@ export default function App() {
             setName(login[0].name);
           }
         } catch (error) {
-
-          console.error('An error occurred:', (error as Error).message);
+          console.error("An error occurred:", (error as Error).message);
         }
       };
       fetchData(); // Call the fetchData function to execute the query
     });
   }, []);
 
-  // Fetch the logged in users total cost by selecting and adding together 
+  // Fetch the logged in users total cost by selecting and adding together
   // each entry from login.cost that matches the id.
   const [total, setTotal] = useState<any>([]);
   useEffect(() => {
@@ -88,8 +91,7 @@ export default function App() {
             setTotal(sum);
           }
         } catch (error) {
-
-          console.error('An error occurred:', (error as Error).message);
+          console.error("An error occurred:", (error as Error).message);
         }
       };
       fetchData(); // Call the fetchData function to execute the query
@@ -102,7 +104,8 @@ export default function App() {
   const [subscriptions, setSubscriptions] = useState<any>([]);
   const [groupedSubscriptions, setGroupedSubscriptions] = useState<any>({});
   const subscriptionTypes = ["Alla", "Eget", "Delat", "Familj"];
-  const [selectedSubscriptionType, setSelectedSubscriptionType] = useState<string>("Alla");
+  const [selectedSubscriptionType, setSelectedSubscriptionType] =
+    useState<string>("Alla");
 
   useEffect(() => {
     AsyncStorage.getItem("id").then((id) => {
@@ -132,21 +135,23 @@ export default function App() {
             setSubscriptions(filteredSubscriptions);
 
             // Push category into array to make it sortable.
-            let groupedData = filteredSubscriptions.reduce((groups:any, subscription: any) => {
-            const category = subscription.category;
-            if (!groups[category]) {
-              groups[category] = [];
-            }
-            groups[category].push(subscription);
-            return groups;
-          }, {});
-          setGroupedSubscriptions(groupedData);
+            let groupedData = filteredSubscriptions.reduce(
+              (groups: any, subscription: any) => {
+                const category = subscription.category;
+                if (!groups[category]) {
+                  groups[category] = [];
+                }
+                groups[category].push(subscription);
+                return groups;
+              },
+              {}
+            );
+            setGroupedSubscriptions(groupedData);
+          }
+        } catch (error) {
+          console.error("An error occurred:", (error as Error).message);
         }
-      } catch (error) {
-
-        console.error('An error occurred:', (error as Error).message);
-      }
-    };
+      };
 
       fetchData();
     });
@@ -159,29 +164,26 @@ export default function App() {
         <H2 content={"Din månadskostnad är " + total + "kr / mån"} />
       </View>
 
-        <View style={tw`flex flex-row justify-between`}>
-          {subscriptionTypes.map((subscriptionType, index) => (
-            <View
-              key={subscriptionType}
-              style={[
-                tw``,
-                index !== subscriptionTypes.length - 1 && tw``,
-              ]}
-            >
-              <SubscriptionType
-                name={subscriptionType}
-                onPress={() => {
-                  setSelectedSubscriptionType(subscriptionType);
-                }}
-                selected={selectedSubscriptionType === subscriptionType}
-              />
-            </View>
-          ))}
-        </View>
-      
-        {Object.keys(groupedSubscriptions).map((category: string) => (
-          <View style={tw`mt-8`} key={category}>
-            <H2 content={category} />
+      <View style={tw`flex flex-row justify-between`}>
+        {subscriptionTypes.map((subscriptionType, index) => (
+          <View
+            key={subscriptionType}
+            style={[tw``, index !== subscriptionTypes.length - 1 && tw``]}
+          >
+            <SubscriptionType
+              name={subscriptionType}
+              onPress={() => {
+                setSelectedSubscriptionType(subscriptionType);
+              }}
+              selected={selectedSubscriptionType === subscriptionType}
+            />
+          </View>
+        ))}
+      </View>
+
+      {Object.keys(groupedSubscriptions).map((category: string) => (
+        <View style={tw`mt-8`} key={category}>
+          <H2 content={category} />
 
           {subscriptions
             .filter((subscription: any) => subscription.category === category)
@@ -198,6 +200,14 @@ export default function App() {
             ))}
         </View>
       ))}
+      <View style={tw`mb-20`}>
+        <Button
+          title="Send notification now"
+          onPress={async () => {
+            await schedulePushNotification();
+          }}
+        />
+      </View>
     </ScrollView>
   );
 }

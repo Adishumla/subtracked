@@ -3,6 +3,8 @@
 import * as Notifications from "expo-notifications";
 import { Platform } from "react-native"; // Import Platform here if it's not already imported
 import * as Device from "expo-device";
+import supabase from "./supabaseStore";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export async function registerForPushNotificationsAsync() {
   let token;
@@ -31,8 +33,6 @@ export async function registerForPushNotificationsAsync() {
       return;
     }
 
-    // Learn more about projectId:
-    // https://docs.expo.dev/push-notifications/push-notifications-setup/#configure-projectid
     token = (
       await Notifications.getExpoPushTokenAsync({
         projectId: "fdb7f1b0-741c-4e34-9f35-6f58032d840f",
@@ -47,10 +47,32 @@ export async function registerForPushNotificationsAsync() {
 }
 
 export async function schedulePushNotification() {
+  const userId = await AsyncStorage.getItem("id");
+  if (!userId) {
+    console.log("User ID not found");
+    return;
+  }
+
+  const { data, error } = await supabase
+    .from("subscriptions")
+    .select("*")
+    .eq("user_id", userId);
+  if (error) {
+    console.log(error);
+    return;
+  }
+
+  if (!data || data.length === 0) {
+    console.log("No subscription found");
+    return;
+  }
+
+  console.log(data);
+
   await Notifications.scheduleNotificationAsync({
     content: {
-      title: "You've got mail! 📬",
-      body: "Here is the notification body",
+      title: `${data[0].provider} is about to renew!`,
+      body: `In 3 days, your ${data[0].provider} subscription will renew.`,
       data: { data: "goes here" },
     },
     trigger: { seconds: 1 },
