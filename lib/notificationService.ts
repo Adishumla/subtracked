@@ -53,10 +53,17 @@ export async function schedulePushNotification() {
     return;
   }
 
+  const currentDate = new Date();
+  const threeDaysFromNow = new Date();
+  threeDaysFromNow.setDate(currentDate.getDate() + 3);
+
   const { data, error } = await supabase
     .from("subscriptions")
     .select("*")
-    .eq("user_id", userId);
+    .eq("user_id", userId)
+    .lte("bill_date", threeDaysFromNow.toISOString())
+    .gte("bill_date", currentDate.toISOString());
+
   if (error) {
     console.log(error);
     return;

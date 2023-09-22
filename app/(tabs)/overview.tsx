@@ -115,45 +115,17 @@ export default function App() {
       }
 
       // Fetch data from the "subscriptions" table where user uuid is logged in.
-      const fetchData = async () => {
-        try {
-          const { data: subscriptions, error } = await supabase
-            .from("subscriptions")
-            .select("*")
-            .eq("user_id", id);
-          if (error) {
-            console.error("Error fetching data:", error.message);
-          } else {
-            let filteredSubscriptions =
-              selectedSubscriptionType === "Alla"
-                ? subscriptions
-                : subscriptions.filter(
-                    (subscription) =>
-                      subscription.plan === selectedSubscriptionType
-                  );
 
-            setSubscriptions(filteredSubscriptions);
-
-            // Push category into array to make it sortable.
-            let groupedData = filteredSubscriptions.reduce(
-              (groups: any, subscription: any) => {
-                const category = subscription.category;
-                if (!groups[category]) {
-                  groups[category] = [];
-                }
-                groups[category].push(subscription);
-                return groups;
-              },
-              {}
-            );
-            setGroupedSubscriptions(groupedData);
+      const subscriptions = supabase
+        .channel("custom-all-channel")
+        .on(
+          "postgres_changes",
+          { event: "*", schema: "public", table: "subscriptions" },
+          (payload) => {
+            console.log("Change received!", payload);
           }
-        } catch (error) {
-          console.error("An error occurred:", (error as Error).message);
-        }
-      };
-
-      fetchData();
+        )
+        .subscribe();
     });
   }, [selectedSubscriptionType]);
 
