@@ -82,18 +82,8 @@ export default function App() {
   // Add handlers to change rendered username 
   // and switches that save push notifications & darkmode respectively
   const [username, setUsername] = useState<string>(userSettings.name);
-  const [push_notifications, setNotifications] = useState<boolean>(userSettings.dark_mode);
-  const [darkMode, setDarkMode] = useState<boolean>(userSettings.push_notifications);
-
-  // let colorScheme = useColorScheme();
-  // useEffect(() => {
-  //   if (darkMode === true){
-  //     AsyncStorage.setItem("darkMode","true")
-  //   }
-  //   else {
-  //     AsyncStorage.setItem("darkMode","false")
-  //   }
-  // }, [colorScheme]);
+  const [push_notifications, setNotifications] = useState<boolean>(userSettings.push_notifications);
+  const [darkMode, setDarkMode] = useState<boolean>(userSettings.dark_mode);
 
   return (
     <ScrollView style={[tw`px-4 pt-8`, darkMode ? tw`bg-black` : tw`bg-white`]}>
@@ -132,20 +122,38 @@ export default function App() {
 
       <View style={tw`mt-16 gap-8`}>
         <View style={tw`flex-row justify-between`}>
-          <H2 content="Dark mode"></H2>
+          <H2 content="Dark mode"/>
           <Switch
             //color="#00FF00"
             value={darkMode}
-            onValueChange={(dark_value) => setDarkMode(dark_value)}
+            onValueChange={async (value) => {
+          const { error } = await supabase
+          .from('login')
+          .update({dark_mode: value})
+          .eq('id', id)
+          setDarkMode(value);
+          if (error) {
+            console.error("Error inserting data:", error);
+          }
+        }}
           />
         </View>
 
         <View style={tw`flex-row justify-between`}>
-          <H2 content="Pushnotiser"></H2>
+          <H2 content="Pushnotiser"/>
           <Switch
             //color="#00FF00"
             value={push_notifications}
-            onValueChange={(value) => setNotifications(value)}
+            onValueChange={async (value) => {
+          const { error } = await supabase
+          .from('login')
+          .update({push_notifications: value})
+          .eq('id', id)
+          setNotifications(value);
+          if (error) {
+            console.error("Error inserting data:", error);
+          }
+        }}
           />
         </View>
       </View>
