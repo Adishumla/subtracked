@@ -50,36 +50,8 @@ export default function App() {
   return (
     <View style={tw`flex-1 items-center justify-center mt-8`}>
       <ScrollView>
-        {/* Button to trigger a test notification */}
-        <Button
-          title="Test Notification"
-          onPress={async () => {
-            try {
-              await schedulePushNotification();
-            } catch (error) {
-              console.error("Error scheduling push notification:", error);
-            }
-          }}
-        />
         <Auth />
-        {/* Button to navigate to a test screen */}
-        <Button
-          title="Test"
-          onPress={() => {
-            router.push("/test");
-          }}
-        />
-
         <AppleAuth />
-
-        <Button
-          title="Sign Out"
-          onPress={() => {
-            supabase.auth.signOut();
-            console.log(session);
-            AsyncStorage.removeItem("id");
-          }}
-        />
       </ScrollView>
     </View>
   );

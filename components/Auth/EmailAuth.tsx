@@ -184,24 +184,6 @@ export default function Auth() {
           />
         </View>
       )}
-      <View style={tw`flex-1 items-center justify-center mt-8`}>
-        <Button
-          title="Sign Out"
-          onPress={() => {
-            supabase.auth.signOut();
-            AsyncStorage.removeItem("id");
-            AsyncStorage.removeItem("name");
-          }}
-        />
-      </View>
-      <View style={tw`flex-1 items-center justify-center mt-8`}>
-        <Button
-          title="Reload"
-          onPress={() => {
-            router.push("/");
-          }}
-        />
-      </View>
     </View>
   );
 }

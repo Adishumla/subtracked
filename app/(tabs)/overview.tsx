@@ -47,6 +47,8 @@ export default function App() {
         return;
       }
 
+
+
       const fetchData = async () => {
         try {
           const { data: login, error } = await supabase
@@ -61,10 +63,22 @@ export default function App() {
         } catch (error) {
           console.error("An error occurred:", (error as Error).message);
         }
+        const nameChanger = supabase
+        .channel("custom-all-channel")
+        .on(
+          "postgres_changes",
+          { event: "*", schema: "public", table: "login", filter: `id=eq.${id}` },
+          (payload) => {
+            fetchData();
+            console.log("Change received!", payload);
+          }
+        )
+        .subscribe();
       };
       fetchData(); // Call the fetchData function to execute the query
     });
   }, []);
+
 
   // Fetch the logged in users total cost by selecting and adding together
   // each entry from login.cost that matches the id.
@@ -157,9 +171,10 @@ export default function App() {
         .channel("custom-all-channel")
         .on(
           "postgres_changes",
-          { event: "*", schema: "public", table: "subscriptions" },
+          { event: "*", schema: "public", table: "subscriptions"},
           (payload) => {
             fetchData();
+            
             console.log("Change received!", payload);
           }
         )

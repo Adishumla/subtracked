@@ -1,3 +1,6 @@
+//TO DO : Rad 33 + ta bort adams fina stycke.
+
+
 import { View, StyleSheet, Text, ScrollView } from "react-native";
 import { Link } from "expo-router";
 import supabase from "../../lib/supabaseStore";
@@ -25,6 +28,12 @@ export default function App() {
       // Fetch all data from the "subscriptions" table containing correct user id.
       const fetchData = async () => {
         const currentDate = new Date(); // Get the current date and time
+
+
+      //IF BILL DATE < TODAYS DATE { +1month} .then(update databas med nytt datum)
+
+
+
         try {
           const currentDate = new Date();
           const { data: subscriptions, error } = await supabase
@@ -57,6 +66,8 @@ export default function App() {
       const billDate = new Date(subscription.bill_date);
       const month = billDate.toLocaleString("sv-SE", { month: "long" });
       const year = billDate.getFullYear();
+
+
       const key = `${year}-${month}`;
       if (!data[key]) {
         data[key] = {
