@@ -115,6 +115,43 @@ export default function App() {
       }
 
       // Fetch data from the "subscriptions" table where user uuid is logged in.
+      const fetchData = async () => {
+        try {
+          const { data: subscriptions, error } = await supabase
+            .from("subscriptions")
+            .select("*")
+            .eq("user_id", id);
+          if (error) {
+            console.error("Error fetching data:", error.message);
+          } else {
+            let filteredSubscriptions =
+              selectedSubscriptionType === "Alla"
+                ? subscriptions
+                : subscriptions.filter(
+                    (subscription) =>
+                      subscription.plan === selectedSubscriptionType
+                  );
+
+            setSubscriptions(filteredSubscriptions);
+
+            // Push category into array to make it sortable.
+            let groupedData = filteredSubscriptions.reduce(
+              (groups: any, subscription: any) => {
+                const category = subscription.category;
+                if (!groups[category]) {
+                  groups[category] = [];
+                }
+                groups[category].push(subscription);
+                return groups;
+              },
+              {}
+            );
+            setGroupedSubscriptions(groupedData);
+          }
+        } catch (error) {
+          console.error("An error occurred:", (error as Error).message);
+        }
+      };
 
       const subscriptions = supabase
         .channel("custom-all-channel")
@@ -122,10 +159,13 @@ export default function App() {
           "postgres_changes",
           { event: "*", schema: "public", table: "subscriptions" },
           (payload) => {
+            fetchData();
             console.log("Change received!", payload);
           }
         )
         .subscribe();
+
+      fetchData(); // Call the fetchData function to execute the query
     });
   }, [selectedSubscriptionType]);
 
