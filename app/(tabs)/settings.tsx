@@ -6,7 +6,7 @@ import {
   useColorScheme,
   Appearance,
 } from "react-native";
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import supabase from "../../lib/supabaseStore";
 import { Session } from "@supabase/supabase-js";
 import tw from "twrnc";
@@ -19,14 +19,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function App() {
 
- // Tror att funktionen här under kan tas bort?
-
   // Handle login+session states to fetch user id.
+  const router = useRouter();
   const [session, setSession] = useState<Session | null>(null);
   const [email, setEmail] = useState<String | undefined>("");
   const [id, setId] = useState<String | undefined >("");
-
-
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -44,14 +41,14 @@ export default function App() {
     });
   }, []);
   
+  //Fetch user data from login table where user id is the same as the logged in id. 
+  // name, dark_mode & push_notifications are saved to an object called userSettings.
   type UserSettings = {
     name : string,
     dark_mode: boolean,
     push_notifications : boolean
   }
-  let [userSettings, setUserSettings] = useState<UserSettings>({name:'', dark_mode:false, push_notifications:false});
-  //Fetch user data from login table where user id is the same as the logged in id. 
-  // name, dark_mode & push_notifications are saved to an array called userSettings.
+  let [userSettings, setUserSettings] = useState<UserSettings>({name:'', dark_mode: false, push_notifications:false});
   useEffect(() => {
     AsyncStorage.getItem('id').then((id) => {
       if (!id) {
@@ -70,6 +67,7 @@ export default function App() {
             setUserSettings({name:fetchedSettings[0].name, dark_mode:fetchedSettings[0].dark_mode, push_notifications:fetchedSettings[0].push_notifications})
             setEmail(fetchedSettings[0].email);
             setId(id);
+            console.log(fetchedSettings);
           }
         } catch (error) {
           console.error('An error occurred:', (error as Error).message);
@@ -79,14 +77,8 @@ export default function App() {
     });
   }, []);
 
-  // Add handlers to change rendered username 
-  // and switches that save push notifications & darkmode respectively
-  const [username, setUsername] = useState<string>(userSettings.name);
-  const [push_notifications, setNotifications] = useState<boolean>(userSettings.push_notifications);
-  const [darkMode, setDarkMode] = useState<boolean>(userSettings.dark_mode);
-
   return (
-    <ScrollView style={[tw`px-4 pt-8`, darkMode ? tw`bg-black` : tw`bg-white`]}>
+    <ScrollView style={[tw`px-4 pt-8`, userSettings.dark_mode ? tw`bg-black` : tw`bg-white`]}>
       <Link href="/(tabs)/overview">
         <H4 content="< Tillbaka"></H4>
       </Link>
@@ -97,12 +89,12 @@ export default function App() {
         <Input
           style={tw`rounded-xl`}
           placeholder={userSettings.name}
-          onChangeText={(value) => setUsername(value)}
+          onChangeText={(value) => setUserSettings({...userSettings, name: value})}
         />
       <Button style={tw`my-6`} title="Spara" onPress={async () => {
           const { data, error } = await supabase
           .from('login')
-          .update({name: username})
+          .update({name: userSettings.name})
           .eq('id', id)
           .select();
           if (error) {
@@ -124,14 +116,13 @@ export default function App() {
         <View style={tw`flex-row justify-between`}>
           <H2 content="Dark mode"/>
           <Switch
-            //color="#00FF00"
-            value={darkMode}
+            value={userSettings.dark_mode}
             onValueChange={async (value) => {
           const { error } = await supabase
           .from('login')
           .update({dark_mode: value})
           .eq('id', id)
-          setDarkMode(value);
+          setUserSettings({...userSettings, dark_mode: value});
           if (error) {
             console.error("Error inserting data:", error);
           }
@@ -142,14 +133,13 @@ export default function App() {
         <View style={tw`flex-row justify-between`}>
           <H2 content="Pushnotiser"/>
           <Switch
-            //color="#00FF00"
-            value={push_notifications}
+            value={userSettings.push_notifications}
             onValueChange={async (value) => {
           const { error } = await supabase
           .from('login')
           .update({push_notifications: value})
           .eq('id', id)
-          setNotifications(value);
+          setUserSettings({...userSettings, push_notifications: value});
           if (error) {
             console.error("Error inserting data:", error);
           }
@@ -158,7 +148,18 @@ export default function App() {
         </View>
       </View>
 
-      <Button style={tw`my-6`} title="Logga ut           //men den här knappen gör ingenting just nu" />
+      <Button
+          style={tw`my-6`}
+          title="Logga ut"
+          onPress={() => {
+            supabase.auth.signOut();
+            AsyncStorage.removeItem("id");
+            AsyncStorage.removeItem("name");
+            setTimeout(() => {
+              router.push("/");
+            }, 500)
+          }}
+        />
 
       <View style={tw`bg-[#DAD8D8] flex mt-16 p-4`}>
         <Text style={tw``}>
