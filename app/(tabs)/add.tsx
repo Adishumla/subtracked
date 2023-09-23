@@ -9,6 +9,7 @@ import H2 from "../../components/H2";
 import H4 from "../../components/H4";
 import { Button, Input } from "react-native-elements";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import z from "zod";
 
 export default function App() {
   const categories = [
@@ -27,6 +28,23 @@ export default function App() {
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [selectedSubscriptionType, setSelectedSubscriptionType] =
     useState<string>("");
+
+  const validCategory = (category: string) => {
+    return categories.includes(category);
+  };
+
+  const validSubscriptionType = (subscriptionType: string) => {
+    return subscriptionTypes.includes(subscriptionType);
+  };
+
+  const subscriptionSchema = z.object({
+    provider: z.string().min(1).max(20),
+    cost: z.number().min(1).max(10000),
+    bill_date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+    note: z.string().min(0).max(100),
+    category: z.string().refine(validCategory),
+    plan: z.string().refine(validSubscriptionType),
+  });
 
   return (
     <ScrollView style={tw`px-4 pt-8`}>
@@ -111,23 +129,39 @@ export default function App() {
         style={tw`mb-12`}
         title="Spara"
         onPress={async () => {
-          const { data, error } = await supabase
-            .from("subscriptions")
-            .insert([
-              {
-                user_id: await AsyncStorage.getItem("id"),
-                provider: provider,
-                cost: price,
-                bill_date: date,
-                note: note,
-                category: selectedCategory, // Include selected category
-                plan: selectedSubscriptionType, // Include selected subscription type
-              },
-            ])
-            .single();
+          try {
+            const formData = {
+              provider,
+              cost: price,
+              bill_date: date,
+              note,
+              category: selectedCategory,
+              plan: selectedSubscriptionType,
+            };
 
-          if (error) {
-            console.error("Error inserting data:", error);
+            const validatedData = subscriptionSchema.parse(formData);
+
+            // If validation passes, continue with inserting data into the database
+            const { data, error } = await supabase
+              .from("subscriptions")
+              .insert([
+                {
+                  user_id: await AsyncStorage.getItem("id"),
+                  ...validatedData,
+                },
+              ])
+              .single();
+
+            if (error) {
+              console.error("Error inserting data:", error);
+            } else {
+              // Data inserted successfully
+              // You can perform any further actions here
+            }
+          } catch (validationError: any | z.ZodError) {
+            // Handle validation errors
+            console.error("Validation error:", validationError.message);
+            // You can also set some state or display error messages to the user
           }
         }}
       />
