@@ -10,7 +10,7 @@ import H4 from "../../components/H4";
 import { Button, Input } from "react-native-elements";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import z from "zod";
-
+import DateTimePicker from "@react-native-community/datetimepicker";
 export default function App() {
   const categories = [
     "Streaming",
@@ -40,11 +40,16 @@ export default function App() {
   const subscriptionSchema = z.object({
     provider: z.string().min(1).max(20),
     cost: z.number().min(1).max(10000),
-    bill_date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+    bill_date: z.date(),
     note: z.string().min(0).max(100),
     category: z.string().refine(validCategory),
     plan: z.string().refine(validSubscriptionType),
   });
+
+  const dateChange = (event: any, selectedDate: any) => {
+    const currentDate = selectedDate || date;
+    setDate(currentDate);
+  };
 
   return (
     <ScrollView style={tw`px-4 pt-8`}>
@@ -83,13 +88,17 @@ export default function App() {
           />
         </View>
 
-        <View style={tw``}>
+        <View style={tw` mt-12`}>
           <H2 content={"Betaldatum"}></H2>
-          <Input placeholder="Ex. 1" onChangeText={(value) => setDate(value)} />
+          {/* <Input placeholder="Ex. 1" onChangeText={(value) => setDate(value)} /> */}
+          <DateTimePicker
+            value={date ? new Date(date) : new Date()}
+            onChange={dateChange}
+          />
         </View>
       </View>
 
-      <View style={tw`mt-12`}>
+      <View style={tw`mt-12 flex flex-col`}>
         <H2 content={"Abonnemangstyp"}></H2>
         <View style={tw`flex-1 items-center justify-center flex-row`}>
           {subscriptionTypes.map((subscriptionType, index) => (
