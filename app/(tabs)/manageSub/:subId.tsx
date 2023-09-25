@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text } from "react-native";
+import { View, Text, Image } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import tw from "twrnc";
 import supabase from "../../../lib/supabaseStore";
@@ -7,6 +7,7 @@ import SubscriptionType from "../../../components/SubscriptionType";
 import { Pressable } from "react-native";
 import { Link } from "expo-router";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import Category from "../../../components/Category";
 
 // Define an interface for your subscription data
 interface Subscription {
@@ -20,6 +21,10 @@ interface Subscription {
   user_id: string;
   plan: string;
   draw_unsuccessful: boolean;
+  price_increase: boolean;
+  icons: {
+    url: string;
+  };
 }
 
 const ManageSub = () => {
@@ -30,77 +35,85 @@ const ManageSub = () => {
   async function getSub() {
     const { data, error } = await supabase
       .from("subscriptions")
-      .select()
+      .select("icons (url), *")
       .eq("id", subId);
     if (error) {
       console.error(error);
       return;
     }
     if (data.length > 0) {
-      setSubscription(data[0] as Subscription); // Set the subscription data
+      setSubscription(data[0] as Subscription);
       console.log(data[0]);
     } else {
-      setSubscription(null); // No matching subscription found
+      setSubscription(null);
     }
   }
 
   useEffect(() => {
     getSub();
-  }, []);
+  }, [subId]);
 
   return (
-    <View style={tw`flex-1 justify-center items-center bg-blue-500`}>
-      <Text style={tw`font-medium text-3xl text-white`}>Sub ID: {subId}</Text>
-
-      {/* Display the subscription data if available */}
+    <View style={tw`flex-1 justify-center items-center bg-slate-500`}>
       {subscription && (
         <>
-          <View style={tw`border p-2 my-2 rounded-md bg-white`}>
-            <Text>Bill Date: {subscription.bill_date}</Text>
-            <Text>Category: {subscription.plan}</Text>
-            <Text>Cost: {subscription.cost}</Text>
-            <Text>Created At: {subscription.created_at}</Text>
-            <Text>ID: {subscription.id}</Text>
-            <Text>Note: {subscription.note}</Text>
-            <Text>Provider: {subscription.provider}</Text>
-            <Text>User ID: {subscription.user_id}</Text>
-            <Text>
-              Status: {subscription.draw_unsuccessful ? "Failed" : "Success"}
-            </Text>
-          </View>
-          <Text style={tw`text-4xl text-white`}>{subscription.provider}</Text>
-          <Text style={tw`text-base text-white`}>{subscription.note}</Text>
-          {/* Kunde inte dras eller prishöjning */}
-          <Text style={tw`text-2xl text-white`}>Om abonnemanget</Text>
-          <View style={tw`flex-row justify-between items-center w-26`}>
-            <SubscriptionType
-              name={subscription.plan}
-              onPress={() => {}}
-              selected={false}
+          <View>
+            <Image
+              source={{ uri: subscription.icons.url }}
+              style={tw`w-16 h-16`}
             />
+            <Text style={tw`text-4xl text-white`}>{subscription.provider}</Text>
+            <Text style={tw`text-base text-white`}>{subscription.note}</Text>
+
+            {subscription.draw_unsuccessful ? (
+              <Text style={tw`text-2xl text-white`}>Status: Failed</Text>
+            ) : (
+              <Text style={tw`text-2xl text-white`}></Text>
+            )}
+            {subscription.price_increase ? (
+              <Text style={tw`text-2xl text-white`}>Price increase</Text>
+            ) : (
+              <Text style={tw`text-2xl text-white`}></Text>
+            )}
+
+            <Text style={tw`text-2xl text-white`}>Om abonnemanget</Text>
+            <View style={tw`flex-row justify-between items-center w-26`}>
+              <SubscriptionType
+                name={subscription.plan}
+                onPress={() => {}}
+                selected={false}
+              />
+            </View>
+            <Text style={tw`text-2xl text-white`}>
+              Månadskostnad: {subscription.cost} kr
+            </Text>
+            <Text style={tw`text-2xl text-white`}>
+              Årskostnad: {subscription.cost * 12} kr
+            </Text>
+            <Text style={tw`text-2xl text-white`}>
+              Nästa dragning: {subscription.bill_date}
+            </Text>
+            <View style={tw`bg-[#DAD8D8] flex mt-16 p-4`}>
+              <Text style={tw``}>
+                För mer information, uppsägning och ändringar agående
+                abbonnemanget, gå till leverantörens hemsida.
+              </Text>
+              <Link style={tw`self-end underline`} href="http://www.google.se">
+                Läs mer här
+              </Link>
+            </View>
+            <View style={tw`text-base text-white bg-white p-4 mt-2 rounded-xl`}>
+              <Link
+                href={`/editSub/${subId}`}
+                style={tw`text-base text-black`}
+                asChild
+              >
+                <Text style={tw`text-base text-black w-full bg-transparent `}>
+                  Ändra abonnemang
+                </Text>
+              </Link>
+            </View>
           </View>
-          <Text style={tw`text-2xl text-white`}>
-            Månadskostnad: {subscription.cost} kr
-          </Text>
-          <Text style={tw`text-2xl text-white`}>
-            Årskostnad: {subscription.cost * 12} kr
-          </Text>
-          <Text style={tw`text-2xl text-white`}>
-            Nästa dragning: {subscription.bill_date}
-          </Text>
-          {/* link */}
-          <Link href={`/editSub/${subId}`} asChild>
-            <Pressable>
-              {({ pressed }) => (
-                <MaterialCommunityIcons
-                  name="information"
-                  size={24}
-                  color="black"
-                  style={{ opacity: pressed ? 0.5 : 1 }}
-                />
-              )}
-            </Pressable>
-          </Link>
         </>
       )}
 
