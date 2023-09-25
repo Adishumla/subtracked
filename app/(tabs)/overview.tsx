@@ -73,6 +73,7 @@ export default function App() {
             },
             (payload) => {
               fetchData();
+
               console.log("Change received!", payload);
             }
           )
@@ -114,6 +115,34 @@ export default function App() {
     });
   }, []);
 
+  // Function to fetch the icon URL based on iconId
+  const fetchIconUrl = async (iconId: number | null) => {
+    try {
+      if (iconId === null) {
+        return null;
+      }
+
+      const { data: iconData, error: iconError } = await supabase
+        .from("icons")
+        .select("url") // Replace with the actual column name for the icon URL
+        .eq("id", iconId);
+
+      if (iconError) {
+        console.error("Error fetching icon URL:", iconError.message);
+        return null;
+      }
+      if (iconData.length > 0) {
+        return iconData[0].url;
+      } else {
+        console.error("No matching icon found for icon_id:", iconId);
+        return null;
+      }
+    } catch (error) {
+      console.error("An error occurred:", error.message);
+      return null;
+    }
+  };
+
   // Handle fetch of the logged in users subscriptions to map the
   // data into SubCard components below.
   // Also group the subscriptions by category type.
@@ -140,10 +169,25 @@ export default function App() {
           if (error) {
             console.error("Error fetching data:", error.message);
           } else {
+            // Fetch image URLs for all subscriptions
+            const imageUrls = await Promise.all(
+              subscriptions.map((subscription) =>
+                fetchIconUrl(subscription.icon_id)
+              )
+            );
+
+            // Combine subscription data with image URLs
+            const subscriptionsWithImages = subscriptions.map(
+              (subscription, index) => ({
+                ...subscription,
+                imageUrl: imageUrls[index], // Add the imageUrl property
+              })
+            );
+
             let filteredSubscriptions =
               selectedSubscriptionType === "Alla"
-                ? subscriptions
-                : subscriptions.filter(
+                ? subscriptionsWithImages
+                : subscriptionsWithImages.filter(
                     (subscription) =>
                       subscription.plan === selectedSubscriptionType
                   );
@@ -224,7 +268,7 @@ export default function App() {
               <SubCard
                 key={subscription.id}
                 productName={subscription.provider}
-                icon="Bild"
+                productIcon={subscription.imageUrl}
                 price={subscription.cost + "kr"}
                 subType={subscription.plan}
                 subId={subscription.id}

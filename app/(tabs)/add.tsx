@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, ScrollView } from "react-native";
 import supabase from "../../lib/supabaseStore";
 import tw from "twrnc";
@@ -11,6 +11,7 @@ import { Button, Input } from "react-native-elements";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import z from "zod";
 import DateTimePicker from "@react-native-community/datetimepicker";
+
 export default function App() {
   const categories = [
     "Streaming",
@@ -28,6 +29,7 @@ export default function App() {
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [selectedSubscriptionType, setSelectedSubscriptionType] =
     useState<string>("");
+  const [iconId, setIconId] = useState<number | null>(null); // State to store the matched icon_id
 
   const validCategory = (category: string) => {
     return categories.includes(category);
@@ -49,6 +51,63 @@ export default function App() {
   const dateChange = (event: any, selectedDate: any) => {
     const currentDate = selectedDate || date;
     setDate(currentDate);
+  };
+
+  const handleSave = async () => {
+    try {
+      // Fetch the icon_id based on the provider's name
+      const { data: iconData, error: iconError } = await supabase
+        .from("icons")
+        .select("id")
+        .eq("name", provider);
+
+      if (iconError) {
+        console.error("Error fetching icon_id:", iconError.message);
+      } else {
+        let iconId = null; // Initialize iconId as null
+
+        if (iconData.length > 0) {
+          // If an icon with the provider's name is found, set the icon_id
+          iconId = iconData[0].id;
+        } else {
+          // Handle the case where no matching icon is found
+          iconId = 2; // You can set it to a default value or handle it accordingly
+        }
+
+        const formData = {
+          provider,
+          cost: price,
+          bill_date: date,
+          note,
+          category: selectedCategory,
+          plan: selectedSubscriptionType,
+        };
+
+        const validatedData = subscriptionSchema.parse(formData);
+
+        const { data, error } = await supabase
+          .from("subscriptions")
+          .insert([
+            {
+              user_id: await AsyncStorage.getItem("id"),
+              icon_id: iconId, // Include the icon_id in the data to be inserted
+              ...validatedData,
+            },
+          ])
+          .single();
+
+        if (error) {
+          console.error("Error inserting data:", error);
+        } else {
+          // Data inserted successfully
+          // You can perform any further actions here
+        }
+      }
+    } catch (validationError: any | z.ZodError) {
+      // Handle validation errors
+      console.error("Validation error:", validationError.message);
+      // You can also set some state or display error messages to the user
+    }
   };
 
   return (
@@ -74,7 +133,10 @@ export default function App() {
         <H2 content={"Leverantör"}></H2>
         <Input
           placeholder="Ex. Spotify"
-          onChangeText={(value) => setProvider(value)}
+          onChangeText={(value) => {
+            console.log(value);
+            setProvider(value);
+          }}
         />
         <H4 content="Ex. Spotify"></H4>
       </View>
@@ -90,7 +152,6 @@ export default function App() {
 
         <View style={tw` mt-12`}>
           <H2 content={"Betaldatum"}></H2>
-          {/* <Input placeholder="Ex. 1" onChangeText={(value) => setDate(value)} /> */}
           <DateTimePicker
             value={date ? new Date(date) : new Date()}
             onChange={dateChange}
@@ -105,17 +166,17 @@ export default function App() {
             <View
               key={subscriptionType}
               style={[
-                tw`flex-1 p-2`, // Adjust padding to control the size of SubscriptionType components
-                index !== subscriptionTypes.length - 1 && tw`mr-2`, // Adjust margin between components
+                tw`flex-1 p-2`,
+                index !== subscriptionTypes.length - 1 && tw`mr-2`,
               ]}
             >
               <SubscriptionType
                 name={subscriptionType}
                 onPress={() => {
                   if (selectedSubscriptionType === subscriptionType) {
-                    setSelectedSubscriptionType(""); // Deselect if already selected
+                    setSelectedSubscriptionType("");
                   } else {
-                    setSelectedSubscriptionType(subscriptionType); // Select the current one
+                    setSelectedSubscriptionType(subscriptionType);
                   }
                 }}
                 selected={selectedSubscriptionType === subscriptionType}
@@ -134,46 +195,7 @@ export default function App() {
         <H4 content="Ex. Annas mobil"></H4>
       </View>
 
-      <Button
-        style={tw`mb-12`}
-        title="Spara"
-        onPress={async () => {
-          try {
-            const formData = {
-              provider,
-              cost: price,
-              bill_date: date,
-              note,
-              category: selectedCategory,
-              plan: selectedSubscriptionType,
-            };
-
-            const validatedData = subscriptionSchema.parse(formData);
-
-            // If validation passes, continue with inserting data into the database
-            const { data, error } = await supabase
-              .from("subscriptions")
-              .insert([
-                {
-                  user_id: await AsyncStorage.getItem("id"),
-                  ...validatedData,
-                },
-              ])
-              .single();
-
-            if (error) {
-              console.error("Error inserting data:", error);
-            } else {
-              // Data inserted successfully
-              // You can perform any further actions here
-            }
-          } catch (validationError: any | z.ZodError) {
-            // Handle validation errors
-            console.error("Validation error:", validationError.message);
-            // You can also set some state or display error messages to the user
-          }
-        }}
-      />
+      <Button style={tw`mb-12`} title="Spara" onPress={handleSave} />
     </ScrollView>
   );
 }

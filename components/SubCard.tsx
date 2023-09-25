@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Pressable, Text, View, useColorScheme } from "react-native";
+import { Pressable, Text, View, useColorScheme, Image } from "react-native";
 import { Button } from "react-native-elements";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import H2 from "./H2";
@@ -13,7 +13,8 @@ interface SubCardProps {
   subType: string;
   subId: string;
   subStatus: boolean;
-  icon?: string;
+  icon?: any;
+  productIcon: any;
   priceIncrease?: boolean;
 }
 
@@ -23,7 +24,7 @@ export default function SubCard({
   subType,
   subId,
   subStatus,
-  icon,
+  productIcon,
   priceIncrease,
 }: SubCardProps) {
   const [darkMode, setDarkMode] = useState<boolean>(false);
@@ -63,98 +64,93 @@ export default function SubCard({
   };
 
   return (
-    <View
-      style={[
-        tw`flex-col justify-between items-center px-4 py-4 rounded-full mt-4  bg-slate-500`,
-        darkMode ? tw`bg-black` : tw`bg-white`,
-      ]}
-    >
-      <View
-        style={tw`flex-row items-center bg-slate-500 rounded-lg w-full h-20 overflow-hidden`}
-      >
-        <View style={tw`mr-4`}>
-          <Text style={tw`font-medium text-2xl p-4`}>{icon}</Text>
-        </View>
-        <View style={tw`flex-1`}>
-          <View style={tw`flex flex-row justify-between items-start w-full`}>
-            <H2 content={productName} />
-            <View style={tw`flex flex-row justify-between items-center`}>
-              <Button
-                title="Mer info"
-                buttonStyle={tw`p-0 m-0 bg-transparent`}
-                titleStyle={tw`text-black font-medium text-lg`}
-                onPress={() => console.log("hej")}
-              />
-              <Link href={`/manageSub/${subId}`} asChild>
-                <Pressable>
-                  {({ pressed }) => (
-                    <MaterialCommunityIcons
-                      name="information"
-                      size={24}
-                      color="black"
-                      style={{ opacity: pressed ? 0.5 : 1 }}
-                    />
-                  )}
-                </Pressable>
-              </Link>
-              <MaterialCommunityIcons
-                name="chevron-right"
-                size={24}
-                color="black"
-              />
-            </View>
-          </View>
-          <View>
-            <Text style={tw`font-light text-lg font-light`}>
-              {price} / mån {renderSubTypeIcon()}
-            </Text>
-          </View>
-        </View>
-      </View>
-      {subStatus === false ? (
+    <Link href={`/manageSub/${subId}`} asChild>
+      <Pressable>
         <View
-          style={tw`flex-col items-center bg-slate-600 w-full rounded-b-xl mt-[-8px]`}
+          style={[
+            tw`flex-col justify-between items-center px-4 py-4 rounded-full mt-4  bg-slate-500`,
+            darkMode ? tw`bg-black` : tw`bg-white`,
+          ]}
         >
-          <View style={tw`flex flex-row items-center w-full p-1`}>
-            <View style={tw`rounded-full bg-red-500`}>
-              <MaterialCommunityIcons
-                name="exclamation"
-                size={20}
-                color="black"
-              />
+          <View
+            style={tw`flex-row items-center bg-slate-500 rounded-lg w-full h-20 overflow-hidden`}
+          >
+            <View style={tw`mr-4`}>
+              <Image source={{ uri: productIcon }} style={tw`w-16 h-16`} />
             </View>
-            <Text style={tw`text-white font-medium text-lg pl-2`}>
-              Kunde ej dras!
-            </Text>
-          </View>
-        </View>
-      ) : (
-        <View
-          style={tw`flex-col items-center bg-slate-600 w-full rounded-b-xl`}
-        ></View>
-      )}
-      {priceIncrease === true ? (
-        <View
-          style={tw`flex-col items-center bg-slate-600 w-full rounded-b-xl mt-[-8px]`}
-        >
-          <View style={tw`flex flex-row items-center w-full p-1`}>
-            <View style={tw`rounded-full bg-yellow-500`}>
-              <MaterialCommunityIcons
-                name="exclamation"
-                size={20}
-                color="black"
-              />
+            <View style={tw`flex-1`}>
+              <View
+                style={tw`flex flex-row justify-between items-start w-full`}
+              >
+                <H2 content={productName} />
+                <View style={tw`flex flex-row justify-between items-center`}>
+                  <Button
+                    title="Mer info"
+                    buttonStyle={tw`p-0 m-0 bg-transparent`}
+                    titleStyle={tw`text-black font-medium text-lg`}
+                    onPress={() => console.log("hej")}
+                  />
+
+                  <MaterialCommunityIcons
+                    name="chevron-right"
+                    size={24}
+                    color="black"
+                  />
+                </View>
+              </View>
+              <View>
+                <Text style={tw`font-light text-lg font-light`}>
+                  {price} / mån {renderSubTypeIcon()}
+                </Text>
+              </View>
             </View>
-            <Text style={tw`text-white font-medium text-lg pl-2`}>
-              Prishöjning!
-            </Text>
           </View>
+          {subStatus === false ? (
+            <View
+              style={tw`flex-col items-center bg-slate-600 w-full rounded-b-xl mt-[-8px]`}
+            >
+              <View style={tw`flex flex-row items-center w-full p-1`}>
+                <View style={tw`rounded-full bg-red-500`}>
+                  <MaterialCommunityIcons
+                    name="exclamation"
+                    size={20}
+                    color="black"
+                  />
+                </View>
+                <Text style={tw`text-white font-medium text-lg pl-2`}>
+                  Kunde ej dras!
+                </Text>
+              </View>
+            </View>
+          ) : (
+            <View
+              style={tw`flex-col items-center bg-slate-600 w-full rounded-b-xl`}
+            ></View>
+          )}
+          {priceIncrease === true ? (
+            <View
+              style={tw`flex-col items-center bg-slate-600 w-full rounded-b-xl mt-[-8px]`}
+            >
+              <View style={tw`flex flex-row items-center w-full p-1`}>
+                <View style={tw`rounded-full bg-yellow-500`}>
+                  <MaterialCommunityIcons
+                    name="exclamation"
+                    size={20}
+                    color="black"
+                  />
+                </View>
+                <Text style={tw`text-white font-medium text-lg pl-2`}>
+                  Prishöjning!
+                </Text>
+              </View>
+            </View>
+          ) : (
+            <View
+              style={tw`flex-col items-center bg-slate-600 w-full rounded-b-xl mt-[-0px]`}
+            ></View>
+          )}
         </View>
-      ) : (
-        <View
-          style={tw`flex-col items-center bg-slate-600 w-full rounded-b-xl mt-[-0px]`}
-        ></View>
-      )}
-    </View>
+      </Pressable>
+    </Link>
   );
 }
