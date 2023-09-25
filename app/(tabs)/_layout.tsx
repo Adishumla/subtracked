@@ -6,6 +6,8 @@ import { Pressable, useColorScheme, Image } from "react-native";
 import supabase from "../../lib/supabaseStore";
 import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Svg, { Circle, Rect } from "react-native-svg";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import Colors from "../../constants/Colors";
 
@@ -51,9 +53,10 @@ export default function TabLayout() {
             },
             tabBarIcon: ({ size, focused, color }) => {
               return (
-                <Image
-                  style={tw``}
-                  source={require("../../assets/images/overview.svg")}
+                <MaterialCommunityIcons
+                  name="home"
+                  size={24}
+                  color={focused ? "#5656FF" : "white"}
                 />
               );
             },
@@ -69,9 +72,10 @@ export default function TabLayout() {
             },
             tabBarIcon: ({ size, focused, color }) => {
               return (
-                <Image
-                  style={tw``}
-                  source={require("../../assets/images/add.svg")}
+                <MaterialCommunityIcons
+                  name="plus"
+                  size={24}
+                  color={focused ? "#5656FF" : "white"}
                 />
               );
             },
