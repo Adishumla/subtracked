@@ -45,6 +45,10 @@ export default function TabLayout() {
           name="overview"
           options={{
             title: "Översikt",
+            headerTitle: "",
+            headerStyle: {
+              height: 50,
+            },
             tabBarIcon: ({ size, focused, color }) => {
               return (
                 <Image
@@ -59,6 +63,10 @@ export default function TabLayout() {
           name="add"
           options={{
             title: "Lägg till ny",
+            headerTitle: "",
+            headerStyle: {
+              height: 50,
+            },
             tabBarIcon: ({ size, focused, color }) => {
               return (
                 <Image
@@ -72,6 +80,10 @@ export default function TabLayout() {
         <Tabs.Screen
           name="payments"
           options={{
+            headerTitle: "",
+            headerStyle: {
+              height: 50,
+            },
             title: "Betalningar",
             tabBarIcon: ({ size, focused, color }) => {
               return (
@@ -86,6 +98,10 @@ export default function TabLayout() {
         <Tabs.Screen
           name="settings"
           options={{
+            headerTitle: "",
+            headerStyle: {
+              height: 50,
+            },
             title: "Inställningar",
             tabBarIcon: ({ size, focused, color }) => {
               return (
@@ -100,12 +116,20 @@ export default function TabLayout() {
         <Tabs.Screen
           name="manageSub/:subId"
           options={{
+            headerTitle: "",
+            headerStyle: {
+              height: 50,
+            },
             href: null,
           }}
         />
         <Tabs.Screen
           name="editSub/:subId"
           options={{
+            headerTitle: "",
+            headerStyle: {
+              height: 50,
+            },
             href: null,
           }}
         />
