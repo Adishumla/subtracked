@@ -102,7 +102,6 @@ export default function Auth() {
       const storedId = await AsyncStorage.getItem("id");
       const storedName = await AsyncStorage.getItem("name");
       const storedDarkMode = await AsyncStorage.getItem("darkMode");
-      console.warn(storedDarkMode);
       setId(storedId || "");
       setName(storedName || "");
       if (storedDarkMode === "true") {
@@ -110,6 +109,7 @@ export default function Auth() {
       } else if (storedDarkMode === "false") {
         await AsyncStorage.setItem("darkMode", false.toString());
       }
+      console.warn(storedDarkMode);
     };
     getId();
   }, []);
