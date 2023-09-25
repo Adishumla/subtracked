@@ -82,7 +82,7 @@ export default function Auth() {
     if (data && data.length > 0) {
       await AsyncStorage.setItem("id", data[0]?.id.toString());
       await AsyncStorage.setItem("name", data[0]?.name);
-      await AsyncStorage.setItem("darkMode", data[0]?.dark_mode);
+      await AsyncStorage.setItem("darkMode", data[0]?.dark_mode.toString());
       const storedId = await AsyncStorage.getItem("id");
       const storedName = await AsyncStorage.getItem("name");
       const storedDarkMode = await AsyncStorage.getItem("darkMode");
@@ -102,10 +102,13 @@ export default function Auth() {
       const storedId = await AsyncStorage.getItem("id");
       const storedName = await AsyncStorage.getItem("name");
       const storedDarkMode = await AsyncStorage.getItem("darkMode");
+      console.warn(storedDarkMode);
       setId(storedId || "");
       setName(storedName || "");
       if (storedDarkMode === "true") {
-        await AsyncStorage.setItem("darkMode", "true");
+        await AsyncStorage.setItem("darkMode", true.toString());
+      } else if (storedDarkMode === "false") {
+        await AsyncStorage.setItem("darkMode", false.toString());
       }
     };
     getId();
