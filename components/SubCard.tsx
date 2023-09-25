@@ -105,7 +105,7 @@ export default function SubCard({
               </View>
             </View>
           </View>
-          {subStatus === false ? (
+          {subStatus === true ? (
             <View
               style={tw`flex-col items-center bg-slate-600 w-full rounded-b-xl mt-[-8px]`}
             >

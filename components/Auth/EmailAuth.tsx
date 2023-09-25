@@ -109,7 +109,7 @@ export default function Auth() {
       } else if (storedDarkMode === "false") {
         await AsyncStorage.setItem("darkMode", false.toString());
       }
-      console.warn(storedDarkMode);
+      console.log(storedDarkMode);
     };
     getId();
   }, []);

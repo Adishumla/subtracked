@@ -15,7 +15,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Verify, subtle } from "crypto";
 
 export default function App() {
-  // Fetch and save subscription data. Remove data not connected to the logged in user.
   const [subscriptions, setSubscriptions] = useState<any>([]);
   useEffect(() => {
     AsyncStorage.getItem("id").then((id) => {
@@ -24,26 +23,48 @@ export default function App() {
         return;
       }
 
-      // Fetch all data from the "subscriptions" table containing correct user id.
       const fetchData = async () => {
-        const currentDate = new Date(); // Get the current date and time
-
-        //IF BILL DATE < TODAYS DATE { +1month} .then(update databas med nytt datum)
+        const currentDate = new Date();
 
         try {
-          const currentDate = new Date();
           const { data: subscriptions, error } = await supabase
             .from("subscriptions")
-            .select("*")
+            .select("icons (url), *")
             .order("bill_date", { ascending: true })
-            .eq("user_id", id)
-            .gt("bill_date", currentDate.toISOString()); // Filter out dates that have passed
+            .eq("user_id", id);
           if (error) {
             console.error("Error fetching data:", error.message);
           } else {
             console.log("Fetched data:", subscriptions);
 
-            setSubscriptions(subscriptions);
+            const updatedSubscriptions = subscriptions.map((subscription) => {
+              const billDate = new Date(subscription.bill_date);
+
+              if (billDate < currentDate) {
+                billDate.setMonth(billDate.getMonth() + 1);
+                supabase
+                  .from("subscriptions")
+                  .update({ bill_date: billDate.toISOString() })
+                  .eq("id", subscription.id)
+                  .then((result) => {
+                    if (result.error) {
+                      console.error(
+                        "Error updating bill_date:",
+                        result.error.message
+                      );
+                    } else {
+                      console.log(
+                        "Bill date updated for subscription:",
+                        subscription.id
+                      );
+                    }
+                  });
+              }
+
+              return subscription;
+            });
+
+            setSubscriptions(updatedSubscriptions);
           }
         } catch (error) {
           //@ts-ignore
@@ -55,8 +76,6 @@ export default function App() {
     });
   }, []);
 
-  // Sort the subscriptions by date. Save year, month and day so that we're able
-  // to show the cards in correct order. January 2024 is placed above December 2023 for example.
   const groupedSubscriptions = subscriptions.reduce(
     (data: any, subscription: any) => {
       const billDate = new Date(subscription.bill_date);
@@ -120,6 +139,7 @@ export default function App() {
                         subType={subscription.plan}
                         subId={subscription.id}
                         subStatus={subscription.draw_unsuccessful}
+                        productIcon={subscription.icons.url}
                       />
                     </View>
                   )
@@ -143,6 +163,7 @@ export default function App() {
                         subType={subscription.plan}
                         subId={subscription.id}
                         subStatus={subscription.draw_unsuccessful}
+                        productIcon={subscription.icons.url}
                       />
                       {/* Display the monthly cost */}
                     </View>

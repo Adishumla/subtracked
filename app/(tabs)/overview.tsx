@@ -79,12 +79,10 @@ export default function App() {
           )
           .subscribe();
       };
-      fetchData(); // Call the fetchData function to execute the query
+      fetchData();
     });
   }, []);
 
-  // Fetch the logged in users total cost by selecting and adding together
-  // each entry from login.cost that matches the id.
   const [total, setTotal] = useState<any>([]);
   useEffect(() => {
     AsyncStorage.getItem("id").then((id) => {
@@ -94,7 +92,6 @@ export default function App() {
         return;
       }
 
-      // Fetch data from the "subscriptions" table where user uuid is logged in.
       const fetchData = async () => {
         try {
           let { data, error } = await supabase
@@ -111,41 +108,10 @@ export default function App() {
           console.error("An error occurred:", (error as Error).message);
         }
       };
-      fetchData(); // Call the fetchData function to execute the query
+      fetchData();
     });
   }, []);
 
-  // Function to fetch the icon URL based on iconId
-  const fetchIconUrl = async (iconId: number | null) => {
-    try {
-      if (iconId === null) {
-        return null;
-      }
-
-      const { data: iconData, error: iconError } = await supabase
-        .from("icons")
-        .select("url") // Replace with the actual column name for the icon URL
-        .eq("id", iconId);
-
-      if (iconError) {
-        console.error("Error fetching icon URL:", iconError.message);
-        return null;
-      }
-      if (iconData.length > 0) {
-        return iconData[0].url;
-      } else {
-        console.error("No matching icon found for icon_id:", iconId);
-        return null;
-      }
-    } catch (error) {
-      console.error("An error occurred:", error.message);
-      return null;
-    }
-  };
-
-  // Handle fetch of the logged in users subscriptions to map the
-  // data into SubCard components below.
-  // Also group the subscriptions by category type.
   const [subscriptions, setSubscriptions] = useState<any>([]);
   const [groupedSubscriptions, setGroupedSubscriptions] = useState<any>({});
   const subscriptionTypes = ["Alla", "Eget", "Delat", "Familj"];
@@ -164,23 +130,15 @@ export default function App() {
         try {
           const { data: subscriptions, error } = await supabase
             .from("subscriptions")
-            .select("*")
+            .select("*, icons (url)")
             .eq("user_id", id);
           if (error) {
             console.error("Error fetching data:", error.message);
           } else {
-            // Fetch image URLs for all subscriptions
-            const imageUrls = await Promise.all(
-              subscriptions.map((subscription) =>
-                fetchIconUrl(subscription.icon_id)
-              )
-            );
-
             // Combine subscription data with image URLs
             const subscriptionsWithImages = subscriptions.map(
               (subscription, index) => ({
                 ...subscription,
-                imageUrl: imageUrls[index], // Add the imageUrl property
               })
             );
 
@@ -268,7 +226,7 @@ export default function App() {
               <SubCard
                 key={subscription.id}
                 productName={subscription.provider}
-                productIcon={subscription.imageUrl}
+                productIcon={subscription.icons.url}
                 price={subscription.cost + "kr"}
                 subType={subscription.plan}
                 subId={subscription.id}
