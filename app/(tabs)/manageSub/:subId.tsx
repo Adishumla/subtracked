@@ -19,6 +19,7 @@ interface Subscription {
   provider: string;
   user_id: string;
   plan: string;
+  draw_unsuccessful: boolean;
 }
 
 const ManageSub = () => {
@@ -63,6 +64,9 @@ const ManageSub = () => {
             <Text>Note: {subscription.note}</Text>
             <Text>Provider: {subscription.provider}</Text>
             <Text>User ID: {subscription.user_id}</Text>
+            <Text>
+              Status: {subscription.draw_unsuccessful ? "Failed" : "Success"}
+            </Text>
           </View>
           <Text style={tw`text-4xl text-white`}>{subscription.provider}</Text>
           <Text style={tw`text-base text-white`}>{subscription.note}</Text>

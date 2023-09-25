@@ -228,7 +228,8 @@ export default function App() {
                 price={subscription.cost + "kr"}
                 subType={subscription.plan}
                 subId={subscription.id}
-                subStatus="STATUS"
+                subStatus={subscription.draw_unsuccessful}
+                priceIncrease={subscription.price_increase}
               />
             ))}
         </View>

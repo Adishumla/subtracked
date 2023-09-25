@@ -12,8 +12,9 @@ interface SubCardProps {
   price: string;
   subType: string;
   subId: string;
-  subStatus: string;
+  subStatus: boolean;
   icon?: string;
+  priceIncrease?: boolean;
 }
 
 export default function SubCard({
@@ -23,6 +24,7 @@ export default function SubCard({
   subId,
   subStatus,
   icon,
+  priceIncrease,
 }: SubCardProps) {
   const [darkMode, setDarkMode] = useState<boolean>(false);
   const colorScheme = useColorScheme();
@@ -63,7 +65,7 @@ export default function SubCard({
   return (
     <View
       style={[
-        tw`flex-row justify-between items-center px-4 py-4 rounded-full mt-4  bg-slate-500`,
+        tw`flex-col justify-between items-center px-4 py-4 rounded-full mt-4  bg-slate-500`,
         darkMode ? tw`bg-black` : tw`bg-white`,
       ]}
     >
@@ -109,6 +111,50 @@ export default function SubCard({
           </View>
         </View>
       </View>
+      {subStatus === false ? (
+        <View
+          style={tw`flex-col items-center bg-slate-600 w-full rounded-b-xl mt-[-8px]`}
+        >
+          <View style={tw`flex flex-row items-center w-full p-1`}>
+            <View style={tw`rounded-full bg-red-500`}>
+              <MaterialCommunityIcons
+                name="exclamation"
+                size={20}
+                color="black"
+              />
+            </View>
+            <Text style={tw`text-white font-medium text-lg pl-2`}>
+              Kunde ej dras!
+            </Text>
+          </View>
+        </View>
+      ) : (
+        <View
+          style={tw`flex-col items-center bg-slate-600 w-full rounded-b-xl`}
+        ></View>
+      )}
+      {priceIncrease === true ? (
+        <View
+          style={tw`flex-col items-center bg-slate-600 w-full rounded-b-xl mt-[-8px]`}
+        >
+          <View style={tw`flex flex-row items-center w-full p-1`}>
+            <View style={tw`rounded-full bg-yellow-500`}>
+              <MaterialCommunityIcons
+                name="exclamation"
+                size={20}
+                color="black"
+              />
+            </View>
+            <Text style={tw`text-white font-medium text-lg pl-2`}>
+              Prishöjning!
+            </Text>
+          </View>
+        </View>
+      ) : (
+        <View
+          style={tw`flex-col items-center bg-slate-600 w-full rounded-b-xl mt-[-0px]`}
+        ></View>
+      )}
     </View>
   );
 }

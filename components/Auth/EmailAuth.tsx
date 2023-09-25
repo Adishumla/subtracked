@@ -75,15 +75,17 @@ export default function Auth() {
   async function getInfo() {
     const { data, error } = await supabase
       .from("login")
-      .select("id, name")
+      .select("id, name, dark_mode")
       .eq("email", email)
       .limit(1);
 
     if (data && data.length > 0) {
       await AsyncStorage.setItem("id", data[0]?.id.toString());
       await AsyncStorage.setItem("name", data[0]?.name);
+      await AsyncStorage.setItem("darkMode", data[0]?.dark_mode);
       const storedId = await AsyncStorage.getItem("id");
       const storedName = await AsyncStorage.getItem("name");
+      const storedDarkMode = await AsyncStorage.getItem("darkMode");
       setId(data[0]?.id.toString());
       setName(data[0]?.name);
       router.push("/overview");
@@ -99,8 +101,12 @@ export default function Auth() {
     const getId = async () => {
       const storedId = await AsyncStorage.getItem("id");
       const storedName = await AsyncStorage.getItem("name");
+      const storedDarkMode = await AsyncStorage.getItem("darkMode");
       setId(storedId || "");
       setName(storedName || "");
+      if (storedDarkMode === "true") {
+        await AsyncStorage.setItem("darkMode", "true");
+      }
     };
     getId();
   }, []);
