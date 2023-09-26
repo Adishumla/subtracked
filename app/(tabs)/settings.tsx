@@ -73,10 +73,8 @@ export default function App() {
           if (error) {
             console.error("Error fetching data:", error.message);
           } else {
-            setUserSettings({
-              name: fetchedSettings[0].name,
-              /* dark_mode: fetchedSettings[0].dark_mode,
-              push_notifications: fetchedSettings[0].push_notifications, */
+            setUserSettings({ ...userSettings,
+              name: fetchedSettings[0].name
             });
             setEmail(fetchedSettings[0].email);
             setId(id);

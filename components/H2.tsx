@@ -1,4 +1,4 @@
-import tw from "twrnc";
+import tw from '../lib/tailwind';
 import { useState, useEffect } from "react";
 import { Text, View } from "react-native";
 
@@ -9,7 +9,7 @@ interface CategoryProps {
 export default function H2({content}:CategoryProps)  {
     return (
         <>
-          <Text style={tw`font-medium text-2xl text-white`}>{content}</Text>
+          <Text style={tw`font-medium font-Inter text-2xl text-white`}>{content}</Text>
         </>
       );
 }

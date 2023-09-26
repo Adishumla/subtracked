@@ -199,7 +199,7 @@ export default function App() {
   }, [selectedSubscriptionType]);
 
   return (
-    <ScrollView style={tw`w-full px-4 pt-8`}>
+    <ScrollView style={tw`w-full px-4 pt-8 font-family: Inter`}>
       <H1 content={"Hej " + name + "!"} />
       <View style={tw`mt-4 mb-20`}>
         <H2 content={"Din månadskostnad är " + total + "kr / mån"} />

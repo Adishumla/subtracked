@@ -1,5 +1,5 @@
 import "react-native-url-polyfill/auto";
-import tw from "twrnc";
+import tw from "../lib/tailwind";
 import { useState, useEffect } from "react";
 import supabase from "../lib/supabaseStore";
 import Auth from "../components/Auth/EmailAuth";
@@ -14,6 +14,7 @@ import {
 } from "../lib/notificationService";
 
 export default function App() {
+
   const [session, setSession] = useState<Session | null>(null);
   const [email, setEmail] = useState<String | undefined>("");
   const [id, setId] = useState<String | undefined>("");
@@ -48,7 +49,7 @@ export default function App() {
   }, []);
 
   return (
-    <View style={tw`flex-1 items-center justify-center mt-8`}>
+    <View style={tw`flex-1 font-Inter items-center justify-center mt-8`}>
       <ScrollView>
         <Auth />
         <AppleAuth />

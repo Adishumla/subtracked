@@ -36,11 +36,16 @@ export default function Root({ children }: { children: React.ReactNode }) {
 }
 
 const responsiveBackground = `
+@font-face {
+  font-family: "Inter";
+  src: url(../assets/fonts/Inter.ttf) format('truetype');
+}
 body {
   background-color: #fff;
+  font-family: 'Inter' !important;
 }
 @media (prefers-color-scheme: dark) {
   body {
-    background-color: #000;
+    background-color: #fff;
   }
 }`;

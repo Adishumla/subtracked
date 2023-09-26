@@ -3,7 +3,7 @@ import { Pressable, Text, View, useColorScheme, Image } from "react-native";
 import { Button } from "react-native-elements";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import H2 from "./H2";
-import tw from "twrnc";
+import tw from '../lib/tailwind';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import { useFocusEffect } from "expo-router";
