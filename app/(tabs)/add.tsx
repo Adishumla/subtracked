@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, ScrollView } from "react-native";
+import { View, ScrollView, useColorScheme } from "react-native";
 import supabase from "../../lib/supabaseStore";
 import tw from "twrnc";
 import Category from "../../components/Category";
@@ -13,6 +13,13 @@ import z from "zod";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
 export default function App() {
+  let colorScheme = useColorScheme();
+  if (colorScheme === "dark") {
+    tw`bg-black`;
+  } else {
+    tw`bg-white`;
+  }
+
   const categories = [
     "Streaming",
     "Ljud",

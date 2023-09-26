@@ -13,9 +13,35 @@ import { Button } from "react-native-elements";
 import { useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Verify, subtle } from "crypto";
+import { useFocusEffect } from "expo-router";
+import React from "react";
 
 export default function App() {
   const [subscriptions, setSubscriptions] = useState<any>([]);
+  const [darkMode, setDarkMode] = useState<boolean>(false);
+  /*  useEffect(() => {
+    const fetchData = async () => {
+      const data = await AsyncStorage.getItem("darkMode");
+      console.log("s");
+    };
+    fetchData();
+    console.log("s");
+  }, [AsyncStorage]); */
+  useFocusEffect(
+    React.useCallback(() => {
+      const fetchData = async () => {
+        const data = await AsyncStorage.getItem("darkMode");
+        if (data === "true") {
+          setDarkMode(true);
+        } else {
+          setDarkMode(false);
+        }
+      };
+      fetchData();
+      console.log("s");
+    }, [])
+  );
+
   useEffect(() => {
     AsyncStorage.getItem("id").then((id) => {
       if (!id) {
@@ -108,7 +134,7 @@ export default function App() {
   let currentMonth = "";
 
   return (
-    <ScrollView style={tw`px-4 pt-8`}>
+    <ScrollView style={[tw`px-4 pt-8`, darkMode ? tw`bg-black` : tw`bg-white`]}>
       <View>
         <H4 content="< Tillbaka" />
         <H1 content={"Kommande betalningar"} />

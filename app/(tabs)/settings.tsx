@@ -16,13 +16,17 @@ import H4 from "../../components/H4";
 import { Button, Input, Switch } from "react-native-elements";
 import { useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { set } from "zod";
 
 export default function App() {
+  let colorScheme = useColorScheme();
+
   // Handle login+session states to fetch user id.
   const router = useRouter();
   const [session, setSession] = useState<Session | null>(null);
   const [email, setEmail] = useState<String | undefined>("");
   const [id, setId] = useState<String | undefined>("");
+  const [darkMode, setDarkMode] = useState<Boolean | undefined>(false);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -45,12 +49,14 @@ export default function App() {
   type UserSettings = {
     name: string;
     dark_mode: boolean;
-    push_notifications: boolean;
+    /*     push_notifications: boolean;
+     */
   };
   let [userSettings, setUserSettings] = useState<UserSettings>({
     name: "",
     dark_mode: false,
-    push_notifications: false,
+    /*     push_notifications: false,
+     */
   });
   useEffect(() => {
     AsyncStorage.getItem("id").then((id) => {
@@ -69,8 +75,8 @@ export default function App() {
           } else {
             setUserSettings({
               name: fetchedSettings[0].name,
-              dark_mode: fetchedSettings[0].dark_mode,
-              push_notifications: fetchedSettings[0].push_notifications,
+              /* dark_mode: fetchedSettings[0].dark_mode,
+              push_notifications: fetchedSettings[0].push_notifications, */
             });
             setEmail(fetchedSettings[0].email);
             setId(id);
@@ -84,13 +90,19 @@ export default function App() {
     });
   }, []);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await AsyncStorage.getItem("darkMode");
+      console.log("data", data);
+    };
+    fetchData();
+
+    //console.log(AsyncStorage.getItem("darkMode"));
+  }),
+    [AsyncStorage];
+
   return (
-    <ScrollView
-      style={[
-        tw`px-4 pt-8`,
-        userSettings.dark_mode ? tw`bg-black` : tw`bg-white`,
-      ]}
-    >
+    <ScrollView style={[tw`px-4 pt-8`, darkMode ? tw`bg-black` : tw`bg-white`]}>
       <Link href="/(tabs)/overview">
         <H4 content="< Tillbaka"></H4>
       </Link>
@@ -134,35 +146,18 @@ export default function App() {
         <View style={tw`flex-row justify-between`}>
           <H2 content="Dark mode" />
           <Switch
-            value={userSettings.dark_mode}
-            onValueChange={async (value) => {
-              const { error } = await supabase
-                .from("login")
-                .update({ dark_mode: value })
-                .eq("id", id);
-              setUserSettings({ ...userSettings, dark_mode: value });
-              if (error) {
-                console.error("Error inserting data:", error);
-              }
+            value={darkMode}
+            onValueChange={(value) => {
+              setDarkMode(value);
+              AsyncStorage.setItem("darkMode", value ? "true" : "false");
+              console.log(value);
             }}
           />
         </View>
 
         <View style={tw`flex-row justify-between`}>
           <H2 content="Pushnotiser" />
-          <Switch
-            value={userSettings.push_notifications}
-            onValueChange={async (value) => {
-              const { error } = await supabase
-                .from("login")
-                .update({ push_notifications: value })
-                .eq("id", id);
-              setUserSettings({ ...userSettings, push_notifications: value });
-              if (error) {
-                console.error("Error inserting data:", error);
-              }
-            }}
-          />
+          <Switch />
         </View>
       </View>
 

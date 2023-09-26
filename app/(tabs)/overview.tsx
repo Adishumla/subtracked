@@ -7,7 +7,7 @@ import H3 from "../../components/H3";
 import { useState, useEffect } from "react";
 import supabase from "../../lib/supabaseStore";
 import Auth from "../../components/Auth/EmailAuth";
-import { View, Text, Button, ScrollView } from "react-native";
+import { View, Text, Button, ScrollView, useColorScheme } from "react-native";
 import { Session } from "@supabase/supabase-js";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import SubCard from "../../components/SubCard";
@@ -17,6 +17,12 @@ import {
 } from "../../lib/notificationService";
 
 export default function App() {
+  let colorScheme = useColorScheme();
+  if (colorScheme === "dark") {
+    tw`bg-black`;
+  } else {
+    tw`bg-white`;
+  }
   const [session, setSession] = useState<Session | null>(null);
   const [email, setEmail] = useState<String | undefined>("");
   const [id, setId] = useState<String | undefined>("");

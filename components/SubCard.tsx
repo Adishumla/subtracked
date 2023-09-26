@@ -6,6 +6,7 @@ import H2 from "./H2";
 import tw from "twrnc";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Link } from "expo-router";
+import { useFocusEffect } from "expo-router";
 
 interface SubCardProps {
   productName: string;
@@ -30,15 +31,19 @@ export default function SubCard({
   const [darkMode, setDarkMode] = useState<boolean>(false);
   const colorScheme = useColorScheme();
 
-  useEffect(() => {
-    if (colorScheme === "dark") {
-      setDarkMode(true);
-      AsyncStorage.setItem("darkMode", "true");
-    } else {
-      setDarkMode(false);
-      AsyncStorage.setItem("darkMode", "false");
-    }
-  }, [colorScheme]);
+  useFocusEffect(
+    React.useCallback(() => {
+      const fetchData = async () => {
+        const data = await AsyncStorage.getItem("darkMode");
+        if (data === "true") {
+          setDarkMode(true);
+        } else {
+          setDarkMode(false);
+        }
+      };
+      fetchData();
+    }, [])
+  );
 
   // Function to render the subType icon based on its value
   const renderSubTypeIcon = () => {
@@ -68,12 +73,14 @@ export default function SubCard({
       <Pressable>
         <View
           style={[
-            tw`flex-col justify-between items-center px-4 py-4 rounded-full mt-4  bg-slate-500`,
-            darkMode ? tw`bg-black` : tw`bg-white`,
+            tw`flex-col justify-between items-center px-4 py-4 rounded-full mt-4`,
           ]}
         >
           <View
-            style={tw`flex-row items-center bg-slate-500 rounded-lg w-full h-20 overflow-hidden`}
+            style={[
+              tw`flex-row items-center  rounded-lg w-full h-20 overflow-hidden`,
+              darkMode ? tw`bg-black` : tw`bg-white`,
+            ]}
           >
             <View style={tw`mr-4`}>
               <Image source={{ uri: productIcon }} style={tw`w-16 h-16`} />
