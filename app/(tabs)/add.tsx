@@ -118,7 +118,11 @@ export default function App() {
   };
 
   return (
-    <ScrollView style={tw`px-4 pt-8`}>
+    <ScrollView
+      style={tw`px-4 pt-8
+    
+    `}
+    >
       <H4 content="<-- Tillbaka ska den här ens vara här?"></H4>
       <H1 content={"Lägg till abonnemang"}></H1>
 
@@ -230,7 +234,7 @@ export default function App() {
       <Button
         style={tw`mb-20
       `}
-        buttonStyle={tw`bg-primaryLight rounded-xl p-4 shadow-lg shadow-indigo-600
+        buttonStyle={tw`bg-primaryLight rounded-xl p-4 shadow-md shadow-indigo-400
         `}
         titleStyle={tw`text-onPrimaryLight
         `}
