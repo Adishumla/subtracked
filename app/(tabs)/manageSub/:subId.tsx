@@ -97,109 +97,213 @@ const ManageSub = () => {
                   {subscription.note}
                 </Text>
               </View>
-
-              {subscription.draw_unsuccessful ? (
-                <View
-                  style={tw`flex-row bg-white w-11/12 p-2 mx-4 shadow-lg shadow-indigo-600 
+              <View
+                style={tw`${
+                  subscription.draw_unsuccessful || subscription.price_increase
+                    ? "my-6"
+                    : "my-[-15px]"
+                }
+              `}
+              >
+                {subscription.draw_unsuccessful ? (
+                  <View
+                    style={tw`flex-row bg-white w-11/12 p-2 mx-4 shadow-lg shadow-indigo-600 justify-between items-center 
                 `}
-                >
-                  <View
-                    style={tw`w-8 h-8 bg-red-500 rounded-full items-center justify-center`}
                   >
-                    <MaterialCommunityIcons
-                      name="exclamation"
-                      size={34}
-                      color="black"
-                    />
-                  </View>
-                  <Text
-                    style={tw`text-xl text-white pl-2 ${
-                      colorScheme === "dark" ? "bg-black" : "text-black"
-                    }
-                  `}
-                  >
-                    Kunde ej dras!
-                  </Text>
-                  <View
-                    style={tw`flex flex-row justify-end items-center pl-16
-                  `}
-                  >
+                    <View
+                      style={tw`w-8 h-8 bg-red-500 rounded-full items-center justify-center`}
+                    >
+                      <MaterialCommunityIcons
+                        name="exclamation"
+                        size={34}
+                        color="black"
+                      />
+                    </View>
                     <Text
                       style={tw`text-xl text-white pl-2 ${
                         colorScheme === "dark" ? "bg-black" : "text-black"
                       }
                   `}
                     >
-                      Mer info
+                      Kunde ej dras!
                     </Text>
-                    <MaterialCommunityIcons
-                      name="chevron-right"
-                      size={38}
-                      color="black"
-                    />
+                    <View
+                      style={tw`flex flex-row justify-end items-center pl-16
+                  `}
+                    >
+                      <Text
+                        style={tw`text-xl text-white pl-2 font-normal
+                      ${colorScheme === "dark" ? "bg-black" : "text-black"}
+                  `}
+                      >
+                        Mer info
+                      </Text>
+                      <MaterialCommunityIcons
+                        name="chevron-right"
+                        size={38}
+                        color="black"
+                      />
+                    </View>
+                  </View>
+                ) : (
+                  <Text style={tw`text-2xl text-white`}></Text>
+                )}
+                {subscription.price_increase ? (
+                  <View
+                    style={tw`flex-row bg-white w-11/12 p-2 mx-4 shadow-lg shadow-indigo-600 justify-between items-center mt-2
+              `}
+                  >
+                    <View
+                      style={tw`w-8 h-8 bg-yellow-400 rounded-full items-center justify-center`}
+                    >
+                      <MaterialCommunityIcons
+                        name="exclamation"
+                        size={34}
+                        color="black"
+                      />
+                    </View>
+                    <Text
+                      style={tw`text-xl text-white pl-0
+                    ${colorScheme === "dark" ? "bg-black" : "text-black"}
+                `}
+                    >
+                      Prishöjning!
+                    </Text>
+                    <View
+                      style={tw`flex flex-row justify-end items-center pl-16
+                `}
+                    >
+                      <Text
+                        style={tw`text-xl text-white pl-2 font-normal
+                    ${colorScheme === "dark" ? "bg-black" : "text-black"}
+                `}
+                      >
+                        Mer info
+                      </Text>
+                      <MaterialCommunityIcons
+                        name="chevron-right"
+                        size={38}
+                        color="black"
+                      />
+                    </View>
+                  </View>
+                ) : (
+                  <Text style={tw`text-2xl text-white`}></Text>
+                )}
+              </View>
+
+              <View
+                style={tw`bg-backgroundSecondaryLight my-4 p-3
+              `}
+              >
+                <Text
+                  style={tw`text-2xl text-onBackgroundLight
+                `}
+                >
+                  Om abonnemanget
+                </Text>
+                <View
+                  style={tw`flex-row justify-between items-center w-26 mt-4`}
+                >
+                  <SubscriptionType
+                    name={subscription.plan}
+                    onPress={() => {}}
+                    selected={false}
+                  />
+                </View>
+                <View style={tw`flex-col justify-between items-center w-full`}>
+                  <View style={tw`w-full bg-tertiaryLight p-3 m-2 rounded-xl`}>
+                    <View style={tw`flex flex-row justify-between`}>
+                      <Text
+                        style={tw`text-xl text-black 
+                    `}
+                      >
+                        Månadskostnad
+                      </Text>
+                      <Text
+                        style={tw`text-xl text-black
+                    `}
+                      >
+                        {subscription.cost} kr
+                      </Text>
+                    </View>
+                  </View>
+                  <View style={tw`w-full bg-tertiaryLight p-3 m-2 rounded-xl`}>
+                    <View style={tw`flex flex-row justify-between`}>
+                      <Text
+                        style={tw`text-xl text-black 
+                    `}
+                      >
+                        Årskostnad
+                      </Text>
+                      <Text
+                        style={tw`text-xl text-black
+                    `}
+                      >
+                        {subscription.cost * 12} kr
+                      </Text>
+                    </View>
+                  </View>
+                  <View style={tw`w-full bg-tertiaryLight p-3 m-2 rounded-xl`}>
+                    <View style={tw`flex flex-row justify-between`}>
+                      <Text
+                        style={tw`text-xl text-black 
+                    `}
+                      >
+                        Nästa dragning
+                      </Text>
+                      <Text
+                        style={tw`text-xl text-black
+                    `}
+                      >
+                        {subscription.bill_date}
+                      </Text>
+                    </View>
                   </View>
                 </View>
-              ) : (
-                <Text style={tw`text-2xl text-white`}></Text>
-              )}
-              {subscription.price_increase ? (
-                <View
-                  style={tw`flex-col bg-slate-400 w-11/12 p-2 mx-4 rounded-xl m-2`}
-                >
-                  <Text style={tw`text-2xl text-white`}>Price increase</Text>
-                </View>
-              ) : (
-                <Text style={tw`text-2xl text-white`}></Text>
-              )}
-
-              <Text style={tw`text-2xl text-white`}>Om abonnemanget</Text>
-              <View style={tw`flex-row justify-between items-center w-26`}>
-                <SubscriptionType
-                  name={subscription.plan}
-                  onPress={() => {}}
-                  selected={false}
-                />
               </View>
-              <View style={tw`flex-col justify-between items-center w-full`}>
-                <View style={tw`w-11/12 bg-slate-400 p-2 m-2`}>
-                  <Text style={tw`text-2xl text-white`}>
-                    Månadskostnad: {subscription.cost} kr
-                  </Text>
-                </View>
-                <View style={tw`w-11/12 bg-slate-400 p-2 m-2`}>
-                  <Text style={tw`text-2xl text-white`}>
-                    Årskostnad: {subscription.cost * 12} kr
-                  </Text>
-                </View>
-                <View style={tw`w-11/12 bg-slate-400 p-2 m-2`}>
-                  <Text style={tw`text-2xl text-white`}>
-                    Nästa dragning: {subscription.bill_date}
-                  </Text>
-                </View>
-              </View>
-              <View style={tw`bg-[#DAD8D8] flex mt-16 p-4`}>
-                <Text style={tw``}>
+              <View
+                style={tw`bg-primaryLight flex mt-12 p-4 mx-4 shadow-lg shadow-indigo-600
+              `}
+              >
+                <Text style={tw`text-lg`}>
                   För mer information, uppsägning och ändringar agående
                   abbonnemanget, gå till leverantörens hemsida.
                 </Text>
                 <Link
-                  style={tw`self-end underline`}
-                  href="http://www.google.se"
+                  style={tw`self-end underline text-lg`}
+                  /* www.provider.com */
+                  href={`http://www.${subscription.provider}.com`}
                 >
-                  Läs mer här
+                  www.{subscription.provider}.com
                 </Link>
               </View>
               <View
-                style={tw`text-base text-white bg-white p-4 my-12 rounded-xl`}
+                style={tw`text-base text-white bg-white p-4 my-12 rounded-xl mx-4 shadow-lg shadow-indigo-600
+                `}
               >
                 <Link
                   href={`/editSub/${subId}`}
-                  style={tw`text-base text-black`}
-                  asChild
+                  style={tw`text-base text-black w-full  h-7 flex flex-row justify-between items-center
+                  `}
                 >
-                  <Text style={tw`text-base text-black w-full bg-transparent `}>
-                    Ändra abonnemang
-                  </Text>
+                  <View
+                    style={tw`flex flex-row justify-between items-center pt-1
+                    `}
+                  >
+                    <Text
+                      style={tw`text-base text-black 
+                    `}
+                    >
+                      Ändra abonnemang
+                    </Text>
+                    <MaterialCommunityIcons
+                      style={tw``}
+                      name="chevron-right"
+                      size={28}
+                      color="black"
+                    />
+                  </View>
                 </Link>
               </View>
             </View>

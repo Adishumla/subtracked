@@ -26,7 +26,6 @@ export default function App() {
   const [session, setSession] = useState<Session | null>(null);
   const [email, setEmail] = useState<String | undefined>("");
   const [id, setId] = useState<String | undefined>("");
-  const [darkMode, setDarkMode] = useState<Boolean | undefined>(false);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -48,13 +47,11 @@ export default function App() {
   // name, dark_mode & push_notifications are saved to an object called userSettings.
   type UserSettings = {
     name: string;
-    dark_mode: boolean;
     /*     push_notifications: boolean;
      */
   };
   let [userSettings, setUserSettings] = useState<UserSettings>({
     name: "",
-    dark_mode: false,
     /*     push_notifications: false,
      */
   });
@@ -73,9 +70,7 @@ export default function App() {
           if (error) {
             console.error("Error fetching data:", error.message);
           } else {
-            setUserSettings({ ...userSettings,
-              name: fetchedSettings[0].name
-            });
+            setUserSettings({ ...userSettings, name: fetchedSettings[0].name });
             setEmail(fetchedSettings[0].email);
             setId(id);
             console.log(fetchedSettings);
@@ -88,19 +83,12 @@ export default function App() {
     });
   }, []);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await AsyncStorage.getItem("darkMode");
-      console.log("data", data);
-    };
-    fetchData();
-
-    //console.log(AsyncStorage.getItem("darkMode"));
-  }),
-    [AsyncStorage];
-
   return (
-    <ScrollView style={[tw`px-4 pt-8`, darkMode ? tw`bg-black` : tw`bg-white`]}>
+    <ScrollView
+      style={[
+        tw`px-4 pt-8 ${colorScheme === "dark" ? "bg-black" : "bg-white"}]`,
+      ]}
+    >
       <Link href="/(tabs)/overview">
         <H4 content="< Tillbaka"></H4>
       </Link>
@@ -144,11 +132,11 @@ export default function App() {
         <View style={tw`flex-row justify-between`}>
           <H2 content="Dark mode" />
           <Switch
-            value={darkMode}
-            onValueChange={(value) => {
-              setDarkMode(value);
-              AsyncStorage.setItem("darkMode", value ? "true" : "false");
-              console.log(value);
+            value={colorScheme === "dark" ? true : false}
+            onValueChange={() => {
+              Appearance.setColorScheme(
+                colorScheme === "dark" ? "light" : "dark"
+              );
             }}
           />
         </View>
