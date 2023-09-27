@@ -230,7 +230,7 @@ export default function App() {
       <Button
         style={tw`mb-20
       `}
-        buttonStyle={tw`bg-primaryLight rounded-xl p-4
+        buttonStyle={tw`bg-primaryLight rounded-xl p-4 shadow-lg shadow-indigo-600
         `}
         titleStyle={tw`text-onPrimaryLight
         `}
