@@ -114,8 +114,10 @@ export default function App() {
 
   return (
     <ScrollView
-      style={tw`px-4 pt-8 ${colorScheme === "dark" ? "bg-black" : "bg-white"}
-    
+      style={tw`px-4 pt-8 ${
+        colorScheme === "dark" ? "bg-black" : "bg-backgroundPrimaryLight"
+      }
+
     `}
     >
       <H4 content="<-- Tillbaka ska den här ens vara här?"></H4>

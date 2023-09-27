@@ -3,7 +3,7 @@ import { Pressable, Text, View, useColorScheme, Image } from "react-native";
 import { Button } from "react-native-elements";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import H2 from "./H2";
-import tw from '../lib/tailwind';
+import tw from "../lib/tailwind";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import { useFocusEffect } from "expo-router";
@@ -28,22 +28,7 @@ export default function SubCard({
   productIcon,
   priceIncrease,
 }: SubCardProps) {
-  const [darkMode, setDarkMode] = useState<boolean>(false);
   const colorScheme = useColorScheme();
-
-  useFocusEffect(
-    React.useCallback(() => {
-      const fetchData = async () => {
-        const data = await AsyncStorage.getItem("darkMode");
-        if (data === "true") {
-          setDarkMode(true);
-        } else {
-          setDarkMode(false);
-        }
-      };
-      fetchData();
-    }, [])
-  );
 
   // Function to render the subType icon based on its value
   const renderSubTypeIcon = () => {
@@ -73,17 +58,20 @@ export default function SubCard({
       <Pressable>
         <View
           style={[
-            tw`flex-col justify-between items-center px-4 py-4 rounded-full mt-4`,
+            tw`flex-col justify-between items-center px-4 py-4 rounded-full mt-4 shadow-lg shadow-indigo-700`,
           ]}
         >
           <View
             style={[
-              tw`flex-row items-center  rounded-lg w-full h-20 overflow-hidden`,
-              darkMode ? tw`bg-black` : tw`bg-white`,
+              tw`flex-row items-center  rounded-lg w-full h-20 overflow-hidden 
+              ${colorScheme === "dark" ? "bg-black" : "bg-primaryLight"}`,
             ]}
           >
-            <View style={tw`mr-4`}>
-              <Image source={{ uri: productIcon }} style={tw`w-16 h-16`} />
+            <View style={tw`mr-4 rounded-full`}>
+              <Image
+                source={{ uri: productIcon }}
+                style={tw`w-14 h-14 rounded-full `}
+              />
             </View>
             <View style={tw`flex-1`}>
               <View

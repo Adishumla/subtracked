@@ -27,21 +27,6 @@ export default function App() {
 
   const [subscriptions, setSubscriptions] = useState<any>([]);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      const fetchData = async () => {
-        const data = await AsyncStorage.getItem("darkMode");
-        if (data === "true") {
-          setDarkMode(true);
-        } else {
-          setDarkMode(false);
-        }
-      };
-      fetchData();
-      console.log("s");
-    }, [])
-  );
-
   useEffect(() => {
     AsyncStorage.getItem("id").then((id) => {
       if (!id) {
