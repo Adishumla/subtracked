@@ -8,6 +8,7 @@ import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
 import { useEffect } from "react";
 import { useColorScheme } from "react-native";
+import tw from "../lib/tailwind";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -42,7 +43,7 @@ export default function RootLayout() {
     return null;
   }
 
-  return <RootLayoutNav/>;
+  return <RootLayoutNav />;
 }
 
 function RootLayoutNav() {

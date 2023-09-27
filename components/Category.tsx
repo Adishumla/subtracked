@@ -1,4 +1,4 @@
-import tw from "twrnc";
+import tw from "../lib/tailwind";
 import { useState, useEffect } from "react";
 import { Text, View, TouchableOpacity } from "react-native";
 
@@ -15,9 +15,18 @@ export default function Category({ name, onPress, selected }: CategoryProps) {
   return (
     <TouchableOpacity onPress={onPress}>
       <View
-        style={[tw`rounded-xl bg-white m-1`, isSelected && tw`bg-blue-500`]}
+        style={[
+          tw`rounded-xl bg-primaryLight m-1 h-10 justify-center items-center shadow-md shadow-blue-600 text-onPrimaryLight
+        `,
+          isSelected && tw`bg-secondaryLight`,
+        ]}
       >
-        <Text style={tw`p-2 `}>{name}</Text>
+        <Text
+          style={tw`py-3 px-4 
+         `}
+        >
+          {name}
+        </Text>
       </View>
     </TouchableOpacity>
   );
