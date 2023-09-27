@@ -1,10 +1,10 @@
 import "react-native-url-polyfill/auto";
-import tw from "twrnc";
+import tw from "../../lib/tailwind";
 import SubscriptionType from "../../components/SubscriptionType";
 import H1 from "../../components/H1";
 import H2 from "../../components/H2";
 import H3 from "../../components/H3";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import supabase from "../../lib/supabaseStore";
 import Auth from "../../components/Auth/EmailAuth";
 import {
@@ -14,7 +14,13 @@ import {
   ScrollView,
   useColorScheme,
   Appearance,
+  Animated,
+  Dimensions,
+  PanResponder,
+  Easing,
+  ImageBackground,
 } from "react-native";
+
 import { Session } from "@supabase/supabase-js";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import SubCard from "../../components/SubCard";
@@ -205,70 +211,127 @@ export default function App() {
     });
   }, [selectedSubscriptionType]);
 
-  return (
-    <ScrollView
-      style={tw`w-full px-4 pt-8 font-family: Inter
-    ${colorScheme === "dark" ? "bg-black" : "bg-white"}`}
-    >
-      <H1 content={"Hej " + name + "!"} />
-      <View style={tw`mt-4 mb-20`}>
-        <H2 content={"Din månadskostnad är " + total + "kr / mån"} />
-      </View>
+  const ballPosition = useRef(new Animated.ValueXY({ x: 0, y: 0 })).current;
 
-      <View style={tw`flex flex-row justify-between`}>
-        {subscriptionTypes.map((subscriptionType, index) => (
-          <View
-            key={subscriptionType}
-            style={[tw``, index !== subscriptionTypes.length - 1 && tw``]}
-          >
-            <SubscriptionType
-              name={subscriptionType}
-              onPress={() => {
-                setSelectedSubscriptionType(subscriptionType);
-              }}
-              selected={selectedSubscriptionType === subscriptionType}
-            />
+  const moveBall = () => {
+    Animated.loop(
+      Animated.sequence([
+        Animated.parallel([
+          Animated.timing(ballPosition.x, {
+            toValue: Dimensions.get("window").width - 90,
+            duration: 10000,
+            easing: Easing.linear,
+            useNativeDriver: false,
+          }),
+          Animated.timing(ballPosition.y, {
+            toValue: Dimensions.get("window").height - 50,
+            duration: 10000,
+            easing: Easing.linear,
+            useNativeDriver: false,
+          }),
+        ]),
+        Animated.parallel([
+          Animated.timing(ballPosition.x, {
+            toValue: 0,
+            duration: 10000,
+            easing: Easing.linear,
+            useNativeDriver: false,
+          }),
+          Animated.timing(ballPosition.y, {
+            toValue: 0,
+            duration: 10000,
+            easing: Easing.linear,
+            useNativeDriver: false,
+          }),
+        ]),
+      ])
+    ).start();
+  };
+
+  useEffect(() => {
+    moveBall();
+  }, []);
+
+  return (
+    <View
+      style={tw`
+    `}
+    >
+      <Animated.View
+        style={[
+          tw`absolute bg-indigo-500 rounded-full w-40 h-40 blur-xl opacity-50 
+            `,
+          {
+            left: ballPosition.x,
+            top: ballPosition.y,
+            filter: "blur(100px)",
+          },
+        ]}
+      />
+      <ScrollView
+        style={tw`w-full px-4 pt-8 font-family: Inter bg-opacity-50 backdrop-blur-xl rounded drop-shadow-lg
+    ${colorScheme === "dark" ? "bg-black" : "bg-white"}`}
+      >
+        <H1 content={"Hej " + name + "!"} />
+        <View style={tw`mt-4 mb-20`}>
+          <H2 content={"Din månadskostnad är " + total + "kr / mån"} />
+        </View>
+
+        <View style={tw`flex flex-row justify-between`}>
+          {subscriptionTypes.map((subscriptionType, index) => (
+            <View
+              key={subscriptionType}
+              style={[tw``, index !== subscriptionTypes.length - 1 && tw``]}
+            >
+              <SubscriptionType
+                name={subscriptionType}
+                onPress={() => {
+                  setSelectedSubscriptionType(subscriptionType);
+                }}
+                selected={selectedSubscriptionType === subscriptionType}
+              />
+            </View>
+          ))}
+        </View>
+
+        {Object.keys(groupedSubscriptions).map((category: string) => (
+          <View style={tw`mt-8`} key={category}>
+            <H2 content={category} />
+
+            {subscriptions
+              .filter((subscription: any) => subscription.category === category)
+              .map((subscription: any) => (
+                <SubCard
+                  key={subscription.id}
+                  productName={subscription.provider}
+                  productIcon={subscription.icons.url}
+                  price={subscription.cost + "kr"}
+                  subType={subscription.plan}
+                  subId={subscription.id}
+                  subStatus={subscription.draw_unsuccessful}
+                  priceIncrease={subscription.price_increase}
+                />
+              ))}
           </View>
         ))}
-      </View>
-
-      {Object.keys(groupedSubscriptions).map((category: string) => (
-        <View style={tw`mt-8`} key={category}>
-          <H2 content={category} />
-
-          {subscriptions
-            .filter((subscription: any) => subscription.category === category)
-            .map((subscription: any) => (
-              <SubCard
-                key={subscription.id}
-                productName={subscription.provider}
-                productIcon={subscription.icons.url}
-                price={subscription.cost + "kr"}
-                subType={subscription.plan}
-                subId={subscription.id}
-                subStatus={subscription.draw_unsuccessful}
-                priceIncrease={subscription.price_increase}
-              />
-            ))}
+        <View style={tw`mb-20`}>
+          <Button
+            title="Send notification now"
+            onPress={async () => {
+              await schedulePushNotification();
+            }}
+          />
+          <Button
+            title="Dark mode"
+            onPress={() => {
+              //change color scheme
+              Appearance.setColorScheme(
+                colorScheme === "dark" ? "light" : "dark"
+              );
+            }}
+          />
         </View>
-      ))}
-      <View style={tw`mb-20`}>
-        <Button
-          title="Send notification now"
-          onPress={async () => {
-            await schedulePushNotification();
-          }}
-        />
-        <Button
-          title="Dark mode"
-          onPress={() => {
-            //change color scheme
-            Appearance.setColorScheme(
-              colorScheme === "dark" ? "light" : "dark"
-            );
-          }}
-        />
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 }

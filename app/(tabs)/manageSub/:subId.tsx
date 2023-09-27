@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Image, ScrollView } from "react-native";
+import { View, Text, Image, ScrollView, useColorScheme } from "react-native";
 import { useRoute } from "@react-navigation/native";
-import tw from "twrnc";
+import tw from "../../../lib/tailwind";
 import supabase from "../../../lib/supabaseStore";
 import SubscriptionType from "../../../components/SubscriptionType";
 import { Pressable } from "react-native";
@@ -28,6 +28,7 @@ interface Subscription {
 }
 
 const ManageSub = () => {
+  let colorScheme = useColorScheme();
   const route = useRoute();
   const { subId } = route.params as { subId: string };
   const [subscription, setSubscription] = useState<Subscription | null>(null);
@@ -54,33 +55,89 @@ const ManageSub = () => {
   }, [subId]);
 
   return (
-    <ScrollView>
-      <View style={tw`flex-1 justify-center items-center bg-slate-500 w-full`}>
+    <ScrollView
+      style={tw`${
+        colorScheme === "dark" ? "bg-black" : "bg-backgroundPrimaryLight"
+      }`}
+    >
+      <View
+        style={tw`flex-1 justify-center items-center w-full ${
+          colorScheme === "dark" ? "bg-black" : "bg-backgroundPrimaryLight"
+        }`}
+      >
         {subscription && (
           <>
             <View style={tw`flex w-full`}>
               <View style={tw`flex justify-between items-center w-full`}>
                 <Image
                   source={{ uri: subscription.icons.url }}
-                  style={tw`w-16 h-16 rounded-full m-4`}
+                  style={tw`w-16 h-16 rounded-full mt-8 mb-2`}
                 />
               </View>
               <View
                 style={tw`flex flex-col justify-center items-center w-full`}
               >
-                <Text style={tw`text-4xl text-white text-center`}>
+                <Text
+                  style={tw`text-4xl text-white text-center ${
+                    colorScheme === "dark"
+                      ? "bg-black"
+                      : "text-onBackgroundLight"
+                  }`}
+                >
                   {subscription.provider}
                 </Text>
-                <Text style={tw`text-base text-white text-center`}>
+                <Text
+                  style={tw`text-base text-white text-center ${
+                    colorScheme === "dark"
+                      ? "bg-black"
+                      : "text-onBackgroundLight"
+                  }
+                `}
+                >
                   {subscription.note}
                 </Text>
               </View>
 
               {subscription.draw_unsuccessful ? (
                 <View
-                  style={tw`flex-col bg-slate-400 w-11/12 p-2 mx-4 rounded-xl m-2`}
+                  style={tw`flex-row bg-white w-11/12 p-2 mx-4 shadow-lg shadow-indigo-600 
+                `}
                 >
-                  <Text style={tw`text-2xl text-white`}>Status: Failed</Text>
+                  <View
+                    style={tw`w-8 h-8 bg-red-500 rounded-full items-center justify-center`}
+                  >
+                    <MaterialCommunityIcons
+                      name="exclamation"
+                      size={34}
+                      color="black"
+                    />
+                  </View>
+                  <Text
+                    style={tw`text-xl text-white pl-2 ${
+                      colorScheme === "dark" ? "bg-black" : "text-black"
+                    }
+                  `}
+                  >
+                    Kunde ej dras!
+                  </Text>
+                  <View
+                    style={tw`flex flex-row justify-end items-center pl-16
+                  `}
+                  >
+                    <Text
+                      style={tw`text-xl text-white pl-2 ${
+                        colorScheme === "dark" ? "bg-black" : "text-black"
+                      }
+                  `}
+                    >
+                      Mer info
+                    </Text>
+                    <MaterialCommunityIcons
+                      name="chevron-right"
+                      size={38}
+                      color="black"
+                    />
+                  </View>
                 </View>
               ) : (
                 <Text style={tw`text-2xl text-white`}></Text>
