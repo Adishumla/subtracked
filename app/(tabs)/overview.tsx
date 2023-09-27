@@ -7,7 +7,14 @@ import H3 from "../../components/H3";
 import { useState, useEffect } from "react";
 import supabase from "../../lib/supabaseStore";
 import Auth from "../../components/Auth/EmailAuth";
-import { View, Text, Button, ScrollView, useColorScheme } from "react-native";
+import {
+  View,
+  Text,
+  Button,
+  ScrollView,
+  useColorScheme,
+  Appearance,
+} from "react-native";
 import { Session } from "@supabase/supabase-js";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import SubCard from "../../components/SubCard";
@@ -199,7 +206,10 @@ export default function App() {
   }, [selectedSubscriptionType]);
 
   return (
-    <ScrollView style={tw`w-full px-4 pt-8 font-family: Inter`}>
+    <ScrollView
+      style={tw`w-full px-4 pt-8 font-family: Inter
+    ${colorScheme === "dark" ? "bg-black" : "bg-white"}`}
+    >
       <H1 content={"Hej " + name + "!"} />
       <View style={tw`mt-4 mb-20`}>
         <H2 content={"Din månadskostnad är " + total + "kr / mån"} />
@@ -247,6 +257,15 @@ export default function App() {
           title="Send notification now"
           onPress={async () => {
             await schedulePushNotification();
+          }}
+        />
+        <Button
+          title="Dark mode"
+          onPress={() => {
+            //change color scheme
+            Appearance.setColorScheme(
+              colorScheme === "dark" ? "light" : "dark"
+            );
           }}
         />
       </View>

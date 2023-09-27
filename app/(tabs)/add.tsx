@@ -14,11 +14,6 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 
 export default function App() {
   let colorScheme = useColorScheme();
-  if (colorScheme === "dark") {
-    tw`bg-black`;
-  } else {
-    tw`bg-white`;
-  }
 
   const categories = [
     "Streaming",
@@ -119,7 +114,7 @@ export default function App() {
 
   return (
     <ScrollView
-      style={tw`px-4 pt-8
+      style={tw`px-4 pt-8 ${colorScheme === "dark" ? "bg-black" : "bg-white"}
     
     `}
     >

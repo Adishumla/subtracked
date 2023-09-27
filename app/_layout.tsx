@@ -10,6 +10,20 @@ import { useEffect } from "react";
 import { useColorScheme } from "react-native";
 import tw from "../lib/tailwind";
 
+const lightTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background: "#F1F1F1",
+  },
+};
+const darkTheme = {
+  ...DarkTheme,
+  colors: {
+    ...DarkTheme.colors,
+    background: "#1B1B1B",
+  },
+};
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
@@ -50,7 +64,7 @@ function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
   return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : lightTheme}>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="index" options={{ headerShown: false }} />

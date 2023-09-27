@@ -1,6 +1,12 @@
 //TO DO : Rad 33 + ta bort adams fina stycke.
 
-import { View, StyleSheet, Text, ScrollView } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  ScrollView,
+  useColorScheme,
+} from "react-native";
 import { Link } from "expo-router";
 import supabase from "../../lib/supabaseStore";
 import tw from "twrnc";
@@ -17,16 +23,10 @@ import { useFocusEffect } from "expo-router";
 import React from "react";
 
 export default function App() {
+  let colorScheme = useColorScheme();
+
   const [subscriptions, setSubscriptions] = useState<any>([]);
-  const [darkMode, setDarkMode] = useState<boolean>(false);
-  /*  useEffect(() => {
-    const fetchData = async () => {
-      const data = await AsyncStorage.getItem("darkMode");
-      console.log("s");
-    };
-    fetchData();
-    console.log("s");
-  }, [AsyncStorage]); */
+
   useFocusEffect(
     React.useCallback(() => {
       const fetchData = async () => {
@@ -134,7 +134,11 @@ export default function App() {
   let currentMonth = "";
 
   return (
-    <ScrollView style={[tw`px-4 pt-8`, darkMode ? tw`bg-black` : tw`bg-white`]}>
+    <ScrollView
+      style={[
+        tw`px-4 pt-8 ${colorScheme === "dark" ? "bg-black" : "bg-white"}`,
+      ]}
+    >
       <View>
         <H4 content="< Tillbaka" />
         <H1 content={"Kommande betalningar"} />
