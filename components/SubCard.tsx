@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Pressable, Text, View, useColorScheme, Image } from "react-native";
 import { Button, colors } from "react-native-elements";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import H2 from "./H2";
 import tw from "../lib/tailwind";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Link } from "expo-router";
