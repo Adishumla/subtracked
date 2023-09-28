@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Alert, StyleSheet, View, Text } from "react-native";
+import { Alert, StyleSheet, View, Text, useColorScheme } from "react-native";
 import supabase from "../../lib/supabaseStore";
 import { Button, Input } from "react-native-elements";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -113,15 +113,23 @@ export default function Auth() {
     };
     getId();
   }, []);
+  let colorScheme = useColorScheme();
 
   return (
     <View style={tw`bg-backgroundPrimaryLight opacity-50`}>
       <View style={tw`items-center justify-center`}>
         {showRegistration && (
           <Input
-            style={tw`text-2xl text-white`}
+            style={tw`rounded-xl border-2 border-solid mx-[-10px] ${
+              colorScheme === "dark"
+                ? "bg-inputSectionDark border-backgroundSecondaryDark"
+                : "bg-inputSectionLight border-backgroundSecondaryLight"
+            }`}
+            inputStyle={tw`px-4 font-Inter`}
+            containerStyle={tw`border-t-0`}
+            inputContainerStyle={tw`border-b-0`}
+            placeholderTextColor={"#202020"}
             label="Name"
-            leftIcon={{ type: "font-awesome", name: "user" }}
             onChangeText={(text) => setName(text)}
             value={name}
             placeholder="Your Name"
@@ -135,11 +143,18 @@ export default function Auth() {
       `}
       >
         <Input
-          style={tw`text-2xl text-white`}
+          style={tw`rounded-xl border-2 border-solid mx-[-10px] ${
+            colorScheme === "dark"
+              ? "bg-inputSectionDark border-backgroundSecondaryDark"
+              : "bg-inputSectionLight border-backgroundSecondaryLight"
+          }`}
+          inputStyle={tw`px-4 font-Inter`}
+          containerStyle={tw`border-t-0`}
+          inputContainerStyle={tw`border-b-0`}
           label="Email"
-          leftIcon={{ type: "font-awesome", name: "envelope" }}
           onChangeText={(text) => setEmail(text)}
           value={email}
+          placeholderTextColor={"#202020"}
           placeholder="email@address.com"
           autoCapitalize={"none"}
         />
@@ -147,9 +162,16 @@ export default function Auth() {
 
       <View style={tw``}>
         <Input
-          style={tw`text-2xl text-white`}
+          style={tw`rounded-xl border-2 border-solid mx-[-10px] ${
+            colorScheme === "dark"
+              ? "bg-inputSectionDark border-backgroundSecondaryDark"
+              : "bg-inputSectionLight border-backgroundSecondaryLight"
+          }`}
+          inputStyle={tw`px-4 font-Inter`}
+          containerStyle={tw`border-t-0`}
+          inputContainerStyle={tw`border-b-0`}
+          placeholderTextColor={"#202020"}
           label="Password"
-          leftIcon={{ type: "font-awesome", name: "lock" }}
           onChangeText={(text) => setPassword(text)}
           value={password}
           secureTextEntry={true}
@@ -162,6 +184,17 @@ export default function Auth() {
         <>
           <View style={tw``}>
             <Button
+              buttonStyle={tw`p-4 rounded-xl ${
+                colorScheme === "dark"
+                  ? "bg-primaryDark shadow-darkMode shadow-md"
+                  : "bg-primaryLight shadow-md"
+              }`}
+              titleStyle={tw`${
+                colorScheme === "dark"
+                  ? "text-onPrimaryDark"
+                  : "text-onPrimaryLight"
+              }`}
+              style={tw`mb-0`}
               title="Registrera"
               disabled={loading}
               onPress={async () => {
@@ -171,6 +204,17 @@ export default function Auth() {
           </View>
           <View style={tw`mt-4`}>
             <Button
+              buttonStyle={tw`p-4 rounded-xl ${
+                colorScheme === "dark"
+                  ? "bg-primaryDark shadow-darkMode shadow-md"
+                  : "bg-primaryLight shadow-md"
+              }`}
+              titleStyle={tw`${
+                colorScheme === "dark"
+                  ? "text-onPrimaryDark"
+                  : "text-onPrimaryLight"
+              }`}
+              style={tw`mb-0`}
               title="Have an account? Login"
               onPress={() => setShowRegistration(false)}
             />
@@ -179,6 +223,17 @@ export default function Auth() {
       ) : (
         <View style={tw``}>
           <Button
+            buttonStyle={tw`p-4 rounded-xl ${
+              colorScheme === "dark"
+                ? "bg-primaryDark shadow-darkMode shadow-md"
+                : "bg-primaryLight shadow-md"
+            }`}
+            titleStyle={tw`${
+              colorScheme === "dark"
+                ? "text-onPrimaryDark"
+                : "text-onPrimaryLight"
+            }`}
+            style={tw`mb-4`}
             title="Logga in"
             disabled={loading}
             onPress={async () => {
@@ -188,8 +243,19 @@ export default function Auth() {
         </View>
       )}
       {!showRegistration && (
-        <View style={tw`mt-4`}>
+        <View style={tw`mt-0`}>
           <Button
+            buttonStyle={tw`p-4 rounded-xl ${
+              colorScheme === "dark"
+                ? "bg-primaryDark shadow-darkMode shadow-md"
+                : "bg-primaryLight shadow-md"
+            }`}
+            titleStyle={tw`${
+              colorScheme === "dark"
+                ? "text-onPrimaryDark"
+                : "text-onPrimaryLight"
+            }`}
+            style={tw``}
             title="Don't have an account? Register"
             onPress={() => setShowRegistration(true)}
           />

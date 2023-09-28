@@ -216,13 +216,13 @@ export default function App() {
       Animated.sequence([
         Animated.parallel([
           Animated.timing(ballPosition.x, {
-            toValue: Dimensions.get("window").width - 90,
+            toValue: Dimensions.get("window").width - 100,
             duration: 30000,
             easing: Easing.linear,
             useNativeDriver: false,
           }),
           Animated.timing(ballPosition.y, {
-            toValue: Dimensions.get("window").height - 50,
+            toValue: Dimensions.get("window").height - 600,
             duration: 30000,
             easing: Easing.linear,
             useNativeDriver: false,
@@ -264,16 +264,33 @@ export default function App() {
         ]}
       />
       <BlurView intensity={100} style={tw`absolute inset-0 w-full h-full`} />
-      
+
       <ScrollView
         style={[
-          tw`font-Inter w-full px-4 pt-8 bg-opacity-50 backdrop-blur-xl rounded drop-shadow-lg ${colorScheme === "dark" ? "bg-backgroundPrimaryDark" : "bg-backgroundPrimaryLight"}`,
+          tw`font-Inter w-full px-4 pt-8 bg-opacity-50 backdrop-blur-xl rounded drop-shadow-lg ${
+            colorScheme === "dark"
+              ? "bg-backgroundPrimaryDark"
+              : "bg-backgroundPrimaryLight"
+          }`,
         ]}
       >
-
         <View style={tw`mb-16 gap-5`}>
-          <Text style={tw`font-Inter text-H1 font-medium ${colorScheme === "dark" ? "text-H1Dark" : "text-onBackgroundLight"}`}>{"Hej " + name + "!"}</Text>
-          <Text style={tw`font-Inter text-H2 font-medium ${colorScheme === "dark" ? "text-onBackgroundDark" : "text-onBackgroundLight"}`}>{"Din månadskostnad är " + total + "kr / mån"}</Text>
+          <Text
+            style={tw`font-Inter text-H1 font-medium ${
+              colorScheme === "dark" ? "text-H1Dark" : "text-onBackgroundLight"
+            }`}
+          >
+            {"Hej " + name + "!"}
+          </Text>
+          <Text
+            style={tw`font-Inter text-H2 font-medium ${
+              colorScheme === "dark"
+                ? "text-onBackgroundDark"
+                : "text-onBackgroundLight"
+            }`}
+          >
+            {"Din månadskostnad är " + total + "kr / mån"}
+          </Text>
         </View>
 
         <View style={tw`flex flex-row justify-between`}>
@@ -295,7 +312,15 @@ export default function App() {
 
         {Object.keys(groupedSubscriptions).map((category: string) => (
           <View style={tw`mt-8`} key={category}>
-          <Text style={tw`font-Inter text-H2 font-medium ${colorScheme === "dark" ? "text-onBackgroundDark" : "text-onBackgroundLight"}`}>{category}</Text>
+            <Text
+              style={tw`font-Inter text-H2 font-medium ${
+                colorScheme === "dark"
+                  ? "text-onBackgroundDark"
+                  : "text-onBackgroundLight"
+              }`}
+            >
+              {category}
+            </Text>
             {subscriptions
               .filter((subscription: any) => subscription.category === category)
               .map((subscription: any) => (
