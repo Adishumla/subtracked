@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Alert, StyleSheet, View, Text, useColorScheme } from "react-native";
 import supabase from "../../lib/supabaseStore";
-import { Button, Input } from "react-native-elements";
+import { Button, Input, CheckBox } from "react-native-elements";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
 import tw from "../../lib/tailwind";
+import Link from "expo-router";
 
 export default function Auth() {
   const [email, setEmail] = useState("");
@@ -13,7 +14,9 @@ export default function Auth() {
   const [name, setName] = useState("");
   const [id, setId] = useState("");
   const [showRegistration, setShowRegistration] = useState(false);
-  const [signInSuccess, setSignInSuccess] = useState(false); // Track sign-in success
+  const [signInSuccess, setSignInSuccess] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
+
   const router = useRouter();
 
   async function signInWithEmail() {
@@ -182,6 +185,14 @@ export default function Auth() {
 
       {showRegistration ? (
         <>
+          <CheckBox
+            style={tw`mt-0`} //link to terms and conditions
+            title="Jag godkänner"
+            checked={isChecked}
+            onPress={() => setIsChecked(!isChecked)}
+            containerStyle={tw`bg-transparent border-0 px-0 mt-[-20px]`}
+            textStyle={tw`text-onBackgroundLight`}
+          />
           <View style={tw``}>
             <Button
               buttonStyle={tw`p-4 rounded-xl ${
@@ -196,7 +207,7 @@ export default function Auth() {
               }`}
               style={tw`mb-0`}
               title="Registrera"
-              disabled={loading}
+              disabled={loading || !isChecked}
               onPress={async () => {
                 await signUpWithEmail();
               }}
