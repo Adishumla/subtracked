@@ -3,7 +3,14 @@ import tw from "../lib/tailwind";
 import { useState, useEffect } from "react";
 import supabase from "../lib/supabaseStore";
 import Auth from "../components/Auth/EmailAuth";
-import { View, Text, Button, ScrollView, Image } from "react-native";
+import {
+  View,
+  Text,
+  Button,
+  ScrollView,
+  Image,
+  useColorScheme,
+} from "react-native";
 import { Session } from "@supabase/supabase-js";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import AppleAuth from "../components/Auth/AppleAuth";
@@ -13,6 +20,7 @@ import {
   schedulePushNotification,
 } from "../lib/notificationService";
 export default function App() {
+  let colorScheme = useColorScheme();
   const [session, setSession] = useState<Session | null>(null);
   const [email, setEmail] = useState<String | undefined>("");
   const [id, setId] = useState<String | undefined>("");
@@ -48,7 +56,11 @@ export default function App() {
 
   return (
     <View
-      style={tw`flex-1 font-Inter pt-16 items-center justify-center bg-backgroundPrimaryLight `}
+      style={tw`flex-1 font-Inter pt-16 items-center justify-center ${
+        colorScheme === "dark"
+          ? "bg-backgroundPrimaryDark"
+          : "bg-backgroundPrimaryLight"
+      }`}
     >
       <View
         style={tw`absolute w-1/2 h-full flex h-full top-[-30%]

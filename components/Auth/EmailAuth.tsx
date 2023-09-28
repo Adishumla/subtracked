@@ -119,7 +119,14 @@ export default function Auth() {
   let colorScheme = useColorScheme();
 
   return (
-    <View style={tw`bg-backgroundPrimaryLight opacity-50`}>
+    <View
+      style={tw` ${
+        colorScheme === "dark"
+          ? "bg-backgroundPrimaryDark"
+          : "bg-backgroundPrimaryLight"
+      } 
+    `}
+    >
       <View style={tw`items-center justify-center`}>
         {showRegistration && (
           <Input
@@ -191,13 +198,17 @@ export default function Auth() {
             checked={isChecked}
             onPress={() => setIsChecked(!isChecked)}
             containerStyle={tw`bg-transparent border-0 px-0 mt-[-20px]`}
-            textStyle={tw`text-onBackgroundLight`}
+            textStyle={tw`${
+              colorScheme === "dark"
+                ? "text-onPrimaryDark"
+                : "text-onPrimaryLight"
+            }`}
           />
           <View style={tw``}>
             <Button
               buttonStyle={tw`p-4 rounded-xl ${
                 colorScheme === "dark"
-                  ? "bg-primaryDark shadow-darkMode shadow-md"
+                  ? "bg-primaryDark shadow-md"
                   : "bg-primaryLight shadow-md"
               }`}
               titleStyle={tw`${
@@ -217,7 +228,7 @@ export default function Auth() {
             <Button
               buttonStyle={tw`p-4 rounded-xl ${
                 colorScheme === "dark"
-                  ? "bg-primaryDark shadow-darkMode shadow-md"
+                  ? "bg-primaryDark shadow-md"
                   : "bg-primaryLight shadow-md"
               }`}
               titleStyle={tw`${

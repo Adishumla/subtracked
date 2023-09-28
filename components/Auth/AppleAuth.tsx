@@ -1,5 +1,5 @@
 import * as AppleAuthentication from "expo-apple-authentication";
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text, useColorScheme } from "react-native";
 import { signInWithSupabaseUsingApple } from "../../lib/authentication";
 import supabase from "../../lib/supabaseStore";
 import { useState } from "react";
@@ -11,6 +11,7 @@ export default function App() {
   const [name, setName] = useState(""); // State variable to store the user's name
 
   const handleAppleSignIn = async () => {
+    let colorScheme = useColorScheme();
     try {
       const credential = await AppleAuthentication.signInAsync({
         requestedScopes: [
