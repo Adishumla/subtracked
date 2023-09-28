@@ -58,7 +58,13 @@ export default function TabLayout() {
                 <MaterialCommunityIcons
                   name="home-variant"
                   size={24}
-                  color={focused ? "#80B2FF" : "#9E9E9E"}
+                  color={
+                    focused
+                      ? colorScheme === "dark"
+                        ? "#8294FF"
+                        : "#5656FF"
+                      : "#9E9E9E"
+                  }
                 />
               );
             },
@@ -80,7 +86,13 @@ export default function TabLayout() {
                 <MaterialCommunityIcons
                   name="plus-circle"
                   size={24}
-                  color={focused ? "#80B2FF" : "#9E9E9E"}
+                  color={
+                    focused
+                      ? colorScheme === "dark"
+                        ? "#8294FF"
+                        : "#5656FF"
+                      : "#9E9E9E"
+                  }
                 />
               );
             },
@@ -102,7 +114,13 @@ export default function TabLayout() {
                 <MaterialCommunityIcons
                   name="database"
                   size={24}
-                  color={focused ? "#80B2FF" : "#9E9E9E"}
+                  color={
+                    focused
+                      ? colorScheme === "dark"
+                        ? "#8294FF"
+                        : "#5656FF"
+                      : "#9E9E9E"
+                  }
                 />
               );
             },
@@ -125,7 +143,13 @@ export default function TabLayout() {
                 <MaterialCommunityIcons
                   name="cog"
                   size={24}
-                  color={focused ? "#80B2FF" : "#9E9E9E"}
+                  color={
+                    focused
+                      ? colorScheme === "dark"
+                        ? "#8294FF"
+                        : "#5656FF"
+                      : "#9E9E9E"
+                  }
                 />
               );
             },

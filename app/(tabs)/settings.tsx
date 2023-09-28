@@ -44,14 +44,12 @@ export default function App() {
   //Fetch user data from login table where user id is the same as the logged in id.
   // name, dark_mode & push_notifications are saved to an object called userSettings.
   type UserSettings = {
+    push_notifications: boolean | undefined;
     name: string;
-    /*     push_notifications: boolean;
-     */
   };
   let [userSettings, setUserSettings] = useState<UserSettings>({
     name: "",
-    /*     push_notifications: false,
-     */
+    push_notifications: false,
   });
   useEffect(() => {
     AsyncStorage.getItem("id").then((id) => {
@@ -89,7 +87,7 @@ export default function App() {
           : "bg-backgroundPrimaryLight"
       }`}
     >
-      <View style={tw`mb-5`}>
+      <View style={tw`mb-5 `}>
         <Link href="/(tabs)/overview" style={tw`flex`}>
           <MaterialCommunityIcons
             style={tw``}
@@ -243,14 +241,12 @@ export default function App() {
             Pushnotiser
           </Text>
           <Switch
-            //@ts-ignore
             value={userSettings.push_notifications}
             trackColor={{ false: `#A5A5A5`, true: "#26AC23" }}
-            //@ts-ignore
             color={`${colorScheme === "dark" ? "#3C415E" : "#FDFDFF"}`}
             thumbColor={`${colorScheme === "dark" ? "#3C415E" : "#FDFDFF"}`}
             onValueChange={(value) => {
-              console.log(value);
+              setUserSettings({ ...userSettings, push_notifications: value });
             }}
           />
         </View>
