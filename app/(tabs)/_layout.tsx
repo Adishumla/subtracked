@@ -46,7 +46,11 @@ export default function TabLayout() {
           name="overview"
           options={{
             title: "Översikt",
-            tabBarLabelStyle: {color:'#80B2FF',},
+            headerTitle: "",
+            headerStyle: {
+              height: 50,
+            },
+            tabBarLabelStyle: { color: "#80B2FF" },
             tabBarIcon: ({ size, focused, color }) => {
               return (
                 <MaterialCommunityIcons
@@ -64,7 +68,7 @@ export default function TabLayout() {
             title: "Lägg till ny",
             headerTitle: "",
             headerStyle: {
-              height: 0,
+              height: 50,
             },
             tabBarIcon: ({ size, focused, color }) => {
               return (
@@ -81,6 +85,10 @@ export default function TabLayout() {
           name="payments"
           options={{
             title: "Betalningar",
+            headerTitle: "",
+            headerStyle: {
+              height: 50,
+            },
             tabBarIcon: ({ size, focused, color }) => {
               return (
                 <Image
@@ -95,6 +103,10 @@ export default function TabLayout() {
           name="settings"
           options={{
             title: "Inställningar",
+            headerTitle: "",
+            headerStyle: {
+              height: 50,
+            },
             tabBarIcon: ({ size, focused, color }) => {
               return (
                 <Image
