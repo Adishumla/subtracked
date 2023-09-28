@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { View, ScrollView } from "react-native";
+import { View, ScrollView, Text, useColorScheme} from "react-native";
 import supabase from "../../../lib/supabaseStore";
-import tw from "twrnc";
+import tw from "../../../lib/tailwind";
 import Category from "../../../components/Category";
 import SubscriptionType from "../../../components/SubscriptionType";
-import H1 from "../../../components/H1";
-import H2 from "../../../components/H2";
-import H4 from "../../../components/H4";
 import { Button, Input } from "react-native-elements";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRoute } from "@react-navigation/native";
@@ -24,6 +21,9 @@ interface Subscription {
 }
 
 export default function App() {
+  let colorScheme = useColorScheme();
+
+
   const route = useRoute();
   const { subId } = route.params as { subId: string };
 
@@ -51,12 +51,12 @@ export default function App() {
   }, []);
 
   const categories = [
-    "Streaming",
-    "Ljud",
-    "Hälsa",
     "Hushåll",
-    "Spel",
+    "Hälsa",
+    "Ljud",
     "Molntjänst",
+    "Spel",
+    "Streaming",
   ];
   const subscriptionTypes = ["Eget", "Delat", "Familj"];
   const [provider, setProvider] = useState<string>("");
@@ -69,11 +69,18 @@ export default function App() {
 
   return (
     <ScrollView style={tw`px-4 pt-8`}>
-      <H4 content="<-- Tillbaka ska den här ens vara här?"></H4>
-      <H1 content={"Lägg till abonnemang"}></H1>
+
+      <Text 
+        style={[tw`font-H4 ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}`]}
+      >Tillbaka</Text>
+      <Text 
+        style={[tw`font-H1 ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}`]}
+      >Lägg till abonnemang</Text>
 
       <View style={tw`mt-16`}>
-        <H2 content="Kategori"></H2>
+        <Text 
+          style={[tw`font-H2 ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}`]}
+        >Kategori</Text>
         <View style={tw`mt-5 flex flex-row flex-wrap`}>
           {categories.map((category) => (
             <Category
@@ -87,17 +94,24 @@ export default function App() {
       </View>
 
       <View style={tw`mt-12`}>
-        <H2 content={"Leverantör"}></H2>
+      <Text 
+          style={[tw`font-H2 ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}`]}
+        >Leverantör</Text>        
         <Input
           placeholder="Ex. Spotify"
           onChangeText={(value) => setProvider(value)}
         />
-        <H4 content="Ex. Spotify"></H4>
+        <Text 
+          style={[tw`font-H4 ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}`]}
+        >Ex. Spotify</Text>
+
       </View>
 
       <View style={tw`mt-12`}>
         <View style={tw``}>
-          <H2 content={"Pris/mån"}></H2>
+        <Text 
+          style={[tw`font-H2 ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}`]}
+        >Pris/mån</Text>
           <Input
             placeholder="Ex. 99"
             onChangeText={(value) => setPrice(parseInt(value))}
@@ -105,13 +119,17 @@ export default function App() {
         </View>
 
         <View style={tw``}>
-          <H2 content={"Betaldatum"}></H2>
+        <Text 
+          style={[tw`font-H2 ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}`]}
+        >Betaldatum</Text>
           <Input placeholder="Ex. 1" onChangeText={(value) => setDate(value)} />
         </View>
       </View>
 
       <View style={tw`mt-12`}>
-        <H2 content={"Abonnemangstyp"}></H2>
+      <Text 
+          style={[tw`font-H2 ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}`]}
+        >Abonnemangstyp</Text>
         <View style={tw`flex-1 items-center justify-center flex-row`}>
           {subscriptionTypes.map((subscriptionType, index) => (
             <View
@@ -138,12 +156,17 @@ export default function App() {
       </View>
 
       <View style={tw`mt-12`}>
-        <H2 content={"Notering"}></H2>
+      <Text 
+          style={[tw`font-H2 ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}`]}
+        >Notering</Text>
+
         <Input
           placeholder="Ex. Annas mobil"
           onChangeText={(value) => setNote(value)}
         />
-        <H4 content="Ex. Annas mobil"></H4>
+        <Text 
+          style={[tw`font-H4 ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}`]}
+        >Ex. Annas mobil.</Text>
       </View>
 
       <Button
