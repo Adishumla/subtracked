@@ -318,7 +318,7 @@ export default function App() {
         </View>
 
         {Object.keys(groupedSubscriptions).map((category: string) => (
-          <View style={tw`mt-8`} key={category}>
+          <View style={tw`mt-8 `} key={category}>
             <Text
               style={tw`font-Inter text-H2 font-medium ${
                 colorScheme === "dark"

@@ -67,7 +67,7 @@ export default function SubCard({
       <Pressable>
         <View
           style={[
-            tw`flex-col font-Inter justify-between items-center px-4 py-4 rounded-full mt-4 shadow-lg shadow-indigo-700`,
+            tw`flex-col font-Inter justify-between items-center px-4 py-4 rounded-full mt-[-10px] shadow-lg shadow-indigo-700`,
           ]}
         >
           <View
