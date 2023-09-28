@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { Link } from "expo-router";
 import supabase from "../../lib/supabaseStore";
-import tw from "twrnc";
+import tw from "../../lib/tailwind";
 import H1 from "../../components/H1";
 import H2 from "../../components/H2";
 import H3 from "../../components/H3";

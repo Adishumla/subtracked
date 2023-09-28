@@ -1,5 +1,11 @@
 module.exports = {
   theme: {
+    fontSize: {
+      'H1' : ['32px','39px'],
+      'H2' : ['24px','29px'],
+      'H3' : ['18px','22px'],
+      'H4' : ['16px','19px'],
+    },
     extend: {
       fontFamily: {
         Inter: ["Inter"],

@@ -4,7 +4,7 @@ import supabase from "../../lib/supabaseStore";
 import { Button, Input } from "react-native-elements";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
-import tw from "twrnc";
+import tw from "../../lib/tailwind";
 
 export default function Auth() {
   const [email, setEmail] = useState("");
@@ -115,10 +115,8 @@ export default function Auth() {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <Text style={tw`text-4xl text-white`}>{id}</Text>
-      <Text style={tw`text-4xl text-white`}>{name}</Text>
-      <View style={tw`flex-1 items-center justify-center`}>
+    <View style={tw`bg-backgroundPrimaryLight`}>
+      <View style={tw`items-center justify-center`}>
         {showRegistration && (
           <Input
             style={tw`text-2xl text-white`}
@@ -131,6 +129,7 @@ export default function Auth() {
           />
         )}
       </View>
+
       <View style={tw`flex-1 items-center justify-center`}>
         <Input
           style={tw`text-2xl text-white`}
@@ -142,6 +141,7 @@ export default function Auth() {
           autoCapitalize={"none"}
         />
       </View>
+
       <View style={styles.verticallySpaced}>
         <Input
           style={tw`text-2xl text-white`}
@@ -154,6 +154,7 @@ export default function Auth() {
           autoCapitalize={"none"}
         />
       </View>
+
       {showRegistration ? (
         <View>
           <View style={styles.verticallySpaced}>

@@ -1,7 +1,7 @@
 /* import React, { useRef, useEffect } from "react";
 import { Button, StyleSheet, View } from "react-native";
 import LottieView from "lottie-react-native";
-import tw from "twrnc";
+import tw from "../../lib/tailwind";
 
 export default function App() {
   const animation = useRef(null);

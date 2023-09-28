@@ -1,7 +1,7 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import "../../assets/images/overview.png";
 import { Link, Tabs } from "expo-router";
-import tw from "twrnc";
+import tw from "../../lib/tailwind";
 import { Pressable, useColorScheme, Image } from "react-native";
 import supabase from "../../lib/supabaseStore";
 import { useEffect, useState } from "react";
@@ -30,6 +30,7 @@ export default function TabLayout() {
         <Tabs.Screen
           name="egg" // This has to be here otherwise overview breaks...
           options={{
+            headerShown:false,
             title: "ins",
             href: null,
             tabBarIcon: ({ size, focused, color }) => {
@@ -47,16 +48,14 @@ export default function TabLayout() {
           name="overview"
           options={{
             title: "Översikt",
-            headerTitle: "",
-            headerStyle: {
-              height: 50,
-            },
+            tabBarLabelStyle: {color:'#626262'},
+            headerShown:false,
             tabBarIcon: ({ size, focused, color }) => {
               return (
                 <MaterialCommunityIcons
                   name="home"
                   size={24}
-                  color={focused ? "#5656FF" : "white"}
+                  color={focused ? "#80B2FF" : "#9E9E9E"}
                 />
               );
             },
@@ -68,7 +67,7 @@ export default function TabLayout() {
             title: "Lägg till ny",
             headerTitle: "",
             headerStyle: {
-              height: 50,
+              height: 0,
             },
             tabBarIcon: ({ size, focused, color }) => {
               return (
@@ -84,10 +83,7 @@ export default function TabLayout() {
         <Tabs.Screen
           name="payments"
           options={{
-            headerTitle: "",
-            headerStyle: {
-              height: 50,
-            },
+            headerShown:false,
             title: "Betalningar",
             tabBarIcon: ({ size, focused, color }) => {
               return (
@@ -102,10 +98,7 @@ export default function TabLayout() {
         <Tabs.Screen
           name="settings"
           options={{
-            headerTitle: "",
-            headerStyle: {
-              height: 50,
-            },
+            headerShown:false,
             title: "Inställningar",
             tabBarIcon: ({ size, focused, color }) => {
               return (

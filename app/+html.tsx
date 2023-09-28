@@ -41,11 +41,5 @@ const responsiveBackground = `
   src: url(../assets/fonts/Inter.ttf) format('truetype');
 }
 body {
-  background-color: #fff;
   font-family: 'Inter' !important;
-}
-@media (prefers-color-scheme: dark) {
-  body {
-    background-color: #fff;
-  }
 }`;
