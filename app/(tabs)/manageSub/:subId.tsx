@@ -57,12 +57,16 @@ const ManageSub = () => {
   return (
     <ScrollView
       style={tw`${
-        colorScheme === "dark" ? "bg-backgroundPrimaryDark" : "bg-backgroundPrimaryLight"
+        colorScheme === "dark"
+          ? "bg-backgroundPrimaryDark"
+          : "bg-backgroundPrimaryLight"
       }`}
     >
       <View
         style={tw`flex-1 justify-center items-center w-full ${
-          colorScheme === "dark" ? "bg-backgroundPrimaryDark" : "bg-backgroundPrimaryLight"
+          colorScheme === "dark"
+            ? "bg-backgroundPrimaryDark"
+            : "bg-backgroundPrimaryLight"
         }`}
       >
         {subscription && (
@@ -206,6 +210,7 @@ const ManageSub = () => {
                   style={tw`flex-row justify-between items-center w-26 mt-4`}
                 >
                   <SubscriptionType
+                    width={28}
                     name={subscription.plan}
                     onPress={() => {}}
                     selected={false}

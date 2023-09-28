@@ -236,7 +236,7 @@ export default function Auth() {
           <Button
             buttonStyle={tw`p-4 rounded-xl ${
               colorScheme === "dark"
-                ? "bg-primaryDark shadow-darkMode shadow-md"
+                ? "bg-primaryDark shadow-md"
                 : "bg-primaryLight shadow-md"
             }`}
             titleStyle={tw`${
@@ -258,7 +258,7 @@ export default function Auth() {
           <Button
             buttonStyle={tw`p-4 rounded-xl ${
               colorScheme === "dark"
-                ? "bg-primaryDark shadow-darkMode shadow-md"
+                ? "bg-primaryDark shadow-md"
                 : "bg-primaryLight shadow-md"
             }`}
             titleStyle={tw`${

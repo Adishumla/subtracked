@@ -120,19 +120,39 @@ export default function App() {
 
     `}
     >
-
       <View style={tw`mb-16 gap-5`}>
-        <Link 
-          href="/(tabs)/overview">
-        <Text style={tw`font-Inter text-H4 font-regular ${colorScheme === "dark" ? "text-onBackgroundDark" : "text-onBackgroundLight"}`}>Tillbaka</Text>
-       </Link>
-       <Text style={tw`font-Inter text-H1 font-medium ${colorScheme === "dark" ? "text-H1Dark" : "text-onBackgroundLight"}`}>Lägg till abonnemang</Text>
+        <Link href="/(tabs)/overview">
+          <Text
+            style={tw`font-Inter text-H4 font-regular ${
+              colorScheme === "dark"
+                ? "text-onBackgroundDark"
+                : "text-onBackgroundLight"
+            }`}
+          >
+            Tillbaka
+          </Text>
+        </Link>
+        <Text
+          style={tw`font-Inter text-H1 font-medium ${
+            colorScheme === "dark" ? "text-H1Dark" : "text-onBackgroundLight"
+          }`}
+        >
+          Lägg till abonnemang
+        </Text>
       </View>
 
       <View style={tw`mt-16`}>
-      <Text 
-          style={[tw`font-H2 ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}`]}
-        >Kategori</Text>        
+        <Text
+          style={[
+            tw`font-H2 ${
+              colorScheme === "dark"
+                ? "text-onPrimaryDark"
+                : "text-onPrimaryLight"
+            }`,
+          ]}
+        >
+          Kategori
+        </Text>
         <View style={tw`mt-5 flex flex-row flex-wrap`}>
           {categories.map((category) => (
             <Category
@@ -147,9 +167,17 @@ export default function App() {
 
       <View style={tw`mt-12`}>
         <View style={tw`px-1`}>
-        <Text 
-          style={[tw`font-H2 ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}`]}
-        >Leverantör</Text>
+          <Text
+            style={[
+              tw`font-H2 ${
+                colorScheme === "dark"
+                  ? "text-onPrimaryDark"
+                  : "text-onPrimaryLight"
+              }`,
+            ]}
+          >
+            Leverantör
+          </Text>
         </View>
         <Input
           style={tw`rounded-xl border-2 border-gray-300 bg-inputSectionLight p-2 mt-4 text-onPrimaryLight
@@ -171,9 +199,17 @@ export default function App() {
       >
         <View style={tw`w-1/2`}>
           <View style={tw`px-1`}>
-          <Text 
-          style={[tw`font-H2 ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}`]}
-        >Pris/mån</Text>
+            <Text
+              style={[
+                tw`font-H2 ${
+                  colorScheme === "dark"
+                    ? "text-onPrimaryDark"
+                    : "text-onPrimaryLight"
+                }`,
+              ]}
+            >
+              Pris/mån
+            </Text>
           </View>
           <Input
             style={tw`rounded-xl border-2 border-gray-300 bg-inputSectionLight p-2 mt-4 text-onPrimaryLight`}
@@ -187,9 +223,17 @@ export default function App() {
 
         <View style={tw`w-1/2`}>
           <View style={tw`px-5`}>
-          <Text 
-          style={[tw`font-H2 ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}`]}
-        >Betaldatum</Text>
+            <Text
+              style={[
+                tw`font-H2 ${
+                  colorScheme === "dark"
+                    ? "text-onPrimaryDark"
+                    : "text-onPrimaryLight"
+                }`,
+              ]}
+            >
+              Betaldatum
+            </Text>
           </View>
           <View style={tw`mt-4 w-full flex pr-8`}>
             <DateTimePicker
@@ -203,9 +247,17 @@ export default function App() {
       </View>
 
       <View style={tw`mt-6 flex flex-col px-1`}>
-      <Text 
-          style={[tw`font-H2 ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}`]}
-        >Abonnemangstyp</Text>
+        <Text
+          style={[
+            tw`font-H2 ${
+              colorScheme === "dark"
+                ? "text-onPrimaryDark"
+                : "text-onPrimaryLight"
+            }`,
+          ]}
+        >
+          Abonnemangstyp
+        </Text>
         <View style={tw`flex items-center justify-center flex-row`}>
           {subscriptionTypes.map((subscriptionType, index) => (
             <View
@@ -217,6 +269,7 @@ export default function App() {
             >
               <SubscriptionType
                 name={subscriptionType}
+                width={28}
                 onPress={() => {
                   if (selectedSubscriptionType === subscriptionType) {
                     setSelectedSubscriptionType("");
@@ -232,9 +285,17 @@ export default function App() {
       </View>
 
       <View style={tw`mt-12`}>
-      <Text 
-          style={[tw`font-H2 ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}`]}
-        >Notering</Text>
+        <Text
+          style={[
+            tw`font-H2 ${
+              colorScheme === "dark"
+                ? "text-onPrimaryDark"
+                : "text-onPrimaryLight"
+            }`,
+          ]}
+        >
+          Notering
+        </Text>
         <Input
           style={tw`rounded-xl border-2 border-gray-300 bg-inputSectionLight p-2 mt-4 text-onPrimaryLight
           `}

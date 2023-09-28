@@ -293,13 +293,21 @@ export default function App() {
           </Text>
         </View>
 
-        <View style={tw`flex flex-row justify-between`}>
+        <View
+          style={tw`flex flex-row justify-between items-center px-0 w-1/2
+        `}
+        >
           {subscriptionTypes.map((subscriptionType, index) => (
             <View
               key={subscriptionType}
-              style={[tw``, index !== subscriptionTypes.length - 1 && tw``]}
+              style={[
+                tw`mx-1
+              `,
+                index !== subscriptionTypes.length - 1 && tw``,
+              ]}
             >
               <SubscriptionType
+                width={20}
                 name={subscriptionType}
                 onPress={() => {
                   setSelectedSubscriptionType(subscriptionType);
