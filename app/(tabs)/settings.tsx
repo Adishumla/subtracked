@@ -25,7 +25,6 @@ export default function App() {
   const [email, setEmail] = useState<String | undefined>("");
   const [id, setId] = useState<String | undefined>("");
 
-
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
@@ -88,16 +87,16 @@ export default function App() {
         tw`px-4 pt-8 ${colorScheme === "dark" ? "bg-backgroundPrimaryDark" : "bg-backgroundPrimaryLight"}`
       }
     >
-      <View style={tw`mb-5 flex flex-row`}>
+      <View style={tw`mb-5`}>
         <Link 
-          href="/(tabs)/overview">
+          href="/(tabs)/overview" style={tw`flex`}>
                   <MaterialCommunityIcons
                     style={tw``}
                     name="chevron-left"
                     size={28}
                     color={`${colorScheme === "dark" ?  "#FDFDFF" : "#202020" }`}
                   />
-        <Text style={tw`font-Inter text-H4 align-self-start font-regular ${colorScheme === "dark" ? "text-onBackgroundDark" : "text-onBackgroundLight"}`}>Tillbaka</Text>
+        <Text style={tw`font-Inter text-H4 self-center font-regular ${colorScheme === "dark" ? "text-onBackgroundDark" : "text-onBackgroundLight"}`}>Tillbaka</Text>
        </Link>
       </View>
       

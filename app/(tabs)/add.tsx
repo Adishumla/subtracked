@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, ScrollView, useColorScheme } from "react-native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import supabase from "../../lib/supabaseStore";
 import tw from "../../lib/tailwind";
 import { Link } from "expo-router";
@@ -120,26 +121,22 @@ export default function App() {
 
     `}
     >
-      <View style={tw`mb-16 gap-5`}>
-        <Link href="/(tabs)/overview">
-          <Text
-            style={tw`font-Inter text-H4 font-regular ${
-              colorScheme === "dark"
-                ? "text-onBackgroundDark"
-                : "text-onBackgroundLight"
-            }`}
-          >
-            Tillbaka
-          </Text>
-        </Link>
-        <Text
-          style={tw`font-Inter text-H1 font-medium ${
-            colorScheme === "dark" ? "text-H1Dark" : "text-onBackgroundLight"
-          }`}
-        >
-          Lägg till abonnemang
-        </Text>
+
+<View style={tw`mb-5`}>
+        <Link 
+          href="/(tabs)/overview" style={tw`flex`}>
+                  <MaterialCommunityIcons
+                    style={tw``}
+                    name="chevron-left"
+                    size={28}
+                    color={`${colorScheme === "dark" ?  "#FDFDFF" : "#202020" }`}
+                  />
+        <Text style={tw`font-Inter text-H4 self-center font-regular ${colorScheme === "dark" ? "text-onBackgroundDark" : "text-onBackgroundLight"}`}>Tillbaka</Text>
+       </Link>
       </View>
+
+      <Text style={tw`mb-16 font-Inter text-H1 font-medium ${colorScheme === "dark" ? "text-H1Dark" : "text-onBackgroundLight"}`}>Lägg till abonnemang</Text>
+
 
       <View style={tw`mt-16`}>
         <Text

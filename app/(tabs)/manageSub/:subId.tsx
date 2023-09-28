@@ -8,6 +8,7 @@ import { Pressable } from "react-native";
 import { Link } from "expo-router";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Category from "../../../components/Category";
+import { colors } from "react-native-elements";
 
 // Define an interface for your subscription data
 interface Subscription {
@@ -82,18 +83,18 @@ const ManageSub = () => {
                 style={tw`flex flex-col justify-center items-center w-full`}
               >
                 <Text
-                  style={tw`text-4xl text-white text-center ${
+                  style={tw`text-H1 font-Inter font-medium text-center ${
                     colorScheme === "dark"
-                      ? "bg-backgroundPrimaryDark"
+                      ? "text-H1Dark"
                       : "text-onBackgroundLight"
                   }`}
                 >
                   {subscription.provider}
                 </Text>
                 <Text
-                  style={tw`text-base text-white text-center ${
+                  style={tw`font-H4 font-normal font-Inter ${
                     colorScheme === "dark"
-                      ? "bg-black"
+                      ? "text-onBackgroundDark"
                       : "text-onBackgroundLight"
                   }
                 `}
@@ -111,11 +112,14 @@ const ManageSub = () => {
               >
                 {subscription.draw_unsuccessful ? (
                   <View
-                    style={tw`flex-row bg-white w-11/12 p-2 mx-4 shadow-lg shadow-indigo-600 justify-between items-center 
-                `}
+                    style={tw`mb-1 flex-row w-11/12 p-2 mx-4 shadow-lg shadow-indigo-600 justify-between items-center 
+                    ${colorScheme === "dark"
+                      ? "bg-primaryDark text-onBackgroundDark"
+                      : "bg-primaryLight text-onBackgroundLight"}
+                    `}
                   >
                     <View
-                      style={tw`w-8 h-8 bg-red-500 rounded-full items-center justify-center`}
+                      style={tw`w-8 h-8 bg-danger rounded-full items-center justify-center`}
                     >
                       <MaterialCommunityIcons
                         name="exclamation"
@@ -124,8 +128,8 @@ const ManageSub = () => {
                       />
                     </View>
                     <Text
-                      style={tw`text-xl text-white pl-2 ${
-                        colorScheme === "dark" ? "bg-black" : "text-black"
+                      style={tw`text-H4 font-Inter pl-2 ${
+                        colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"
                       }
                   `}
                     >
@@ -136,8 +140,10 @@ const ManageSub = () => {
                   `}
                     >
                       <Text
-                        style={tw`text-xl text-white pl-2 font-normal
-                      ${colorScheme === "dark" ? "bg-black" : "text-black"}
+                        style={tw`text-H4 font-Inter font-normal
+                      ${
+                        colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"
+                      }
                   `}
                       >
                         Mer info
@@ -145,8 +151,8 @@ const ManageSub = () => {
                       <MaterialCommunityIcons
                         name="chevron-right"
                         size={38}
-                        color="black"
-                      />
+                        color={`${colorScheme === "dark" ?  "#FDFDFF" : "#202020" }`}
+                        />
                     </View>
                   </View>
                 ) : (
@@ -154,11 +160,14 @@ const ManageSub = () => {
                 )}
                 {subscription.price_increase ? (
                   <View
-                    style={tw`flex-row bg-white w-11/12 p-2 mx-4 shadow-lg shadow-indigo-600 justify-between items-center mt-2
-              `}
-                  >
+                  style={tw`flex-row w-11/12 p-2 mx-4 shadow-lg shadow-indigo-600 justify-between items-center 
+                  ${colorScheme === "dark"
+                    ? "bg-primaryDark text-onBackgroundDark"
+                    : "bg-primaryLight text-onBackgroundLight"}
+                  `}
+                >
                     <View
-                      style={tw`w-8 h-8 bg-yellow-400 rounded-full items-center justify-center`}
+                      style={tw`w-8 h-8 bg-alert rounded-full items-center justify-center`}
                     >
                       <MaterialCommunityIcons
                         name="exclamation"
@@ -167,9 +176,10 @@ const ManageSub = () => {
                       />
                     </View>
                     <Text
-                      style={tw`text-xl text-white pl-0
-                    ${colorScheme === "dark" ? "bg-black" : "text-black"}
-                `}
+                      style={tw`text-H4 font-Inter ${
+                        colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"
+                      }
+                  `}
                     >
                       Prishöjning!
                     </Text>
@@ -178,17 +188,19 @@ const ManageSub = () => {
                 `}
                     >
                       <Text
-                        style={tw`text-xl text-white pl-2 font-normal
-                    ${colorScheme === "dark" ? "bg-black" : "text-black"}
-                `}
+                        style={tw`text-H4 font-Inter pl-4 font-normal
+                        ${
+                          colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"
+                        }
+                    `}
                       >
                         Mer info
                       </Text>
                       <MaterialCommunityIcons
                         name="chevron-right"
                         size={38}
-                        color="black"
-                      />
+                        color={`${colorScheme === "dark" ?  "#FDFDFF" : "#202020" }`}
+                        />
                     </View>
                   </View>
                 ) : (
@@ -197,12 +209,12 @@ const ManageSub = () => {
               </View>
 
               <View
-                style={tw`bg-backgroundSecondaryLight my-4 p-3
-              `}
+                style={[tw`my-4 p-3  ${colorScheme === "dark" ? "bg-backgroundSecondaryDark" : "bg-backgroundSecondaryLight"}
+              `]}
               >
                 <Text
-                  style={tw`text-H2 text-onBackgroundLight
-                `}
+                  style={[tw`text-H2 font-medium ${colorScheme === "dark" ? "text-onBackgroundDark" : "text-onBackgroundLight"}
+                `]}
                 >
                   Om abonnemanget
                 </Text>
@@ -217,49 +229,49 @@ const ManageSub = () => {
                   />
                 </View>
                 <View style={tw`flex-col justify-between items-center w-full`}>
-                  <View style={tw`w-full bg-tertiaryLight p-3 m-2 rounded-xl`}>
+                <View style={tw`w-full p-3 m-2 rounded-xl ${colorScheme === "dark" ? "bg-tertiaryDark" : "bg-tertiaryLight"}`}>
                     <View style={tw`flex flex-row justify-between`}>
                       <Text
-                        style={tw`text-xl text-black 
+                        style={tw`text-H3 font-normal font-Inter ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}
                     `}
                       >
                         Månadskostnad
                       </Text>
                       <Text
-                        style={tw`text-xl text-black
-                    `}
+                        style={tw`text-H3 font-normal font-Inter ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}
+                        `}
                       >
                         {subscription.cost} kr
                       </Text>
                     </View>
                   </View>
-                  <View style={tw`w-full bg-tertiaryLight p-3 m-2 rounded-xl`}>
+                  <View style={tw`w-full p-3 m-2 rounded-xl ${colorScheme === "dark" ? "bg-tertiaryDark" : "bg-tertiaryLight"}`}>
                     <View style={tw`flex flex-row justify-between`}>
                       <Text
-                        style={tw`text-xl text-black 
-                    `}
+                        style={tw`text-H3 font-normal font-Inter ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}
+                        `}
                       >
                         Årskostnad
                       </Text>
                       <Text
-                        style={tw`text-xl text-black
-                    `}
+                        style={tw`text-H3 font-normal font-Inter ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}
+                        `}
                       >
                         {subscription.cost * 12} kr
                       </Text>
                     </View>
                   </View>
-                  <View style={tw`w-full bg-tertiaryLight p-3 m-2 rounded-xl`}>
+                  <View style={tw`w-full p-3 m-2 rounded-xl ${colorScheme === "dark" ? "bg-tertiaryDark" : "bg-tertiaryLight"}`}>
                     <View style={tw`flex flex-row justify-between`}>
                       <Text
-                        style={tw`text-xl text-black 
-                    `}
+                        style={tw`text-H3 font-normal font-Inter ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}
+                        `}
                       >
                         Nästa dragning
                       </Text>
                       <Text
-                        style={tw`text-xl text-black
-                    `}
+                        style={tw`text-H3 font-normal font-Inter ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}
+                        `}
                       >
                         {subscription.bill_date}
                       </Text>
@@ -268,36 +280,37 @@ const ManageSub = () => {
                 </View>
               </View>
               <View
-                style={tw`bg-primaryLight flex mt-12 p-4 mx-4 shadow-lg shadow-indigo-600
+                style={tw`flex mt-12 p-4 mx-4 shadow-lg shadow-indigo-600 ${colorScheme === "dark" ? "bg-primaryDark" : "bg-primaryLight"}
               `}
               >
-                <Text style={tw`text-lg`}>
+                <Text 
+                style={tw`font-H4 font-Inter font-normal ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}`}
+                >
                   För mer information, uppsägning och ändringar agående
                   abbonnemanget, gå till leverantörens hemsida.
                 </Text>
                 <Link
-                  style={tw`self-end underline text-lg`}
-                  /* www.provider.com */
+                style={tw`font-H4 font-Inter self-end underline font-medium ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}`}                  /* www.provider.com */
                   href={`http://www.${subscription.provider}.com`}
                 >
                   www.{subscription.provider}.com
                 </Link>
               </View>
               <View
-                style={tw`text-base text-white bg-white p-4 my-12 rounded-xl mx-4 shadow-lg shadow-indigo-600
+                style={tw`p-4 my-12 rounded-xl mx-4 shadow-lg shadow-indigo-600 ${colorScheme === "dark" ? "bg-primaryDark" : "bg-primaryLight"}
                 `}
               >
                 <Link
                   href={`/editSub/${subId}`}
-                  style={tw`text-base text-black w-full  h-7 flex flex-row justify-between items-center
+                  style={tw`w-full h-7 flex flex-row ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}
                   `}
                 >
                   <View
-                    style={tw`flex flex-row justify-between items-center pt-1
+                    style={tw`flex flex-row items-center w-full justify-between pt-1
                     `}
                   >
                     <Text
-                      style={tw`text-base text-black 
+                      style={tw`font-H4 font-Inter font-normal ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}
                     `}
                     >
                       Ändra abonnemang
@@ -306,8 +319,7 @@ const ManageSub = () => {
                       style={tw``}
                       name="chevron-right"
                       size={28}
-                      color="black"
-                    />
+                      color={`${colorScheme === "dark" ?  "#FDFDFF" : "#202020" }`}                    />
                   </View>
                 </Link>
               </View>
