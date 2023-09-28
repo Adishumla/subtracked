@@ -110,9 +110,11 @@ const ManageSub = () => {
                 {subscription.draw_unsuccessful ? (
                   <View
                     style={tw`mb-1 flex-row w-11/12 p-2 mx-4 shadow-lg shadow-indigo-600 justify-between items-center 
-                    ${colorScheme === "dark"
-                      ? "bg-primaryDark text-onBackgroundDark"
-                      : "bg-primaryLight text-onBackgroundLight"}
+                    ${
+                      colorScheme === "dark"
+                        ? "bg-primaryDark text-onBackgroundDark"
+                        : "bg-primaryLight text-onBackgroundLight"
+                    }
                     `}
                   >
                     <View
@@ -126,7 +128,9 @@ const ManageSub = () => {
                     </View>
                     <Text
                       style={tw`text-H4 font-Inter pl-2 ${
-                        colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"
+                        colorScheme === "dark"
+                          ? "text-onPrimaryDark"
+                          : "text-onPrimaryLight"
                       }
                   `}
                     >
@@ -139,7 +143,9 @@ const ManageSub = () => {
                       <Text
                         style={tw`text-H4 font-Inter font-normal
                       ${
-                        colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"
+                        colorScheme === "dark"
+                          ? "text-onPrimaryDark"
+                          : "text-onPrimaryLight"
                       }
                   `}
                       >
@@ -148,8 +154,10 @@ const ManageSub = () => {
                       <MaterialCommunityIcons
                         name="chevron-right"
                         size={38}
-                        color={`${colorScheme === "dark" ?  "#FDFDFF" : "#202020" }`}
-                        />
+                        color={`${
+                          colorScheme === "dark" ? "#FDFDFF" : "#202020"
+                        }`}
+                      />
                     </View>
                   </View>
                 ) : (
@@ -157,12 +165,14 @@ const ManageSub = () => {
                 )}
                 {subscription.price_increase ? (
                   <View
-                  style={tw`flex-row w-11/12 p-2 mx-4 shadow-lg shadow-indigo-600 justify-between items-center 
-                  ${colorScheme === "dark"
-                    ? "bg-primaryDark text-onBackgroundDark"
-                    : "bg-primaryLight text-onBackgroundLight"}
+                    style={tw`flex-row w-11/12 p-2 mx-4 shadow-lg shadow-indigo-600 justify-between items-center 
+                  ${
+                    colorScheme === "dark"
+                      ? "bg-primaryDark text-onBackgroundDark"
+                      : "bg-primaryLight text-onBackgroundLight"
+                  }
                   `}
-                >
+                  >
                     <View
                       style={tw`w-8 h-8 bg-alert rounded-full items-center justify-center`}
                     >
@@ -174,7 +184,9 @@ const ManageSub = () => {
                     </View>
                     <Text
                       style={tw`text-H4 font-Inter ${
-                        colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"
+                        colorScheme === "dark"
+                          ? "text-onPrimaryDark"
+                          : "text-onPrimaryLight"
                       }
                   `}
                     >
@@ -187,7 +199,9 @@ const ManageSub = () => {
                       <Text
                         style={tw`text-H4 font-Inter pl-4 font-normal
                         ${
-                          colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"
+                          colorScheme === "dark"
+                            ? "text-onPrimaryDark"
+                            : "text-onPrimaryLight"
                         }
                     `}
                       >
@@ -196,8 +210,10 @@ const ManageSub = () => {
                       <MaterialCommunityIcons
                         name="chevron-right"
                         size={38}
-                        color={`${colorScheme === "dark" ?  "#FDFDFF" : "#202020" }`}
-                        />
+                        color={`${
+                          colorScheme === "dark" ? "#FDFDFF" : "#202020"
+                        }`}
+                      />
                     </View>
                   </View>
                 ) : (
@@ -206,12 +222,24 @@ const ManageSub = () => {
               </View>
 
               <View
-                style={[tw`my-4 p-3  ${colorScheme === "dark" ? "bg-backgroundSecondaryDark" : "bg-backgroundSecondaryLight"}
-              `]}
+                style={[
+                  tw`my-4 p-3 py-6  ${
+                    colorScheme === "dark"
+                      ? "bg-backgroundSecondaryDark"
+                      : "bg-backgroundSecondaryLight"
+                  }
+              `,
+                ]}
               >
                 <Text
-                  style={[tw`text-H2 font-medium ${colorScheme === "dark" ? "text-onBackgroundDark" : "text-onBackgroundLight"}
-                `]}
+                  style={[
+                    tw`text-H2 font-medium ${
+                      colorScheme === "dark"
+                        ? "text-onBackgroundDark"
+                        : "text-onBackgroundLight"
+                    }
+                `,
+                  ]}
                 >
                   Om abonnemanget
                 </Text>
@@ -226,48 +254,96 @@ const ManageSub = () => {
                   />
                 </View>
                 <View style={tw`flex-col justify-between items-center w-full`}>
-                <View style={tw`w-full p-3 m-2 rounded-xl ${colorScheme === "dark" ? "bg-tertiaryDark" : "bg-tertiaryLight"}`}>
-                    <View style={tw`flex flex-row justify-between`}>
+                  <View
+                    style={tw`w-full p-3 m-2 rounded-xl ${
+                      colorScheme === "dark"
+                        ? "bg-tertiaryDark"
+                        : "bg-tertiaryLight"
+                    }`}
+                  >
+                    <View
+                      style={tw`flex flex-row justify-between items-center`}
+                    >
                       <Text
-                        style={tw`text-H3 font-normal font-Inter ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}
+                        style={tw`text-H3 font-normal font-Inter ${
+                          colorScheme === "dark"
+                            ? "text-onPrimaryDark"
+                            : "text-onPrimaryLight"
+                        }
                     `}
                       >
                         Månadskostnad
                       </Text>
                       <Text
-                        style={tw`text-H3 font-normal font-Inter ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}
+                        style={tw`text-H3 font-normal font-Inter py-1 ${
+                          colorScheme === "dark"
+                            ? "text-onPrimaryDark"
+                            : "text-onPrimaryLight"
+                        }
                         `}
                       >
                         {subscription.cost} kr
                       </Text>
                     </View>
                   </View>
-                  <View style={tw`w-full p-3 m-2 rounded-xl ${colorScheme === "dark" ? "bg-tertiaryDark" : "bg-tertiaryLight"}`}>
-                    <View style={tw`flex flex-row justify-between`}>
+                  <View
+                    style={tw`w-full p-3 m-2 rounded-xl ${
+                      colorScheme === "dark"
+                        ? "bg-tertiaryDark"
+                        : "bg-tertiaryLight"
+                    }`}
+                  >
+                    <View
+                      style={tw`flex flex-row justify-between items-center`}
+                    >
                       <Text
-                        style={tw`text-H3 font-normal font-Inter ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}
+                        style={tw`text-H3 font-normal font-Inter py-1 ${
+                          colorScheme === "dark"
+                            ? "text-onPrimaryDark"
+                            : "text-onPrimaryLight"
+                        }
                         `}
                       >
                         Årskostnad
                       </Text>
                       <Text
-                        style={tw`text-H3 font-normal font-Inter ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}
+                        style={tw`text-H3 font-normal font-Inter ${
+                          colorScheme === "dark"
+                            ? "text-onPrimaryDark"
+                            : "text-onPrimaryLight"
+                        }
                         `}
                       >
                         {subscription.cost * 12} kr
                       </Text>
                     </View>
                   </View>
-                  <View style={tw`w-full p-3 m-2 rounded-xl ${colorScheme === "dark" ? "bg-tertiaryDark" : "bg-tertiaryLight"}`}>
-                    <View style={tw`flex flex-row justify-between`}>
+                  <View
+                    style={tw`w-full p-3 m-2 rounded-xl ${
+                      colorScheme === "dark"
+                        ? "bg-tertiaryDark"
+                        : "bg-tertiaryLight"
+                    }`}
+                  >
+                    <View
+                      style={tw`flex flex-row justify-between items-center`}
+                    >
                       <Text
-                        style={tw`text-H3 font-normal font-Inter ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}
+                        style={tw`text-H3 font-normal font-Inter py-1 ${
+                          colorScheme === "dark"
+                            ? "text-onPrimaryDark"
+                            : "text-onPrimaryLight"
+                        }
                         `}
                       >
                         Nästa dragning
                       </Text>
                       <Text
-                        style={tw`text-H3 font-normal font-Inter ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}
+                        style={tw`text-H3 font-normal font-Inter ${
+                          colorScheme === "dark"
+                            ? "text-onPrimaryDark"
+                            : "text-onPrimaryLight"
+                        }
                         `}
                       >
                         {subscription.bill_date}
@@ -277,29 +353,45 @@ const ManageSub = () => {
                 </View>
               </View>
               <View
-                style={tw`flex mt-12 p-4 mx-4 shadow-lg shadow-indigo-600 ${colorScheme === "dark" ? "bg-primaryDark" : "bg-primaryLight"}
+                style={tw`flex mt-12 p-4 mx-4 shadow-lg shadow-indigo-600 ${
+                  colorScheme === "dark" ? "bg-primaryDark" : "bg-primaryLight"
+                }
               `}
               >
-                <Text 
-                style={tw`text-H4 font-Inter font-normal ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}`}
+                <Text
+                  style={tw`text-H4 font-Inter font-normal ${
+                    colorScheme === "dark"
+                      ? "text-onPrimaryDark"
+                      : "text-onPrimaryLight"
+                  }`}
                 >
                   För mer information, uppsägning och ändringar agående
                   abbonnemanget, gå till leverantörens hemsida.
                 </Text>
                 <Link
-                style={tw`text-H4 font-Inter self-end underline font-medium ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}`}                  /* www.provider.com */
+                  style={tw`text-H4 font-Inter self-end underline font-medium ${
+                    colorScheme === "dark"
+                      ? "text-onPrimaryDark"
+                      : "text-onPrimaryLight"
+                  }`} /* www.provider.com */
                   href={`http://www.${subscription.provider}.com`}
                 >
                   www.{subscription.provider}.com
                 </Link>
               </View>
               <View
-                style={tw`p-4 my-12 rounded-xl mx-4 shadow-lg shadow-indigo-600 ${colorScheme === "dark" ? "bg-primaryDark" : "bg-primaryLight"}
+                style={tw`p-4 my-12 rounded-xl mx-4 shadow-lg shadow-indigo-600 ${
+                  colorScheme === "dark" ? "bg-primaryDark" : "bg-primaryLight"
+                }
                 `}
               >
                 <Link
                   href={`/editSub/${subId}`}
-                  style={tw`w-full h-7 flex flex-row ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}
+                  style={tw`w-full h-7 flex flex-row ${
+                    colorScheme === "dark"
+                      ? "text-onPrimaryDark"
+                      : "text-onPrimaryLight"
+                  }
                   `}
                 >
                   <View
@@ -307,7 +399,11 @@ const ManageSub = () => {
                     `}
                   >
                     <Text
-                      style={tw`text-H4 font-Inter font-normal ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}
+                      style={tw`text-H4 font-Inter font-normal ${
+                        colorScheme === "dark"
+                          ? "text-onPrimaryDark"
+                          : "text-onPrimaryLight"
+                      }
                     `}
                     >
                       Ändra abonnemang
@@ -316,7 +412,10 @@ const ManageSub = () => {
                       style={tw``}
                       name="chevron-right"
                       size={28}
-                      color={`${colorScheme === "dark" ?  "#FDFDFF" : "#202020" }`}                    />
+                      color={`${
+                        colorScheme === "dark" ? "#FDFDFF" : "#202020"
+                      }`}
+                    />
                   </View>
                 </Link>
               </View>
@@ -326,7 +425,7 @@ const ManageSub = () => {
 
         {/* Display a message if no subscription data is available */}
         {!subscription && (
-          <Text style={tw`text-lg text-white`}>
+          <Text style={tw`text-H4 text-white`}>
             No subscription found for ID: {subId}
           </Text>
         )}

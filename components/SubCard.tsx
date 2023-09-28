@@ -67,12 +67,12 @@ export default function SubCard({
       <Pressable>
         <View
           style={[
-            tw`flex-col font-Inter justify-between items-center px-4 py-4 rounded-full mt-[-10px] shadow-lg shadow-indigo-700`,
+            tw`flex-col font-Inter justify-between items-center px-0 py-4 rounded-full mt-[-10px] shadow-lg shadow-indigo-700`,
           ]}
         >
           <View
             style={[
-              tw`flex-row items-center  rounded-lg w-full h-20 overflow-hidden 
+              tw`flex-row items-center  rounded-lg w-full h-20 overflow-hidden px-4
               ${colorScheme === "dark" ? "bg-primaryDark" : "bg-primaryLight"}`,
             ]}
           >
@@ -135,7 +135,7 @@ export default function SubCard({
           {subStatus === true ? (
             <View
               style={[
-                tw`flex-col items-center w-full mt-[-8px] ${
+                tw`flex-col items-center w-full mt-[-8px]  pl-4 ${
                   priceIncrease === true ? "" : "rounded-b-xl"
                 }
                 ${
@@ -174,7 +174,7 @@ export default function SubCard({
           {priceIncrease === true ? (
             <View
               style={[
-                tw`flex-col items-center w-full rounded-b-xl ${
+                tw`flex-col items-center w-full rounded-b-xl pl-4 ${
                   subStatus === true ? "mt-[-0px]" : "mt-[-8px]"
                 }
                 ${

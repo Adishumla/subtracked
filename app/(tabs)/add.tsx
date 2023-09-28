@@ -149,7 +149,7 @@ export default function App() {
         Lägg till abonnemang
       </Text>
 
-      <View style={tw`mt-16`}>
+      <View style={tw`mt-0`}>
         <Text
           style={[
             tw`text-H2 ${
@@ -255,7 +255,7 @@ export default function App() {
         </View>
       </View>
 
-      <View style={tw`mt-6 flex flex-col px-1`}>
+      <View style={tw` flex flex-col px-1`}>
         <Text
           style={[
             tw`text-H2 ${
@@ -317,12 +317,15 @@ export default function App() {
       </View>
 
       <Button
-        style={tw`mb-20
-      `}
-        buttonStyle={tw`bg-primaryLight rounded-xl p-4 shadow-md shadow-indigo-400
-        `}
-        titleStyle={tw`text-onPrimaryLight
-        `}
+        buttonStyle={tw`p-4 rounded-xl ${
+          colorScheme === "dark"
+            ? "bg-primaryDark shadow-md"
+            : "bg-primaryLight shadow-md"
+        }`}
+        titleStyle={tw`${
+          colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"
+        }`}
+        style={tw`mt-8 mb-16`}
         title="Spara"
         onPress={handleSave}
       />

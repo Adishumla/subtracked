@@ -6,6 +6,9 @@ import Category from "../../../components/Category";
 import SubscriptionType from "../../../components/SubscriptionType";
 import { Button, Input } from "react-native-elements";
 import { useRoute } from "@react-navigation/native";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import { Link } from "expo-router";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 interface Subscription {
   bill_date: string;
@@ -46,7 +49,7 @@ export default function App() {
 
   useEffect(() => {
     getSub();
-  }, []);
+  }, [subId]);
 
   const categories = [
     "Hushåll",
@@ -57,40 +60,69 @@ export default function App() {
     "Streaming",
   ];
   const subscriptionTypes = ["Eget", "Delat", "Familj"];
-  const [provider, setProvider] = useState<string>("");
+  const [provider, setProvider] = useState<string>(
+    subscription?.provider || ""
+  );
   const [price, setPrice] = useState<number>(0);
   const [date, setDate] = useState<string>("");
   const [note, setNote] = useState<string>("");
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [selectedSubscriptionType, setSelectedSubscriptionType] =
     useState<string>("");
+  const dateChange = (event: any, selectedDate: any) => {
+    const currentDate = selectedDate || date;
+    setDate(currentDate);
+  };
 
+  useEffect(() => {
+    if (subscription) {
+      setProvider(subscription.provider);
+      setPrice(subscription.cost);
+      setDate(subscription.bill_date);
+      setNote(subscription.note);
+      setSelectedCategory(subscription.category);
+      setSelectedSubscriptionType(subscription.plan);
+    }
+  }, [subscription]);
   return (
-    <ScrollView style={tw`px-4 pt-8`}>
+    <ScrollView
+      style={tw`px-4 pt-8 ${
+        colorScheme === "dark"
+          ? "bg-backgroundPrimaryDark"
+          : "bg-backgroundPrimaryLight"
+      }
+
+    `}
+    >
+      <View style={tw`mb-5`}>
+        <Link href="/(tabs)/overview" style={tw`flex`}>
+          <MaterialCommunityIcons
+            style={tw``}
+            name="chevron-left"
+            size={28}
+            color={`${colorScheme === "dark" ? "#FDFDFF" : "#202020"}`}
+          />
+          <Text
+            style={tw`font-Inter text-H4 self-center font-normal ${
+              colorScheme === "dark"
+                ? "text-onBackgroundDark"
+                : "text-onBackgroundLight"
+            }`}
+          >
+            Tillbaka
+          </Text>
+        </Link>
+      </View>
+
       <Text
-        style={[
-          tw`text-H4 ${
-            colorScheme === "dark"
-              ? "text-onPrimaryDark"
-              : "text-onPrimaryLight"
-          }`,
-        ]}
+        style={tw`mb-16 font-Inter text-H1 font-medium ${
+          colorScheme === "dark" ? "text-H1Dark" : "text-onBackgroundLight"
+        }`}
       >
-        Tillbaka
-      </Text>
-      <Text
-        style={[
-          tw`text-H1 ${
-            colorScheme === "dark"
-              ? "text-onPrimaryDark"
-              : "text-onPrimaryLight"
-          }`,
-        ]}
-      >
-        Lägg till abonnemang
+        Ändra abonnemang
       </Text>
 
-      <View style={tw`mt-16`}>
+      <View style={tw`mt-0`}>
         <Text
           style={[
             tw`text-H2 ${
@@ -108,43 +140,14 @@ export default function App() {
               key={category}
               name={category}
               onPress={() => setSelectedCategory(category)} // Update selected category
-              selected={selectedCategory === category} // Pass selected prop
+              selected={category === selectedCategory}
             />
           ))}
         </View>
       </View>
 
       <View style={tw`mt-12`}>
-        <Text
-          style={[
-            tw`text-H2 ${
-              colorScheme === "dark"
-                ? "text-onPrimaryDark"
-                : "text-onPrimaryLight"
-            }`,
-          ]}
-        >
-          Leverantör
-        </Text>
-        <Input
-          placeholder="Ex. Spotify"
-          onChangeText={(value) => setProvider(value)}
-        />
-        <Text
-          style={[
-            tw`text-H4 ${
-              colorScheme === "dark"
-                ? "text-onPrimaryDark"
-                : "text-onPrimaryLight"
-            }`,
-          ]}
-        >
-          Ex. Spotify
-        </Text>
-      </View>
-
-      <View style={tw`mt-12`}>
-        <View style={tw``}>
+        <View style={tw`px-1`}>
           <Text
             style={[
               tw`text-H2 ${
@@ -154,31 +157,79 @@ export default function App() {
               }`,
             ]}
           >
-            Pris/mån
+            Leverantör
           </Text>
+        </View>
+        <Input
+          style={tw`rounded-xl border-2 border-gray-300 bg-inputSectionLight p-2 mt-4 text-onPrimaryLight
+          `}
+          placeholder="Ex. Spotify"
+          inputContainerStyle={[tw`border-b-0 p-0 mt-0`]}
+          containerStyle={[tw`border-b-0 p-0 mt-0`]}
+          value={provider}
+          onChangeText={(value) => {
+            setProvider(value);
+          }}
+        />
+        {/* <H4 content="Ex. Spotify"></H4> */}
+      </View>
+
+      <View
+        style={tw`flex flex-row justify-between px-0
+      `}
+      >
+        <View style={tw`w-1/2`}>
+          <View style={tw`px-1`}>
+            <Text
+              style={[
+                tw`text-H2 ${
+                  colorScheme === "dark"
+                    ? "text-onPrimaryDark"
+                    : "text-onPrimaryLight"
+                }`,
+              ]}
+            >
+              Pris/mån
+            </Text>
+          </View>
           <Input
-            placeholder="Ex. 99"
+            style={tw`rounded-xl border-2 border-gray-300 bg-inputSectionLight p-2 mt-4 text-onPrimaryLight`}
+            placeholder={subscription?.cost.toString()}
+            inputContainerStyle={[tw`border-b-0 p-0 mt-0`]}
+            containerStyle={[tw`border-b-0 p-0 mt-0`]}
+            keyboardType="numeric" // Add keyboardType prop
+            value={price.toString()}
             onChangeText={(value) => setPrice(parseInt(value))}
           />
         </View>
 
-        <View style={tw``}>
-          <Text
-            style={[
-              tw`text-H2 ${
-                colorScheme === "dark"
-                  ? "text-onPrimaryDark"
-                  : "text-onPrimaryLight"
-              }`,
-            ]}
-          >
-            Betaldatum
-          </Text>
-          <Input placeholder="Ex. 1" onChangeText={(value) => setDate(value)} />
+        <View style={tw`w-1/2`}>
+          <View style={tw`px-5`}>
+            <Text
+              style={[
+                tw`text-H2 ${
+                  colorScheme === "dark"
+                    ? "text-onPrimaryDark"
+                    : "text-onPrimaryLight"
+                }`,
+              ]}
+            >
+              Betaldatum
+            </Text>
+          </View>
+          <View style={tw`mt-4 w-full flex pr-8`}>
+            <DateTimePicker
+              textColor="#202020"
+              style={tw`w-full mr-8 text-black bg-transparent
+            `}
+              value={date ? new Date(date) : new Date()}
+              onChange={dateChange}
+            />
+          </View>
         </View>
       </View>
 
-      <View style={tw`mt-12`}>
+      <View style={tw` flex flex-col px-1`}>
         <Text
           style={[
             tw`text-H2 ${
@@ -190,25 +241,26 @@ export default function App() {
         >
           Abonnemangstyp
         </Text>
-        <View style={tw`flex-1 items-center justify-center flex-row`}>
+        <View style={tw`flex items-center justify-center flex-row`}>
           {subscriptionTypes.map((subscriptionType, index) => (
             <View
               key={subscriptionType}
               style={[
-                tw`flex-1 p-2`, // Adjust padding to control the size of SubscriptionType components
-                index !== subscriptionTypes.length - 1 && tw`mr-2`, // Adjust margin between components
+                tw`flex-1 p-0 mt-4`,
+                index !== subscriptionTypes.length - 1 && tw`mr-2`,
               ]}
             >
               <SubscriptionType
                 name={subscriptionType}
+                width={28}
                 onPress={() => {
                   if (selectedSubscriptionType === subscriptionType) {
-                    setSelectedSubscriptionType(""); // Deselect if already selected
+                    setSelectedSubscriptionType("");
                   } else {
-                    setSelectedSubscriptionType(subscriptionType); // Select the current one
+                    setSelectedSubscriptionType(subscriptionType);
                   }
                 }}
-                selected={selectedSubscriptionType === subscriptionType}
+                selected={subscriptionType === selectedSubscriptionType}
               />
             </View>
           ))}
@@ -227,26 +279,28 @@ export default function App() {
         >
           Notering
         </Text>
-
         <Input
+          style={tw`rounded-xl border-2 border-gray-300 bg-inputSectionLight p-2 mt-4 text-onPrimaryLight
+          `}
           placeholder="Ex. Annas mobil"
+          inputContainerStyle={[tw`border-b-0 p-0 mt-0`]}
+          containerStyle={[tw`border-b-0 p-0 mt-0`]}
           onChangeText={(value) => setNote(value)}
+          value={note}
         />
-        <Text
-          style={[
-            tw`text-H4 ${
-              colorScheme === "dark"
-                ? "text-onPrimaryDark"
-                : "text-onPrimaryLight"
-            }`,
-          ]}
-        >
-          Ex. Annas mobil.
-        </Text>
+        {/* <H4 content="Ex. Annas mobil"></H4> */}
       </View>
 
       <Button
-        style={tw`mb-12`}
+        buttonStyle={tw`p-4 rounded-xl ${
+          colorScheme === "dark"
+            ? "bg-primaryDark shadow-md"
+            : "bg-primaryLight shadow-md"
+        }`}
+        titleStyle={tw`${
+          colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"
+        }`}
+        style={tw`mt-8 mb-16`}
         title="Uppdatera"
         onPress={async () => {
           const { data, error } = await supabase

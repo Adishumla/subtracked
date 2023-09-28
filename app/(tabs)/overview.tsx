@@ -262,11 +262,15 @@ export default function App() {
           },
         ]}
       />
-      <BlurView intensity={100} style={tw`absolute inset-0 w-full h-full`} />
 
+      <BlurView
+        intensity={100}
+        style={tw`absolute inset-0 w-full h-full
+      `}
+      />
       <ScrollView
         style={[
-          tw`font-Inter w-full px-4 pt-8 bg-opacity-50 ${
+          tw`font-Inter w-full px-4 pt-8 bg-opacity-50  h-full ${
             colorScheme === "dark"
               ? "bg-backgroundPrimaryDark"
               : "bg-backgroundPrimaryLight"
@@ -351,15 +355,6 @@ export default function App() {
               await schedulePushNotification();
             }}
           />
-          {/* <Button
-            title="Dark mode"
-            onPress={() => {
-              //change color scheme
-              Appearance.setColorScheme(
-                colorScheme === "dark" ? "light" : "dark"
-              );
-            }}
-          /> */}
         </View>
       </ScrollView>
     </View>
