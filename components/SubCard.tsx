@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Pressable, Text, View, useColorScheme, Image } from "react-native";
-import { Button } from "react-native-elements";
+import { Button, colors } from "react-native-elements";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import H2 from "./H2";
 import tw from "../lib/tailwind";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import { useFocusEffect } from "expo-router";
+
+
 
 interface SubCardProps {
   productName: string;
@@ -35,7 +37,10 @@ export default function SubCard({
     let icon = null;
 
     if (subType === "Eget") {
-      icon = <MaterialCommunityIcons name="account" size={20} color="black" />;
+      icon = 
+      <MaterialCommunityIcons name="account" size={20} 
+      color="black" 
+      />;
     } else if (subType === "Delat") {
       icon = (
         <MaterialCommunityIcons
@@ -46,7 +51,8 @@ export default function SubCard({
       );
     } else if (subType === "Familj") {
       icon = (
-        <MaterialCommunityIcons name="account-group" size={20} color="black" />
+        <MaterialCommunityIcons name="account-group" size={20} 
+        color="black" />
       );
     }
 

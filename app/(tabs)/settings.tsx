@@ -155,11 +155,11 @@ export default function App() {
             //@ts-ignore
             color={`${colorScheme === "dark" ? "#3C415E" : "#FDFDFF"}`}       
             thumbColor={`${colorScheme === "dark" ? "#3C415E" : "#FDFDFF"}`}
-            // onValueChange={() => {
-            //   Appearance.setColorScheme(
-            //     colorScheme === "dark" ? "light" : "dark"
-            //   );
-            // }}
+            onValueChange={() => {
+              Appearance.setColorScheme(
+                colorScheme === "dark" ? "light" : "dark"
+              );
+            }}
           />
         </View>
 
