@@ -123,123 +123,125 @@ export default function App() {
         }`,
       ]}
     >
-      <View style={tw`mb-5`}>
-        <Link href="/(tabs)/overview" style={tw`flex`}>
-          <MaterialCommunityIcons
-            style={tw``}
-            name="chevron-left"
-            size={28}
-            color={`${colorScheme === "dark" ? "#FDFDFF" : "#202020"}`}
-          />
-          <Text
-            style={tw`font-Inter text-H4 self-center font-normal ${
-              colorScheme === "dark"
-                ? "text-onBackgroundDark"
-                : "text-onBackgroundLight"
-            }`}
-          >
-            Tillbaka
-          </Text>
-        </Link>
-      </View>
+      <View style={tw`mb-12`}>
+        <View style={tw`mb-5`}>
+          <Link href="/(tabs)/overview" style={tw`flex`}>
+            <MaterialCommunityIcons
+              style={tw``}
+              name="chevron-left"
+              size={28}
+              color={`${colorScheme === "dark" ? "#FDFDFF" : "#202020"}`}
+            />
+            <Text
+              style={tw`font-Inter text-H4 self-center font-normal ${
+                colorScheme === "dark"
+                  ? "text-onBackgroundDark"
+                  : "text-onBackgroundLight"
+              }`}
+            >
+              Tillbaka
+            </Text>
+          </Link>
+        </View>
 
-      <Text
-        style={tw`mb-16 font-Inter text-H1 font-medium ${
-          colorScheme === "dark" ? "text-H1Dark" : "text-onBackgroundLight"
-        }`}
-      >
-        Kommande betalningar
-      </Text>
+        <Text
+          style={tw`mb-16 font-Inter text-H1 font-medium ${
+            colorScheme === "dark" ? "text-H1Dark" : "text-onBackgroundLight"
+          }`}
+        >
+          Kommande betalningar
+        </Text>
 
-      <View>
-        {Object.keys(sortedGroupedSubscriptions).map((data) => {
-          const monthLabel = data.split("-")[1];
-          const totalCost = sortedGroupedSubscriptions[data].totalCost;
+        <View>
+          {Object.keys(sortedGroupedSubscriptions).map((data) => {
+            const monthLabel = data.split("-")[1];
+            const totalCost = sortedGroupedSubscriptions[data].totalCost;
 
-          if (monthLabel !== currentMonth) {
-            currentMonth = monthLabel;
-            return (
-              <View key={data}>
-                <View style={tw`flex flex-row justify-between`}>
-                  <Text
-                    style={tw`font-Inter mb-[20px] text-H2 font-medium ${
-                      colorScheme === "dark"
-                        ? "text-onBackgroundDark"
-                        : "text-onBackgroundLight"
-                    }`}
-                  >
-                    {monthLabel}
-                  </Text>
-                  <Text
-                    style={tw`font-Inter mb-[20px] text-H2 font-medium ${
-                      colorScheme === "dark"
-                        ? "text-onBackgroundDark"
-                        : "text-onBackgroundLight"
-                    }`}
-                  >
-                    {totalCost + " kr"}
-                  </Text>
-                </View>
+            if (monthLabel !== currentMonth) {
+              currentMonth = monthLabel;
+              return (
+                <View key={data}>
+                  <View style={tw`flex flex-row justify-between`}>
+                    <Text
+                      style={tw`font-Inter mb-[20px] text-H2 font-medium ${
+                        colorScheme === "dark"
+                          ? "text-onBackgroundDark"
+                          : "text-onBackgroundLight"
+                      }`}
+                    >
+                      {monthLabel}
+                    </Text>
+                    <Text
+                      style={tw`font-Inter mb-[20px] text-H2 font-medium ${
+                        colorScheme === "dark"
+                          ? "text-onBackgroundDark"
+                          : "text-onBackgroundLight"
+                      }`}
+                    >
+                      {totalCost + " kr"}
+                    </Text>
+                  </View>
 
-                {sortedGroupedSubscriptions[data].subscriptions.map(
-                  (subscription: any) => (
-                    <View key={subscription.id}>
-                      <SubCard
-                        productName={subscription.provider}
-                        icon="Bild"
-                        price={subscription.cost + "kr"}
-                        subType={subscription.plan}
-                        subId={subscription.id}
-                        subStatus={subscription.draw_unsuccessful}
-                        productIcon={subscription.icons.url}
-                      />
-                    </View>
-                  )
-                )}
-              </View>
-            );
-          } else {
-            return (
-              <View key={data}>
-                {sortedGroupedSubscriptions[data].subscriptions.map(
-                  (subscription: any) => (
-                    <View key={subscription.id}>
-                      <View style={tw`flex flex-row justify-between`}>
-                        <Text
-                          style={tw`font-Inter mb-[20px] text-H2 font-medium ${
-                            colorScheme === "dark"
-                              ? "text-onBackgroundDark"
-                              : "text-onBackgroundLight"
-                          }`}
-                        >
-                          {monthLabel}
-                        </Text>
-                        <Text
-                          style={tw`font-Inter mb-[20px] text-H2 font-medium ${
-                            colorScheme === "dark"
-                              ? "text-onBackgroundDark"
-                              : "text-onBackgroundLight"
-                          }`}
-                        >
-                          {totalCost + " kr"}
-                        </Text>
+                  {sortedGroupedSubscriptions[data].subscriptions.map(
+                    (subscription: any) => (
+                      <View key={subscription.id}>
+                        <SubCard
+                          productName={subscription.provider}
+                          icon="Bild"
+                          price={subscription.cost + "kr"}
+                          subType={subscription.plan}
+                          subId={subscription.id}
+                          subStatus={subscription.draw_unsuccessful}
+                          productIcon={subscription.icons.url}
+                        />
                       </View>
-                      <SubCard
-                        productName={subscription.provider}
-                        icon="Bild"
-                        price={subscription.cost + "kr"}
-                        subType={subscription.plan}
-                        subId={subscription.id}
-                        subStatus={subscription.draw_unsuccessful}
-                        productIcon={subscription.icons.url}
-                      />
-                    </View>
-                  )
-                )}
-              </View>
-            );
-          }
-        })}
+                    )
+                  )}
+                </View>
+              );
+            } else {
+              return (
+                <View key={data}>
+                  {sortedGroupedSubscriptions[data].subscriptions.map(
+                    (subscription: any) => (
+                      <View key={subscription.id}>
+                        <View style={tw`flex flex-row justify-between`}>
+                          <Text
+                            style={tw`font-Inter mb-[20px] text-H2 font-medium ${
+                              colorScheme === "dark"
+                                ? "text-onBackgroundDark"
+                                : "text-onBackgroundLight"
+                            }`}
+                          >
+                            {monthLabel}
+                          </Text>
+                          <Text
+                            style={tw`font-Inter mb-[20px] text-H2 font-medium ${
+                              colorScheme === "dark"
+                                ? "text-onBackgroundDark"
+                                : "text-onBackgroundLight"
+                            }`}
+                          >
+                            {totalCost + " kr"}
+                          </Text>
+                        </View>
+                        <SubCard
+                          productName={subscription.provider}
+                          icon="Bild"
+                          price={subscription.cost + "kr"}
+                          subType={subscription.plan}
+                          subId={subscription.id}
+                          subStatus={subscription.draw_unsuccessful}
+                          productIcon={subscription.icons.url}
+                        />
+                      </View>
+                    )
+                  )}
+                </View>
+              );
+            }
+          })}
+        </View>
       </View>
     </ScrollView>
   );
