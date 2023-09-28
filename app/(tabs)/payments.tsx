@@ -1,5 +1,3 @@
-//TO DO : Rad 33 + ta bort adams fina stycke.
-
 import {
   View,
   StyleSheet,
@@ -125,6 +123,7 @@ export default function App() {
       ]}
     >
       <View>
+        <Text></Text>
         <H4 content="< Tillbaka" />
         <H1 content={"Kommande betalningar"} />
       </View>

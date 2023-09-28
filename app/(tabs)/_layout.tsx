@@ -8,7 +8,6 @@ import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Svg, { Circle, Rect } from "react-native-svg";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-
 import Colors from "../../constants/Colors";
 
 function TabBarIcon(props: {
@@ -48,7 +47,7 @@ export default function TabLayout() {
           name="overview"
           options={{
             title: "Översikt",
-            tabBarLabelStyle: {color:'#626262'},
+            tabBarLabelStyle: {color:'#80B2FF',},
             headerShown:false,
             tabBarIcon: ({ size, focused, color }) => {
               return (
@@ -65,6 +64,7 @@ export default function TabLayout() {
           name="add"
           options={{
             title: "Lägg till ny",
+            headerShown: false,
             headerTitle: "",
             headerStyle: {
               height: 0,
@@ -113,6 +113,7 @@ export default function TabLayout() {
         <Tabs.Screen
           name="manageSub/:subId"
           options={{
+            headerShown: false,
             headerTitle: "",
             headerStyle: {
               height: 50,
@@ -123,6 +124,7 @@ export default function TabLayout() {
         <Tabs.Screen
           name="editSub/:subId"
           options={{
+            headerShown: false,
             headerTitle: "",
             headerStyle: {
               height: 50,

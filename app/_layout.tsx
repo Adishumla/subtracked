@@ -4,7 +4,7 @@ import {
   DefaultTheme,
   ThemeProvider,
 } from "@react-navigation/native";
-
+import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
 import { useEffect } from "react";
 import { useColorScheme } from "react-native";
@@ -38,7 +38,24 @@ export const unstable_settings = {
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  
+    const [fontsLoaded, fontsError] = useFonts({
+    Inter: require("../assets/fonts/Inter.ttf"),
+  });
+
+  // Expo Router uses Error Boundaries to catch errors in the navigation tree.
+  useEffect(() => {
+    if (fontsError) throw fontsError;
+  }, [fontsError]);
+
+  useEffect(() => {
+    if (fontsLoaded) {
+      SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
+
+  if (!fontsLoaded) {
+    return null;
+  }
   return <RootLayoutNav/>;
 }
 
