@@ -146,7 +146,7 @@ const ManageSub = () => {
                     </View>
                   </View>
                 ) : (
-                  <Text style={tw`text-2xl text-white`}></Text>
+                  <Text style={tw`text-H2 text-white`}></Text>
                 )}
                 {subscription.price_increase ? (
                   <View
@@ -188,7 +188,7 @@ const ManageSub = () => {
                     </View>
                   </View>
                 ) : (
-                  <Text style={tw`text-2xl text-white`}></Text>
+                  <Text style={tw`text-H2 text-white`}></Text>
                 )}
               </View>
 
@@ -197,7 +197,7 @@ const ManageSub = () => {
               `}
               >
                 <Text
-                  style={tw`text-2xl text-onBackgroundLight
+                  style={tw`text-H2 text-onBackgroundLight
                 `}
                 >
                   Om abonnemanget

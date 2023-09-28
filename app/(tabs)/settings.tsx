@@ -87,12 +87,15 @@ export default function App() {
         tw`px-4 pt-8 ${colorScheme === "dark" ? "bg-backgroundPrimaryDark" : "bg-backgroundPrimaryLight"}`
       }
     >
-      <Link href="/(tabs)/overview">
-        <Text style={tw`font-Inter text-H4 font-medium ${colorScheme === "dark" ? "text-onBackgroundDark" : "text-onBackgroundLight"}`}>Tillbaka</Text>
-      </Link>
-      <Text style={tw`font-Inter text-H1 font-medium ${colorScheme === "dark" ? "text-onBackgroundDark" : "text-onBackgroundLight"}`}>Inställningar</Text>
+      <View style={tw`mb-16 gap-5`}>
+        <Link 
+          href="/(tabs)/overview">
+        <Text style={tw`font-Inter text-H4 font-regular ${colorScheme === "dark" ? "text-onBackgroundDark" : "text-onBackgroundLight"}`}>Tillbaka</Text>
+       </Link>
+       <Text style={tw`font-Inter text-H1 font-medium ${colorScheme === "dark" ? "text-H1Dark" : "text-onBackgroundLight"}`}>Inställningar</Text>
+      </View>
 
-      <View style={tw`mt-16`}>
+      <View>
       <Text style={tw`font-Inter mb-[20px] text-H2 font-medium ${colorScheme === "dark" ? "text-onBackgroundDark" : "text-onBackgroundLight"}`}>Namn på konto</Text>
         <Input
           style={tw`rounded-xl border-2 border-solid mx-[-10px] ${colorScheme === "dark" ? "bg-inputSectionDark border-backgroundSecondaryDark" : "bg-inputSectionLight border-backgroundSecondaryLight"}`}
@@ -130,7 +133,7 @@ export default function App() {
         </Text>
 
         <Text 
-          style={tw`font-Inter text-H4 font-medium ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}`}>
+          style={tw`font-Inter text-H4 font-regular ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}`}>
           Klicka här så skickas en återställningslänk till din registrerade mejladress.
         </Text>
         
@@ -192,7 +195,7 @@ export default function App() {
       />
 
       <View style={tw`flex my-12 p-4 gap-4 ${colorScheme === "dark" ? "bg-primaryDark" : "bg-primaryLight"}`}>
-        <Text style={tw`text-H4 ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}`}>
+        <Text style={tw`text-H4 font-regular ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}`}>
           För mer information gällande GDPR och hur vi använder dina uppgifter.
         </Text>
         <Link style={tw`self-end underline ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}`} href="http://www.google.se">

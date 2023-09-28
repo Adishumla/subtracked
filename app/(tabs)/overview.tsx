@@ -1,9 +1,6 @@
 import "react-native-url-polyfill/auto";
 import tw from "../../lib/tailwind";
 import SubscriptionType from "../../components/SubscriptionType";
-import H1 from "../../components/H1";
-import H2 from "../../components/H2";
-import H3 from "../../components/H3";
 import { useState, useEffect, useRef } from "react";
 import supabase from "../../lib/supabaseStore";
 import Auth from "../../components/Auth/EmailAuth";
@@ -254,10 +251,7 @@ export default function App() {
   }, []);
 
   return (
-    <View
-      style={tw`
-    `}
-    >
+    <View>
       <Animated.View
         style={[
           tw`absolute bg-indigo-500 rounded-full w-68 h-68 blur-xl opacity-50 
@@ -270,13 +264,16 @@ export default function App() {
         ]}
       />
       <BlurView intensity={100} style={tw`absolute inset-0 w-full h-full`} />
+      
       <ScrollView
-        style={tw`w-full px-4 pt-8 font-family: Inter bg-opacity-50 backdrop-blur-xl rounded drop-shadow-lg
-    ${colorScheme === "dark" ? "bg-black" : "bg-white"}`}
+        style={[
+          tw`font-Inter w-full px-4 pt-8 bg-opacity-50 backdrop-blur-xl rounded drop-shadow-lg ${colorScheme === "dark" ? "bg-backgroundPrimaryDark" : "bg-backgroundPrimaryLight"}`,
+        ]}
       >
-        <H1 content={"Hej " + name + "!"} />
-        <View style={tw`mt-4 mb-20`}>
-          <H2 content={"Din månadskostnad är " + total + "kr / mån"} />
+
+        <View style={tw`mb-16 gap-5`}>
+          <Text style={tw`font-Inter text-H1 font-medium ${colorScheme === "dark" ? "text-H1Dark" : "text-onBackgroundLight"}`}>{"Hej " + name + "!"}</Text>
+          <Text style={tw`font-Inter text-H2 font-medium ${colorScheme === "dark" ? "text-onBackgroundDark" : "text-onBackgroundLight"}`}>{"Din månadskostnad är " + total + "kr / mån"}</Text>
         </View>
 
         <View style={tw`flex flex-row justify-between`}>
@@ -298,8 +295,7 @@ export default function App() {
 
         {Object.keys(groupedSubscriptions).map((category: string) => (
           <View style={tw`mt-8`} key={category}>
-            <H2 content={category} />
-
+          <Text style={tw`font-Inter text-H2 font-medium ${colorScheme === "dark" ? "text-onBackgroundDark" : "text-onBackgroundLight"}`}>{category}</Text>
             {subscriptions
               .filter((subscription: any) => subscription.category === category)
               .map((subscription: any) => (

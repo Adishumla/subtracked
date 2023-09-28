@@ -8,10 +8,6 @@ import {
 import { Link } from "expo-router";
 import supabase from "../../lib/supabaseStore";
 import tw from "../../lib/tailwind";
-import H1 from "../../components/H1";
-import H2 from "../../components/H2";
-import H3 from "../../components/H3";
-import H4 from "../../components/H4";
 import SubCard from "../../components/SubCard";
 import { Button } from "react-native-elements";
 import { useState, useEffect } from "react";
@@ -119,13 +115,15 @@ export default function App() {
   return (
     <ScrollView
       style={[
-        tw`px-4 pt-8 ${colorScheme === "dark" ? "bg-black" : "bg-white"}`,
+        tw`px-4 pt-8 ${colorScheme === "dark" ? "bg-backgroundPrimaryDark" : "bg-backgroundPrimaryLight"}`,
       ]}
     >
-      <View>
-        <Text></Text>
-        <H4 content="< Tillbaka" />
-        <H1 content={"Kommande betalningar"} />
+      <View style={tw`mb-16 gap-5`}>
+      <Link href="/(tabs)/overview">
+        {/* Icon chevron right/left */}
+        <Text style={tw`font-Inter text-H4 font-medium ${colorScheme === "dark" ? "text-onBackgroundDark" : "text-onBackgroundLight"}`}>Tillbaka</Text>
+      </Link>
+      <Text style={tw`font-Inter text-H1 font-medium ${colorScheme === "dark" ? "text-H1Dark" : "text-onBackgroundLight"}`}>Kommande betalningar</Text>
       </View>
 
       <View>
@@ -138,14 +136,13 @@ export default function App() {
             return (
               <View key={data}>
                 <View style={tw`flex flex-row justify-between`}>
-                  <H2 content={monthLabel} />
-                  <H2 content={totalCost + "kr"} />
+                  <Text style={tw`font-Inter mb-[20px] text-H2 font-medium ${colorScheme === "dark" ? "text-onBackgroundDark" : "text-onBackgroundLight"}`}>{monthLabel}</Text>
+                  <Text style={tw`font-Inter mb-[20px] text-H2 font-medium ${colorScheme === "dark" ? "text-onBackgroundDark" : "text-onBackgroundLight"}`}>{totalCost + " kr"}</Text>
                 </View>
+
                 {sortedGroupedSubscriptions[data].subscriptions.map(
                   (subscription: any) => (
                     <View key={subscription.id}>
-                      <Text>{subscription.name}</Text>
-
                       <SubCard
                         productName={subscription.provider}
                         icon="Bild"
@@ -167,9 +164,9 @@ export default function App() {
                   (subscription: any) => (
                     <View key={subscription.id}>
                       <View style={tw`flex flex-row justify-between`}>
-                        <H2 content={monthLabel} />
-                        <H2 content={totalCost + "kr"} />
-                      </View>
+                        <Text style={tw`font-Inter mb-[20px] text-H2 font-medium ${colorScheme === "dark" ? "text-onBackgroundDark" : "text-onBackgroundLight"}`}>{monthLabel}</Text>
+                        <Text style={tw`font-Inter mb-[20px] text-H2 font-medium ${colorScheme === "dark" ? "text-onBackgroundDark" : "text-onBackgroundLight"}`}>{totalCost + " kr"}</Text>
+                       </View>
                       <SubCard
                         productName={subscription.provider}
                         icon="Bild"
@@ -179,7 +176,6 @@ export default function App() {
                         subStatus={subscription.draw_unsuccessful}
                         productIcon={subscription.icons.url}
                       />
-                      {/* Display the monthly cost */}
                     </View>
                   )
                 )}
