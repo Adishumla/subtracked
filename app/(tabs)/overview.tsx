@@ -254,12 +254,11 @@ export default function App() {
     <View>
       <Animated.View
         style={[
-          tw`absolute bg-indigo-500 rounded-full w-68 h-68 blur-xl opacity-50 
+          tw`absolute bg-indigo-500 rounded-full w-68 h-68 opacity-50 
             `,
           {
             left: ballPosition.x,
             top: ballPosition.y,
-            filter: "blur(100px)",
           },
         ]}
       />
@@ -267,7 +266,7 @@ export default function App() {
 
       <ScrollView
         style={[
-          tw`font-Inter w-full px-4 pt-8 bg-opacity-50 backdrop-blur-xl rounded drop-shadow-lg ${
+          tw`font-Inter w-full px-4 pt-8 bg-opacity-50 ${
             colorScheme === "dark"
               ? "bg-backgroundPrimaryDark"
               : "bg-backgroundPrimaryLight"

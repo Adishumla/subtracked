@@ -123,7 +123,7 @@ export default function App() {
       <View style={tw`mb-16 gap-5`}>
         <Link href="/(tabs)/overview">
           <Text
-            style={tw`font-Inter text-H4 font-regular ${
+            style={tw`font-Inter text-H4 font-normal ${
               colorScheme === "dark"
                 ? "text-onBackgroundDark"
                 : "text-onBackgroundLight"
@@ -144,7 +144,7 @@ export default function App() {
       <View style={tw`mt-16`}>
         <Text
           style={[
-            tw`font-H2 ${
+            tw`text-H2 ${
               colorScheme === "dark"
                 ? "text-onPrimaryDark"
                 : "text-onPrimaryLight"
@@ -169,7 +169,7 @@ export default function App() {
         <View style={tw`px-1`}>
           <Text
             style={[
-              tw`font-H2 ${
+              tw`text-H2 ${
                 colorScheme === "dark"
                   ? "text-onPrimaryDark"
                   : "text-onPrimaryLight"
@@ -201,7 +201,7 @@ export default function App() {
           <View style={tw`px-1`}>
             <Text
               style={[
-                tw`font-H2 ${
+                tw`text-H2 ${
                   colorScheme === "dark"
                     ? "text-onPrimaryDark"
                     : "text-onPrimaryLight"
@@ -225,7 +225,7 @@ export default function App() {
           <View style={tw`px-5`}>
             <Text
               style={[
-                tw`font-H2 ${
+                tw`text-H2 ${
                   colorScheme === "dark"
                     ? "text-onPrimaryDark"
                     : "text-onPrimaryLight"
@@ -249,7 +249,7 @@ export default function App() {
       <View style={tw`mt-6 flex flex-col px-1`}>
         <Text
           style={[
-            tw`font-H2 ${
+            tw`text-H2 ${
               colorScheme === "dark"
                 ? "text-onPrimaryDark"
                 : "text-onPrimaryLight"
@@ -287,7 +287,7 @@ export default function App() {
       <View style={tw`mt-12`}>
         <Text
           style={[
-            tw`font-H2 ${
+            tw`text-H2 ${
               colorScheme === "dark"
                 ? "text-onPrimaryDark"
                 : "text-onPrimaryLight"
