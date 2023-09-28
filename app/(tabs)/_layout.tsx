@@ -46,6 +46,9 @@ export default function TabLayout() {
           name="overview"
           options={{
             title: "Översikt",
+            tabBarLabelStyle: {
+              color: colorScheme === "dark" ? "#FDFDFF" : "#9E9E9E",
+            },
             headerTitle: "",
             headerStyle: {
               height: 50,
@@ -53,7 +56,7 @@ export default function TabLayout() {
             tabBarIcon: ({ size, focused, color }) => {
               return (
                 <MaterialCommunityIcons
-                  name="home"
+                  name="home-variant"
                   size={24}
                   color={focused ? "#80B2FF" : "#9E9E9E"}
                 />
@@ -66,13 +69,16 @@ export default function TabLayout() {
           options={{
             title: "Lägg till ny",
             headerTitle: "",
+            tabBarLabelStyle: {
+              color: colorScheme === "dark" ? "#FDFDFF" : "#9E9E9E",
+            },
             headerStyle: {
               height: 50,
             },
             tabBarIcon: ({ size, focused, color }) => {
               return (
                 <MaterialCommunityIcons
-                  name="plus"
+                  name="plus-circle"
                   size={24}
                   color={focused ? "#80B2FF" : "#9E9E9E"}
                 />
@@ -85,13 +91,16 @@ export default function TabLayout() {
           options={{
             title: "Betalningar",
             headerTitle: "",
+            tabBarLabelStyle: {
+              color: colorScheme === "dark" ? "#FDFDFF" : "#9E9E9E",
+            },
             headerStyle: {
               height: 50,
             },
             tabBarIcon: ({ size, focused, color }) => {
               return (
                 <MaterialCommunityIcons
-                  name="credit-card"
+                  name="database"
                   size={24}
                   color={focused ? "#80B2FF" : "#9E9E9E"}
                 />
@@ -104,6 +113,9 @@ export default function TabLayout() {
           options={{
             title: "Inställningar",
             tabBarLabel: "Inställningar",
+            tabBarLabelStyle: {
+              color: colorScheme === "dark" ? "#FDFDFF" : "#9E9E9E",
+            },
             headerTitle: "",
             headerStyle: {
               height: 50,
@@ -123,6 +135,9 @@ export default function TabLayout() {
           name="manageSub/:subId"
           options={{
             headerTitle: "",
+            tabBarLabelStyle: {
+              color: colorScheme === "dark" ? "#FDFDFF" : "#9E9E9E",
+            },
             headerStyle: {
               height: 50,
             },

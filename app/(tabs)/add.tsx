@@ -246,7 +246,7 @@ export default function App() {
           <View style={tw`mt-4 w-full flex pr-8`}>
             <DateTimePicker
               textColor="#202020"
-              style={tw`w-full mr-8 text-black
+              style={tw`w-full mr-8 text-black bg-transparent
             `}
               value={date ? new Date(date) : new Date()}
               onChange={dateChange}
