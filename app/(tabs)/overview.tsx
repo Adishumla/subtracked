@@ -20,6 +20,7 @@ import {
   Easing,
   ImageBackground,
 } from "react-native";
+import { BlurView } from "expo-blur";
 
 import { Session } from "@supabase/supabase-js";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -219,13 +220,13 @@ export default function App() {
         Animated.parallel([
           Animated.timing(ballPosition.x, {
             toValue: Dimensions.get("window").width - 90,
-            duration: 10000,
+            duration: 30000,
             easing: Easing.linear,
             useNativeDriver: false,
           }),
           Animated.timing(ballPosition.y, {
             toValue: Dimensions.get("window").height - 50,
-            duration: 10000,
+            duration: 30000,
             easing: Easing.linear,
             useNativeDriver: false,
           }),
@@ -233,13 +234,13 @@ export default function App() {
         Animated.parallel([
           Animated.timing(ballPosition.x, {
             toValue: 0,
-            duration: 10000,
+            duration: 30000,
             easing: Easing.linear,
             useNativeDriver: false,
           }),
           Animated.timing(ballPosition.y, {
             toValue: 0,
-            duration: 10000,
+            duration: 30000,
             easing: Easing.linear,
             useNativeDriver: false,
           }),
@@ -259,7 +260,7 @@ export default function App() {
     >
       <Animated.View
         style={[
-          tw`absolute bg-indigo-500 rounded-full w-40 h-40 blur-xl opacity-50 
+          tw`absolute bg-indigo-500 rounded-full w-68 h-68 blur-xl opacity-50 
             `,
           {
             left: ballPosition.x,
@@ -268,6 +269,7 @@ export default function App() {
           },
         ]}
       />
+      <BlurView intensity={100} style={tw`absolute inset-0 w-full h-full`} />
       <ScrollView
         style={tw`w-full px-4 pt-8 font-family: Inter bg-opacity-50 backdrop-blur-xl rounded drop-shadow-lg
     ${colorScheme === "dark" ? "bg-black" : "bg-white"}`}
@@ -321,7 +323,7 @@ export default function App() {
               await schedulePushNotification();
             }}
           />
-          <Button
+          {/* <Button
             title="Dark mode"
             onPress={() => {
               //change color scheme
@@ -329,7 +331,7 @@ export default function App() {
                 colorScheme === "dark" ? "light" : "dark"
               );
             }}
-          />
+          /> */}
         </View>
       </ScrollView>
     </View>
