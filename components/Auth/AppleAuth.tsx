@@ -3,7 +3,7 @@ import { View, StyleSheet, Text } from "react-native";
 import { signInWithSupabaseUsingApple } from "../../lib/authentication";
 import supabase from "../../lib/supabaseStore";
 import { useState } from "react";
-import tw from "twrnc";
+import tw from "../../lib/tailwind";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 
@@ -96,30 +96,18 @@ export default function App() {
   }
 
   return (
-    <View style={styles.container}>
+    <View
+      style={tw`mt-4
+    `}
+    >
       <AppleAuthentication.AppleAuthenticationButton
         buttonType={AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN}
         buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.BLACK}
         cornerRadius={5}
-        style={styles.button}
+        style={tw`w-full h-12
+        `}
         onPress={handleAppleSignIn}
       />
-      {/* <View style={styles.container}>
-        <Text style={tw`text-2xl font-bold mb-4 text-white`}>Welcome</Text>
-        <Text style={tw`text-2xl font-bold mb-4 text-white`}>{name}</Text>
-      </View> */}
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  button: {
-    width: 200,
-    height: 44,
-  },
-});

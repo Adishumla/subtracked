@@ -115,7 +115,7 @@ export default function Auth() {
   }, []);
 
   return (
-    <View style={tw`bg-backgroundPrimaryLight`}>
+    <View style={tw`bg-backgroundPrimaryLight opacity-50`}>
       <View style={tw`items-center justify-center`}>
         {showRegistration && (
           <Input
@@ -130,7 +130,10 @@ export default function Auth() {
         )}
       </View>
 
-      <View style={tw`flex-1 items-center justify-center`}>
+      <View
+        style={tw`w-72
+      `}
+      >
         <Input
           style={tw`text-2xl text-white`}
           label="Email"
@@ -142,7 +145,7 @@ export default function Auth() {
         />
       </View>
 
-      <View style={styles.verticallySpaced}>
+      <View style={tw``}>
         <Input
           style={tw`text-2xl text-white`}
           label="Password"
@@ -156,8 +159,8 @@ export default function Auth() {
       </View>
 
       {showRegistration ? (
-        <View>
-          <View style={styles.verticallySpaced}>
+        <>
+          <View style={tw``}>
             <Button
               title="Registrera"
               disabled={loading}
@@ -166,28 +169,26 @@ export default function Auth() {
               }}
             />
           </View>
-          <View style={styles.verticallySpaced}>
+          <View style={tw`mt-4`}>
             <Button
               title="Have an account? Login"
               onPress={() => setShowRegistration(false)}
             />
           </View>
-        </View>
+        </>
       ) : (
-        <View style={[styles.verticallySpaced, styles.mt20]}>
-          <View style={styles.container}>
-            <Button
-              title="Logga in"
-              disabled={loading}
-              onPress={async () => {
-                await signInWithEmail();
-              }}
-            />
-          </View>
+        <View style={tw``}>
+          <Button
+            title="Logga in"
+            disabled={loading}
+            onPress={async () => {
+              await signInWithEmail();
+            }}
+          />
         </View>
       )}
       {!showRegistration && (
-        <View style={styles.verticallySpaced}>
+        <View style={tw`mt-4`}>
           <Button
             title="Don't have an account? Register"
             onPress={() => setShowRegistration(true)}
@@ -197,17 +198,3 @@ export default function Auth() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    marginTop: 40,
-  },
-  verticallySpaced: {
-    paddingTop: 4,
-    paddingBottom: 4,
-    alignSelf: "stretch",
-  },
-  mt20: {
-    marginTop: 20,
-  },
-});

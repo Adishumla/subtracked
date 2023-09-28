@@ -12,9 +12,7 @@ import {
   registerForPushNotificationsAsync,
   schedulePushNotification,
 } from "../lib/notificationService";
-
 export default function App() {
-
   const [session, setSession] = useState<Session | null>(null);
   const [email, setEmail] = useState<String | undefined>("");
   const [id, setId] = useState<String | undefined>("");
@@ -49,13 +47,23 @@ export default function App() {
   }, []);
 
   return (
-    <View style={tw`flex-1 font-Inter pt-16 items-center justify-center bg-backgroundPrimaryLight`}>
-      <Image
-        style={tw`w-99% h-12% mb-16`}
-         source={require("../assets/images/abonna_logo.png")}
-      />       
+    <View
+      style={tw`flex-1 font-Inter pt-16 items-center justify-center bg-backgroundPrimaryLight `}
+    >
+      <View
+        style={tw`absolute w-1/2 h-full flex h-full top-[-30%]
+      `}
+      >
+        <Image
+          source={require("../assets/images/abonna_logo.png")}
+          style={tw`w-full h-full`}
+          resizeMode="contain"
+        />
+      </View>
+      <View style={tw``}>
         <Auth />
         <AppleAuth />
+      </View>
     </View>
   );
 }
