@@ -29,7 +29,6 @@ export default function TabLayout() {
         <Tabs.Screen
           name="egg" // This has to be here otherwise overview breaks...
           options={{
-            headerShown:false,
             title: "ins",
             href: null,
             tabBarIcon: ({ size, focused, color }) => {
@@ -48,7 +47,6 @@ export default function TabLayout() {
           options={{
             title: "Översikt",
             tabBarLabelStyle: {color:'#80B2FF',},
-            headerShown:false,
             tabBarIcon: ({ size, focused, color }) => {
               return (
                 <MaterialCommunityIcons
@@ -64,7 +62,6 @@ export default function TabLayout() {
           name="add"
           options={{
             title: "Lägg till ny",
-            headerShown: false,
             headerTitle: "",
             headerStyle: {
               height: 0,
@@ -83,7 +80,6 @@ export default function TabLayout() {
         <Tabs.Screen
           name="payments"
           options={{
-            headerShown:false,
             title: "Betalningar",
             tabBarIcon: ({ size, focused, color }) => {
               return (
@@ -98,7 +94,6 @@ export default function TabLayout() {
         <Tabs.Screen
           name="settings"
           options={{
-            headerShown:false,
             title: "Inställningar",
             tabBarIcon: ({ size, focused, color }) => {
               return (
@@ -113,7 +108,6 @@ export default function TabLayout() {
         <Tabs.Screen
           name="manageSub/:subId"
           options={{
-            headerShown: false,
             headerTitle: "",
             headerStyle: {
               height: 50,
@@ -124,7 +118,6 @@ export default function TabLayout() {
         <Tabs.Screen
           name="editSub/:subId"
           options={{
-            headerShown: false,
             headerTitle: "",
             headerStyle: {
               height: 50,

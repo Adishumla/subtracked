@@ -6,6 +6,7 @@ import {
   useColorScheme,
   Appearance,
 } from "react-native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Link, useRouter } from "expo-router";
 import supabase from "../../lib/supabaseStore";
 import { Session } from "@supabase/supabase-js";
@@ -87,13 +88,20 @@ export default function App() {
         tw`px-4 pt-8 ${colorScheme === "dark" ? "bg-backgroundPrimaryDark" : "bg-backgroundPrimaryLight"}`
       }
     >
-      <View style={tw`mb-16 gap-5`}>
+      <View style={tw`mb-5 flex flex-row`}>
         <Link 
           href="/(tabs)/overview">
-        <Text style={tw`font-Inter text-H4 font-regular ${colorScheme === "dark" ? "text-onBackgroundDark" : "text-onBackgroundLight"}`}>Tillbaka</Text>
+                  <MaterialCommunityIcons
+                    style={tw``}
+                    name="chevron-left"
+                    size={28}
+                    color={`${colorScheme === "dark" ?  "#FDFDFF" : "#202020" }`}
+                  />
+        <Text style={tw`font-Inter text-H4 align-self-start font-regular ${colorScheme === "dark" ? "text-onBackgroundDark" : "text-onBackgroundLight"}`}>Tillbaka</Text>
        </Link>
-       <Text style={tw`font-Inter text-H1 font-medium ${colorScheme === "dark" ? "text-H1Dark" : "text-onBackgroundLight"}`}>Inställningar</Text>
       </View>
+      
+      <Text style={tw`mb-16 font-Inter text-H1 font-medium ${colorScheme === "dark" ? "text-H1Dark" : "text-onBackgroundLight"}`}>Inställningar</Text>
 
       <View>
       <Text style={tw`font-Inter mb-[20px] text-H2 font-medium ${colorScheme === "dark" ? "text-onBackgroundDark" : "text-onBackgroundLight"}`}>Namn på konto</Text>

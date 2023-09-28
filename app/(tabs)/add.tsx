@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import { View, ScrollView, useColorScheme } from "react-native";
 import supabase from "../../lib/supabaseStore";
 import tw from "../../lib/tailwind";
+import { Link } from "expo-router";
 import Category from "../../components/Category";
 import SubscriptionType from "../../components/SubscriptionType";
-import { Button, Input } from "react-native-elements";
+import { Button, Input, Text } from "react-native-elements";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import z from "zod";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -119,11 +120,19 @@ export default function App() {
 
     `}
     >
-      <H4 content="<-- Tillbaka ska den här ens vara här?"></H4>
-      <H1 content={"Lägg till abonnemang"}></H1>
+
+      <View style={tw`mb-16 gap-5`}>
+        <Link 
+          href="/(tabs)/overview">
+        <Text style={tw`font-Inter text-H4 font-regular ${colorScheme === "dark" ? "text-onBackgroundDark" : "text-onBackgroundLight"}`}>Tillbaka</Text>
+       </Link>
+       <Text style={tw`font-Inter text-H1 font-medium ${colorScheme === "dark" ? "text-H1Dark" : "text-onBackgroundLight"}`}>Lägg till abonnemang</Text>
+      </View>
 
       <View style={tw`mt-16`}>
-        <H2 content="Kategori"></H2>
+      <Text 
+          style={[tw`font-H2 ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}`]}
+        >Kategori</Text>        
         <View style={tw`mt-5 flex flex-row flex-wrap`}>
           {categories.map((category) => (
             <Category
@@ -138,7 +147,9 @@ export default function App() {
 
       <View style={tw`mt-12`}>
         <View style={tw`px-1`}>
-          <H2 content={"Leverantör"}></H2>
+        <Text 
+          style={[tw`font-H2 ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}`]}
+        >Leverantör</Text>
         </View>
         <Input
           style={tw`rounded-xl border-2 border-gray-300 bg-inputSectionLight p-2 mt-4 text-onPrimaryLight
@@ -160,7 +171,9 @@ export default function App() {
       >
         <View style={tw`w-1/2`}>
           <View style={tw`px-1`}>
-            <H2 content={"Pris/mån"}></H2>
+          <Text 
+          style={[tw`font-H2 ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}`]}
+        >Pris/mån</Text>
           </View>
           <Input
             style={tw`rounded-xl border-2 border-gray-300 bg-inputSectionLight p-2 mt-4 text-onPrimaryLight`}
@@ -174,7 +187,9 @@ export default function App() {
 
         <View style={tw`w-1/2`}>
           <View style={tw`px-5`}>
-            <H2 content={"Betaldatum"}></H2>
+          <Text 
+          style={[tw`font-H2 ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}`]}
+        >Betaldatum</Text>
           </View>
           <View style={tw`mt-4 w-full flex pr-8`}>
             <DateTimePicker
@@ -188,7 +203,9 @@ export default function App() {
       </View>
 
       <View style={tw`mt-6 flex flex-col px-1`}>
-        <H2 content={"Abonnemangstyp"}></H2>
+      <Text 
+          style={[tw`font-H2 ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}`]}
+        >Abonnemangstyp</Text>
         <View style={tw`flex items-center justify-center flex-row`}>
           {subscriptionTypes.map((subscriptionType, index) => (
             <View
@@ -215,7 +232,9 @@ export default function App() {
       </View>
 
       <View style={tw`mt-12`}>
-        <H2 content={"Notering"}></H2>
+      <Text 
+          style={[tw`font-H2 ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}`]}
+        >Notering</Text>
         <Input
           style={tw`rounded-xl border-2 border-gray-300 bg-inputSectionLight p-2 mt-4 text-onPrimaryLight
           `}
