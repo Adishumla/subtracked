@@ -30,6 +30,7 @@ export default function SubCard({
   productIcon,
   priceIncrease,
 }: SubCardProps) {
+
   const colorScheme = useColorScheme();
 
   // Function to render the subType icon based on its value
@@ -39,20 +40,20 @@ export default function SubCard({
     if (subType === "Eget") {
       icon = 
       <MaterialCommunityIcons name="account" size={20} 
-      color="black" 
+      color={`${colorScheme === "dark" ?  "#FDFDFF" : "#202020" }`} 
       />;
     } else if (subType === "Delat") {
       icon = (
         <MaterialCommunityIcons
           name="account-multiple"
           size={20}
-          color="black"
+          color={`${colorScheme === "dark" ?  "#FDFDFF" : "#202020" }`}
         />
       );
     } else if (subType === "Familj") {
       icon = (
         <MaterialCommunityIcons name="account-group" size={20} 
-        color="black" />
+        color={`${colorScheme === "dark" ?  "#FDFDFF" : "#202020" }`} />
       );
     }
 
@@ -64,13 +65,13 @@ export default function SubCard({
       <Pressable>
         <View
           style={[
-            tw`flex-col justify-between items-center px-4 py-4 rounded-full mt-4 shadow-lg shadow-indigo-700`,
+            tw`flex-col font-Inter justify-between items-center px-4 py-4 rounded-full mt-4 shadow-lg shadow-indigo-700`,
           ]}
         >
           <View
             style={[
               tw`flex-row items-center  rounded-lg w-full h-20 overflow-hidden 
-              ${colorScheme === "dark" ? "bg-black" : "bg-primaryLight"}`,
+              ${colorScheme === "dark" ? "bg-primaryDark" : "bg-primaryLight"}`,
             ]}
           >
             <View style={tw`mr-4 rounded-full`}>
@@ -83,24 +84,24 @@ export default function SubCard({
               <View
                 style={tw`flex flex-row justify-between items-start w-full`}
               >
-                <H2 content={productName} />
+                <Text style={[tw`font-Inter text-H2 font-medium ${colorScheme === "dark" ? "text-onBackgroundDark" : "text-onBackgroundLight"}`]}>{productName}</Text>
                 <View style={tw`flex flex-row justify-between items-center`}>
                   <Button
                     title="Mer info"
                     buttonStyle={tw`p-0 m-0 bg-transparent`}
-                    titleStyle={tw`text-black font-medium text-lg`}
+                    titleStyle={[tw`font-H4 font-regular ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}`]}
                     onPress={() => console.log("hej")}
                   />
 
                   <MaterialCommunityIcons
                     name="chevron-right"
                     size={24}
-                    color="black"
+                    color={`${colorScheme === "dark" ?  "#FDFDFF" : "#202020" }`}
                   />
                 </View>
               </View>
               <View>
-                <Text style={tw`font-light text-lg font-light`}>
+                <Text style={[tw`font-light font-H4 font-light ${colorScheme === "dark" ? "text-onBackgroundDark" : "text-onBackgroundLight"}`]}>
                   {price} / mån {renderSubTypeIcon()}
                 </Text>
               </View>
@@ -108,7 +109,7 @@ export default function SubCard({
           </View>
           {subStatus === true ? (
             <View
-              style={tw`flex-col items-center bg-slate-600 w-full rounded-b-xl mt-[-8px]`}
+              style={[tw`flex-col items-center w-full rounded-b-xl mt-[-8px] ${colorScheme === "dark" ? "bg-secondaryDark" : "bg-secondaryLight"}`]}
             >
               <View style={tw`flex flex-row items-center w-full p-1`}>
                 <View style={tw`rounded-full bg-red-500`}>
@@ -118,7 +119,8 @@ export default function SubCard({
                     color="black"
                   />
                 </View>
-                <Text style={tw`text-white font-medium text-lg pl-2`}>
+                <Text 
+                style={[tw`font-H2 font-regular pl-2 ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}`]}>
                   Kunde ej dras!
                 </Text>
               </View>
@@ -130,7 +132,7 @@ export default function SubCard({
           )}
           {priceIncrease === true ? (
             <View
-              style={tw`flex-col items-center bg-slate-600 w-full rounded-b-xl mt-[-8px]`}
+            style={[tw`flex-col items-center w-full rounded-b-xl mt-[-8px] ${colorScheme === "dark" ? "bg-secondaryDark" : "bg-secondaryLight"}`]}
             >
               <View style={tw`flex flex-row items-center w-full p-1`}>
                 <View style={tw`rounded-full bg-yellow-500`}>
@@ -140,8 +142,9 @@ export default function SubCard({
                     color="black"
                   />
                 </View>
-                <Text style={tw`text-white font-medium text-lg pl-2`}>
-                  Prishöjning!
+                <Text 
+                style={[tw`font-H2 font-regular pl-2 ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}`]}>
+                Prishöjning!
                 </Text>
               </View>
             </View>
