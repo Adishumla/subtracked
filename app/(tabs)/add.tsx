@@ -121,22 +121,33 @@ export default function App() {
 
     `}
     >
-
-<View style={tw`mb-5`}>
-        <Link 
-          href="/(tabs)/overview" style={tw`flex`}>
-                  <MaterialCommunityIcons
-                    style={tw``}
-                    name="chevron-left"
-                    size={28}
-                    color={`${colorScheme === "dark" ?  "#FDFDFF" : "#202020" }`}
-                  />
-        <Text style={tw`font-Inter text-H4 self-center font-regular ${colorScheme === "dark" ? "text-onBackgroundDark" : "text-onBackgroundLight"}`}>Tillbaka</Text>
-       </Link>
+      <View style={tw`mb-5`}>
+        <Link href="/(tabs)/overview" style={tw`flex`}>
+          <MaterialCommunityIcons
+            style={tw``}
+            name="chevron-left"
+            size={28}
+            color={`${colorScheme === "dark" ? "#FDFDFF" : "#202020"}`}
+          />
+          <Text
+            style={tw`font-Inter text-H4 self-center font-normal ${
+              colorScheme === "dark"
+                ? "text-onBackgroundDark"
+                : "text-onBackgroundLight"
+            }`}
+          >
+            Tillbaka
+          </Text>
+        </Link>
       </View>
 
-      <Text style={tw`mb-16 font-Inter text-H1 font-medium ${colorScheme === "dark" ? "text-H1Dark" : "text-onBackgroundLight"}`}>Lägg till abonnemang</Text>
-
+      <Text
+        style={tw`mb-16 font-Inter text-H1 font-medium ${
+          colorScheme === "dark" ? "text-H1Dark" : "text-onBackgroundLight"
+        }`}
+      >
+        Lägg till abonnemang
+      </Text>
 
       <View style={tw`mt-16`}>
         <Text
@@ -234,7 +245,8 @@ export default function App() {
           </View>
           <View style={tw`mt-4 w-full flex pr-8`}>
             <DateTimePicker
-              style={tw`w-full mr-8
+              textColor="#202020"
+              style={tw`w-full mr-8 text-black
             `}
               value={date ? new Date(date) : new Date()}
               onChange={dateChange}
