@@ -14,14 +14,14 @@ const lightTheme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    background: "#F1F1F1",
+    background: "#D6DDEB",
   },
 };
 const darkTheme = {
   ...DarkTheme,
   colors: {
     ...DarkTheme.colors,
-    background: "#1B1B1B",
+    background: "#1B202B",
   },
 };
 export {

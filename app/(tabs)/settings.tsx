@@ -1,7 +1,7 @@
 import {
-  // View,
+  View,
   StyleSheet,
-  // Text,
+  Text,
   ScrollView,
   useColorScheme,
   Appearance,
@@ -10,11 +10,11 @@ import { Link, useRouter } from "expo-router";
 import supabase from "../../lib/supabaseStore";
 import { Session } from "@supabase/supabase-js";
 import tw from "../../lib/tailwind";
-import { Button, Input, Switch } from "react-native-elements";
+import { Button, Input, Switch} from "react-native-elements";
 import { useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { set } from "zod";
-import { Text, View } from "../../components/Themed";
+
 export default function App() {
   let colorScheme = useColorScheme();
 
@@ -84,7 +84,7 @@ export default function App() {
   return (
     <ScrollView
       style={
-        tw`px-4 pt-8 ${colorScheme === "dark" ? "bg-backgroundPrimaryDark" : "bg-backgroundPrimaryLight"}]`
+        tw`px-4 pt-8 ${colorScheme === "dark" ? "bg-backgroundPrimaryDark" : "bg-backgroundPrimaryLight"}`
       }
     >
       <Link href="/(tabs)/overview">
@@ -92,7 +92,7 @@ export default function App() {
       </Link>
       <Text style={tw`font-Inter text-H1 font-medium ${colorScheme === "dark" ? "text-onBackgroundDark" : "text-onBackgroundLight"}`}>Inställningar</Text>
 
-      <View style={tw`mt-16` }>
+      <View style={tw`mt-16`}>
       <Text style={tw`font-Inter mb-[20px] text-H2 font-medium ${colorScheme === "dark" ? "text-onBackgroundDark" : "text-onBackgroundLight"}`}>Namn på konto</Text>
         <Input
           style={tw`rounded-xl border-2 border-solid mx-[-10px] ${colorScheme === "dark" ? "bg-inputSectionDark border-backgroundSecondaryDark" : "bg-inputSectionLight border-backgroundSecondaryLight"}`}
@@ -106,7 +106,7 @@ export default function App() {
           }
         />
         <Button
-          buttonStyle={tw`p-4 rounded-xl${colorScheme === "dark" ? "bg-primaryDark shadow-darkMode shadow-md" : "bg-primaryLight shadow-md"}`}
+          buttonStyle={tw`p-4 rounded-xl ${colorScheme === "dark" ? "bg-primaryDark shadow-darkMode shadow-md" : "bg-primaryLight shadow-md"}`}
           titleStyle={tw`${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}`}
           style={tw`mt-8 mb-16`}
           title="Spara"
@@ -125,12 +125,12 @@ export default function App() {
 
       <View>
         <Text 
-          style={[tw`font-Inter text-H2 mb-8 font-medium ${colorScheme === "dark" ? "text-onBackgroundDark" : "text-onBackgroundLight"}`]}>
+          style={tw`font-Inter text-H2 mb-8 font-medium ${colorScheme === "dark" ? "text-onBackgroundDark" : "text-onBackgroundLight"}`}>
           Lösenord
         </Text>
 
         <Text 
-          style={[tw`font-Inter text-H4 font-medium ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}`]}>
+          style={tw`font-Inter text-H4 font-medium ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}`}>
           Klicka här så skickas en återställningslänk till din registrerade mejladress.
         </Text>
         
