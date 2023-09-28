@@ -102,7 +102,7 @@ export default function SubCard({
                     title="Mer info"
                     buttonStyle={tw`p-0 m-0 bg-transparent`}
                     titleStyle={[
-                      tw`font-H4 font-regular ${
+                      tw`text-H4 font-normal ${
                         colorScheme === "dark"
                           ? "text-onPrimaryDark"
                           : "text-onPrimaryLight"
@@ -120,7 +120,7 @@ export default function SubCard({
               <View>
                 <Text
                   style={[
-                    tw`font-light font-H4 font-light ${
+                    tw`font-light text-H4 font-light ${
                       colorScheme === "dark"
                         ? "text-onBackgroundDark"
                         : "text-onBackgroundLight"
@@ -155,7 +155,7 @@ export default function SubCard({
                 </View>
                 <Text
                   style={[
-                    tw`font-H2 font-regular pl-2 ${
+                    tw`text-H4 font-normal pl-2 ${
                       colorScheme === "dark"
                         ? "text-onPrimaryDark"
                         : "text-onPrimaryLight"
@@ -194,7 +194,7 @@ export default function SubCard({
                 </View>
                 <Text
                   style={[
-                    tw`font-H2 font-regular pl-2 ${
+                    tw`text-H4 font-normal pl-2 ${
                       colorScheme === "dark"
                         ? "text-onPrimaryDark"
                         : "text-onPrimaryLight"

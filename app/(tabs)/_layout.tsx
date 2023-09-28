@@ -50,7 +50,6 @@ export default function TabLayout() {
             headerStyle: {
               height: 50,
             },
-            tabBarLabelStyle: { color: "#80B2FF" },
             tabBarIcon: ({ size, focused, color }) => {
               return (
                 <MaterialCommunityIcons
@@ -75,7 +74,7 @@ export default function TabLayout() {
                 <MaterialCommunityIcons
                   name="plus"
                   size={24}
-                  color={focused ? "#5656FF" : "white"}
+                  color={focused ? "#80B2FF" : "#9E9E9E"}
                 />
               );
             },
@@ -91,9 +90,10 @@ export default function TabLayout() {
             },
             tabBarIcon: ({ size, focused, color }) => {
               return (
-                <Image
-                  style={tw``}
-                  source={require("../../assets/images/payments.svg")}
+                <MaterialCommunityIcons
+                  name="credit-card"
+                  size={24}
+                  color={focused ? "#80B2FF" : "#9E9E9E"}
                 />
               );
             },
@@ -103,15 +103,17 @@ export default function TabLayout() {
           name="settings"
           options={{
             title: "Inställningar",
+            tabBarLabel: "Inställningar",
             headerTitle: "",
             headerStyle: {
               height: 50,
             },
             tabBarIcon: ({ size, focused, color }) => {
               return (
-                <Image
-                  style={tw``}
-                  source={require("../../assets/images/settings.svg")}
+                <MaterialCommunityIcons
+                  name="cog"
+                  size={24}
+                  color={focused ? "#80B2FF" : "#9E9E9E"}
                 />
               );
             },

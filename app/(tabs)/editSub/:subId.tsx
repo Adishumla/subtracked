@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, ScrollView, Text, useColorScheme} from "react-native";
+import { View, ScrollView, Text, useColorScheme } from "react-native";
 import supabase from "../../../lib/supabaseStore";
 import tw from "../../../lib/tailwind";
 import Category from "../../../components/Category";
@@ -22,7 +22,6 @@ interface Subscription {
 
 export default function App() {
   let colorScheme = useColorScheme();
-
 
   const route = useRoute();
   const { subId } = route.params as { subId: string };
@@ -69,18 +68,41 @@ export default function App() {
 
   return (
     <ScrollView style={tw`px-4 pt-8`}>
-
-      <Text 
-        style={[tw`font-H4 ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}`]}
-      >Tillbaka</Text>
-      <Text 
-        style={[tw`font-H1 ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}`]}
-      >Lägg till abonnemang</Text>
+      <Text
+        style={[
+          tw`font-H4 ${
+            colorScheme === "dark"
+              ? "text-onPrimaryDark"
+              : "text-onPrimaryLight"
+          }`,
+        ]}
+      >
+        Tillbaka
+      </Text>
+      <Text
+        style={[
+          tw`font-H1 ${
+            colorScheme === "dark"
+              ? "text-onPrimaryDark"
+              : "text-onPrimaryLight"
+          }`,
+        ]}
+      >
+        Lägg till abonnemang
+      </Text>
 
       <View style={tw`mt-16`}>
-        <Text 
-          style={[tw`font-H2 ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}`]}
-        >Kategori</Text>
+        <Text
+          style={[
+            tw`text-H2 ${
+              colorScheme === "dark"
+                ? "text-onPrimaryDark"
+                : "text-onPrimaryLight"
+            }`,
+          ]}
+        >
+          Kategori
+        </Text>
         <View style={tw`mt-5 flex flex-row flex-wrap`}>
           {categories.map((category) => (
             <Category
@@ -94,24 +116,47 @@ export default function App() {
       </View>
 
       <View style={tw`mt-12`}>
-      <Text 
-          style={[tw`font-H2 ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}`]}
-        >Leverantör</Text>        
+        <Text
+          style={[
+            tw`text-H2 ${
+              colorScheme === "dark"
+                ? "text-onPrimaryDark"
+                : "text-onPrimaryLight"
+            }`,
+          ]}
+        >
+          Leverantör
+        </Text>
         <Input
           placeholder="Ex. Spotify"
           onChangeText={(value) => setProvider(value)}
         />
-        <Text 
-          style={[tw`font-H4 ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}`]}
-        >Ex. Spotify</Text>
-
+        <Text
+          style={[
+            tw`font-H4 ${
+              colorScheme === "dark"
+                ? "text-onPrimaryDark"
+                : "text-onPrimaryLight"
+            }`,
+          ]}
+        >
+          Ex. Spotify
+        </Text>
       </View>
 
       <View style={tw`mt-12`}>
         <View style={tw``}>
-        <Text 
-          style={[tw`font-H2 ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}`]}
-        >Pris/mån</Text>
+          <Text
+            style={[
+              tw`text-H2 ${
+                colorScheme === "dark"
+                  ? "text-onPrimaryDark"
+                  : "text-onPrimaryLight"
+              }`,
+            ]}
+          >
+            Pris/mån
+          </Text>
           <Input
             placeholder="Ex. 99"
             onChangeText={(value) => setPrice(parseInt(value))}
@@ -119,17 +164,33 @@ export default function App() {
         </View>
 
         <View style={tw``}>
-        <Text 
-          style={[tw`font-H2 ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}`]}
-        >Betaldatum</Text>
+          <Text
+            style={[
+              tw`text-H2 ${
+                colorScheme === "dark"
+                  ? "text-onPrimaryDark"
+                  : "text-onPrimaryLight"
+              }`,
+            ]}
+          >
+            Betaldatum
+          </Text>
           <Input placeholder="Ex. 1" onChangeText={(value) => setDate(value)} />
         </View>
       </View>
 
       <View style={tw`mt-12`}>
-      <Text 
-          style={[tw`font-H2 ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}`]}
-        >Abonnemangstyp</Text>
+        <Text
+          style={[
+            tw`text-H2 ${
+              colorScheme === "dark"
+                ? "text-onPrimaryDark"
+                : "text-onPrimaryLight"
+            }`,
+          ]}
+        >
+          Abonnemangstyp
+        </Text>
         <View style={tw`flex-1 items-center justify-center flex-row`}>
           {subscriptionTypes.map((subscriptionType, index) => (
             <View
@@ -156,17 +217,33 @@ export default function App() {
       </View>
 
       <View style={tw`mt-12`}>
-      <Text 
-          style={[tw`font-H2 ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}`]}
-        >Notering</Text>
+        <Text
+          style={[
+            tw`text-H2 ${
+              colorScheme === "dark"
+                ? "text-onPrimaryDark"
+                : "text-onPrimaryLight"
+            }`,
+          ]}
+        >
+          Notering
+        </Text>
 
         <Input
           placeholder="Ex. Annas mobil"
           onChangeText={(value) => setNote(value)}
         />
-        <Text 
-          style={[tw`font-H4 ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}`]}
-        >Ex. Annas mobil.</Text>
+        <Text
+          style={[
+            tw`font-H4 ${
+              colorScheme === "dark"
+                ? "text-onPrimaryDark"
+                : "text-onPrimaryLight"
+            }`,
+          ]}
+        >
+          Ex. Annas mobil.
+        </Text>
       </View>
 
       <Button

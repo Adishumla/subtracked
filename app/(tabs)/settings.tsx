@@ -11,7 +11,7 @@ import { Link, useRouter } from "expo-router";
 import supabase from "../../lib/supabaseStore";
 import { Session } from "@supabase/supabase-js";
 import tw from "../../lib/tailwind";
-import { Button, Input, Switch} from "react-native-elements";
+import { Button, Input, Switch } from "react-native-elements";
 import { useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { set } from "zod";
@@ -83,9 +83,11 @@ export default function App() {
 
   return (
     <ScrollView
-      style={
-        tw`px-4 pt-8 ${colorScheme === "dark" ? "bg-backgroundPrimaryDark" : "bg-backgroundPrimaryLight"}`
-      }
+      style={tw`px-4 pt-8 ${
+        colorScheme === "dark"
+          ? "bg-backgroundPrimaryDark"
+          : "bg-backgroundPrimaryLight"
+      }`}
     >
       <View style={tw`mb-5`}>
         <Link 
@@ -99,25 +101,51 @@ export default function App() {
         <Text style={tw`font-Inter text-H4 self-center font-regular ${colorScheme === "dark" ? "text-onBackgroundDark" : "text-onBackgroundLight"}`}>Tillbaka</Text>
        </Link>
       </View>
-      
-      <Text style={tw`mb-16 font-Inter text-H1 font-medium ${colorScheme === "dark" ? "text-H1Dark" : "text-onBackgroundLight"}`}>Inställningar</Text>
+
+      <Text
+        style={tw`mb-16 font-Inter text-H1 font-medium ${
+          colorScheme === "dark" ? "text-H1Dark" : "text-onBackgroundLight"
+        }`}
+      >
+        Inställningar
+      </Text>
 
       <View>
-      <Text style={tw`font-Inter mb-[20px] text-H2 font-medium ${colorScheme === "dark" ? "text-onBackgroundDark" : "text-onBackgroundLight"}`}>Namn på konto</Text>
+        <Text
+          style={tw`font-Inter mb-[20px] text-H2 font-medium ${
+            colorScheme === "dark"
+              ? "text-onBackgroundDark"
+              : "text-onBackgroundLight"
+          }`}
+        >
+          Namn på konto
+        </Text>
         <Input
-          style={tw`rounded-xl border-2 border-solid mx-[-10px] ${colorScheme === "dark" ? "bg-inputSectionDark border-backgroundSecondaryDark" : "bg-inputSectionLight border-backgroundSecondaryLight"}`}
+          style={tw`rounded-xl border-2 border-solid mx-[-10px] ${
+            colorScheme === "dark"
+              ? "bg-inputSectionDark border-backgroundSecondaryDark"
+              : "bg-inputSectionLight border-backgroundSecondaryLight"
+          }`}
           inputStyle={tw`px-4 font-Inter`}
           containerStyle={tw`border-t-0`}
           inputContainerStyle={tw`border-b-0`}
-          placeholder={userSettings.name} 
-          placeholderTextColor={'#202020'}
+          placeholder={userSettings.name}
+          placeholderTextColor={"#202020"}
           onChangeText={(value) =>
             setUserSettings({ ...userSettings, name: value })
           }
         />
         <Button
-          buttonStyle={tw`p-4 rounded-xl ${colorScheme === "dark" ? "bg-primaryDark shadow-darkMode shadow-md" : "bg-primaryLight shadow-md"}`}
-          titleStyle={tw`${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}`}
+          buttonStyle={tw`p-4 rounded-xl ${
+            colorScheme === "dark"
+              ? "bg-primaryDark shadow-md"
+              : "bg-primaryLight shadow-md"
+          }`}
+          titleStyle={tw`${
+            colorScheme === "dark"
+              ? "text-onPrimaryDark"
+              : "text-onPrimaryLight"
+          }`}
           style={tw`mt-8 mb-16`}
           title="Spara"
           onPress={async () => {
@@ -134,19 +162,38 @@ export default function App() {
       </View>
 
       <View>
-        <Text 
-          style={tw`font-Inter text-H2 mb-8 font-medium ${colorScheme === "dark" ? "text-onBackgroundDark" : "text-onBackgroundLight"}`}>
+        <Text
+          style={tw`font-Inter text-H2 mb-8 font-medium ${
+            colorScheme === "dark"
+              ? "text-onBackgroundDark"
+              : "text-onBackgroundLight"
+          }`}
+        >
           Lösenord
         </Text>
 
-        <Text 
-          style={tw`font-Inter text-H4 font-regular ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}`}>
-          Klicka här så skickas en återställningslänk till din registrerade mejladress.
+        <Text
+          style={tw`font-Inter text-H4 font-normal ${
+            colorScheme === "dark"
+              ? "text-onPrimaryDark"
+              : "text-onPrimaryLight"
+          }`}
+        >
+          Klicka här så skickas en återställningslänk till din registrerade
+          mejladress.
         </Text>
-        
-        <Button 
-          buttonStyle={tw`p-4 rounded-xl ${colorScheme === "dark" ? "bg-primaryDark shadow-darkMode shadow-md" : "bg-primaryLight shadow-md"}`}
-          titleStyle={tw`${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}`}
+
+        <Button
+          buttonStyle={tw`p-4 rounded-xl ${
+            colorScheme === "dark"
+              ? "bg-primaryDark shadow-md"
+              : "bg-primaryLight shadow-md"
+          }`}
+          titleStyle={tw`${
+            colorScheme === "dark"
+              ? "text-onPrimaryDark"
+              : "text-onPrimaryLight"
+          }`}
           style={tw`my-6`}
           title="Byt lösenord"
         />
@@ -154,41 +201,63 @@ export default function App() {
 
       <View style={tw`mt-16 gap-5`}>
         <View style={tw`flex-row justify-between`}>
-          <Text style={[tw`font-Inter text-H2 font-medium ${colorScheme === "dark" ? "text-onBackgroundDark" : "text-onBackgroundLight"}`]}>Darkmode</Text>
+          <Text
+            style={[
+              tw`font-Inter text-H2 font-medium ${
+                colorScheme === "dark"
+                  ? "text-onBackgroundDark"
+                  : "text-onBackgroundLight"
+              }`,
+            ]}
+          >
+            Darkmode
+          </Text>
           <Switch
-          //@ts-ignore
-            value={colorScheme === "dark" ? true : false}
-            trackColor={{false: `#A5A5A5`, true: '#26AC23'}}
-            //@ts-ignore
-            color={`${colorScheme === "dark" ? "#3C415E" : "#FDFDFF"}`}       
-            thumbColor={`${colorScheme === "dark" ? "#3C415E" : "#FDFDFF"}`}
-            onValueChange={() => {
-              Appearance.setColorScheme(
-                colorScheme === "dark" ? "light" : "dark"
-              );
+            value={colorScheme === "dark"}
+            trackColor={{ false: "#A5A5A5", true: "#26AC23" }}
+            thumbColor={colorScheme === "dark" ? "#3C415E" : "#FDFDFF"}
+            onValueChange={(value) => {
+              const newColorScheme = value ? "dark" : "light";
+              Appearance.setColorScheme(newColorScheme);
             }}
           />
         </View>
 
         <View style={tw`flex-row justify-between`}>
-          <Text style={[tw`font-Inter text-H2 font-medium ${colorScheme === "dark" ? "text-onBackgroundDark" : "text-onBackgroundLight"}`]}>Pushnotiser</Text>
+          <Text
+            style={[
+              tw`font-Inter text-H2 font-medium ${
+                colorScheme === "dark"
+                  ? "text-onBackgroundDark"
+                  : "text-onBackgroundLight"
+              }`,
+            ]}
+          >
+            Pushnotiser
+          </Text>
           <Switch
-          //@ts-ignore
-            value={userSettings.push_notifications}
-            trackColor={{false: `#A5A5A5`, true: '#26AC23'}}
             //@ts-ignore
-            color={`${colorScheme === "dark" ? "#3C415E" : "#FDFDFF" }`}
-            thumbColor={`${colorScheme === "dark" ? "#3C415E" : "#FDFDFF" }`}
+            value={userSettings.push_notifications}
+            trackColor={{ false: `#A5A5A5`, true: "#26AC23" }}
+            //@ts-ignore
+            color={`${colorScheme === "dark" ? "#3C415E" : "#FDFDFF"}`}
+            thumbColor={`${colorScheme === "dark" ? "#3C415E" : "#FDFDFF"}`}
             onValueChange={(value) => {
               console.log(value);
             }}
-          />        
+          />
         </View>
       </View>
 
       <Button
-        buttonStyle={tw`p-4 rounded-xl ${colorScheme === "dark" ? "bg-primaryDark shadow-darkMode shadow-md" : "bg-primaryLight shadow-md"}`}
-        titleStyle={tw `${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight" }`}
+        buttonStyle={tw`p-4 rounded-xl ${
+          colorScheme === "dark"
+            ? "bg-primaryDark shadow-md"
+            : "bg-primaryLight shadow-md"
+        }`}
+        titleStyle={tw`${
+          colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"
+        }`}
         style={tw`my-6`}
         title="Logga ut"
         onPress={() => {
@@ -201,11 +270,28 @@ export default function App() {
         }}
       />
 
-      <View style={tw`flex my-12 p-4 gap-4 ${colorScheme === "dark" ? "bg-primaryDark" : "bg-primaryLight"}`}>
-        <Text style={tw`text-H4 font-regular ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}`}>
+      <View
+        style={tw`flex my-12 p-4 gap-4 ${
+          colorScheme === "dark" ? "bg-primaryDark" : "bg-primaryLight"
+        }`}
+      >
+        <Text
+          style={tw`text-H4 font-normal ${
+            colorScheme === "dark"
+              ? "text-onPrimaryDark"
+              : "text-onPrimaryLight"
+          }`}
+        >
           För mer information gällande GDPR och hur vi använder dina uppgifter.
         </Text>
-        <Link style={tw`self-end underline ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}`} href="http://www.google.se">
+        <Link
+          style={tw`self-end underline ${
+            colorScheme === "dark"
+              ? "text-onPrimaryDark"
+              : "text-onPrimaryLight"
+          }`}
+          href="http://www.google.se"
+        >
           Läs mer här
         </Link>
       </View>

@@ -65,7 +65,7 @@ export default function SubscriptionType({
         {icon}
         <Text
           style={[
-            tw`text-H4 font-regular`,
+            tw`text-H4 font-normal`,
             !icon && tw`mt-5`,
             colorScheme === "dark"
               ? tw`text-onPrimaryDark`
