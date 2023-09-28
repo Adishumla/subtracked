@@ -57,12 +57,12 @@ const ManageSub = () => {
   return (
     <ScrollView
       style={tw`${
-        colorScheme === "dark" ? "bg-black" : "bg-backgroundPrimaryLight"
+        colorScheme === "dark" ? "bg-backgroundPrimaryDark" : "bg-backgroundPrimaryLight"
       }`}
     >
       <View
         style={tw`flex-1 justify-center items-center w-full ${
-          colorScheme === "dark" ? "bg-black" : "bg-backgroundPrimaryLight"
+          colorScheme === "dark" ? "bg-backgroundPrimaryDark" : "bg-backgroundPrimaryLight"
         }`}
       >
         {subscription && (
@@ -80,7 +80,7 @@ const ManageSub = () => {
                 <Text
                   style={tw`text-4xl text-white text-center ${
                     colorScheme === "dark"
-                      ? "bg-black"
+                      ? "bg-backgroundPrimaryDark"
                       : "text-onBackgroundLight"
                   }`}
                 >
