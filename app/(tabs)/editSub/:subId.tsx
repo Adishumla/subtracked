@@ -5,7 +5,6 @@ import tw from "../../../lib/tailwind";
 import Category from "../../../components/Category";
 import SubscriptionType from "../../../components/SubscriptionType";
 import { Button, Input } from "react-native-elements";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRoute } from "@react-navigation/native";
 
 interface Subscription {
@@ -70,7 +69,7 @@ export default function App() {
     <ScrollView style={tw`px-4 pt-8`}>
       <Text
         style={[
-          tw`font-H4 ${
+          tw`text-H4 ${
             colorScheme === "dark"
               ? "text-onPrimaryDark"
               : "text-onPrimaryLight"
@@ -81,7 +80,7 @@ export default function App() {
       </Text>
       <Text
         style={[
-          tw`font-H1 ${
+          tw`text-H1 ${
             colorScheme === "dark"
               ? "text-onPrimaryDark"
               : "text-onPrimaryLight"
@@ -133,7 +132,7 @@ export default function App() {
         />
         <Text
           style={[
-            tw`font-H4 ${
+            tw`text-H4 ${
               colorScheme === "dark"
                 ? "text-onPrimaryDark"
                 : "text-onPrimaryLight"
@@ -235,7 +234,7 @@ export default function App() {
         />
         <Text
           style={[
-            tw`font-H4 ${
+            tw`text-H4 ${
               colorScheme === "dark"
                 ? "text-onPrimaryDark"
                 : "text-onPrimaryLight"

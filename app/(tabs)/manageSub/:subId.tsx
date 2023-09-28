@@ -4,11 +4,8 @@ import { useRoute } from "@react-navigation/native";
 import tw from "../../../lib/tailwind";
 import supabase from "../../../lib/supabaseStore";
 import SubscriptionType from "../../../components/SubscriptionType";
-import { Pressable } from "react-native";
 import { Link } from "expo-router";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import Category from "../../../components/Category";
-import { colors } from "react-native-elements";
 
 // Define an interface for your subscription data
 interface Subscription {
@@ -92,7 +89,7 @@ const ManageSub = () => {
                   {subscription.provider}
                 </Text>
                 <Text
-                  style={tw`font-H4 font-normal font-Inter ${
+                  style={tw`text-H4 font-normal font-Inter ${
                     colorScheme === "dark"
                       ? "text-onBackgroundDark"
                       : "text-onBackgroundLight"
@@ -284,13 +281,13 @@ const ManageSub = () => {
               `}
               >
                 <Text 
-                style={tw`font-H4 font-Inter font-normal ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}`}
+                style={tw`text-H4 font-Inter font-normal ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}`}
                 >
                   För mer information, uppsägning och ändringar agående
                   abbonnemanget, gå till leverantörens hemsida.
                 </Text>
                 <Link
-                style={tw`font-H4 font-Inter self-end underline font-medium ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}`}                  /* www.provider.com */
+                style={tw`text-H4 font-Inter self-end underline font-medium ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}`}                  /* www.provider.com */
                   href={`http://www.${subscription.provider}.com`}
                 >
                   www.{subscription.provider}.com
@@ -310,7 +307,7 @@ const ManageSub = () => {
                     `}
                   >
                     <Text
-                      style={tw`font-H4 font-Inter font-normal ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}
+                      style={tw`text-H4 font-Inter font-normal ${colorScheme === "dark" ? "text-onPrimaryDark" : "text-onPrimaryLight"}
                     `}
                     >
                       Ändra abonnemang
