@@ -16,12 +16,12 @@
 //   let colorScheme = useColorScheme();
 
 //   const categories = [
-//     "Streaming",
-//     "Ljud",
-//     "Hälsa",
-//     "Hushåll",
-//     "Spel",
-//     "Molntjänst",
+  //     "Hushåll",
+  //     "Hälsa",
+  //     "Ljud",
+  //     "Molntjänst",
+  //     "Spel",
+  //     "Streaming",
 //   ];
 //   const subscriptionTypes = ["Eget", "Delat", "Familj"];
 //   const [provider, setProvider] = useState<string>("");

@@ -11,6 +11,8 @@ module.exports = {
         Inter: ["Inter"],
       },
       colors: {
+        H1Dark : "#8294FF",
+        
         primaryLight: "#FDFDFF",
         primaryDark: "#3C415E",
         onPrimaryLight: "#202020",

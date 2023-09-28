@@ -50,10 +50,6 @@ export default function App() {
 
   return (
     <View style={tw`flex-1 font-Inter pt-16 items-center justify-center bg-backgroundPrimaryLight`}>
-      <Image
-        style={tw`w-99% h-12% mb-16`}
-         source={require("../assets/images/abonna_logo.png")}
-      />       
         <Auth />
         <AppleAuth />
     </View>
