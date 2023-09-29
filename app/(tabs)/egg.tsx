@@ -30,11 +30,6 @@ export default function App() {
   return (
     <ThemeProvider value={colorScheme === "dark" ? darkTheme : lightTheme}>
       <View style={tw`flex-1 items-center justify-center mt-8`}>
-        <Image
-          style={tw`w-50% h-50%`}
-          source={require("../../assets/images/cookies.png")}
-        />
-        {/* darmode light mode button */}
         <Button
           title="Dark mode"
           onPress={() => {
