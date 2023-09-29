@@ -8,9 +8,9 @@
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/cookies.png",
+      "image": "./assets/images/abonna_logo.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#D6DDEB"
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {

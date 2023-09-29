@@ -126,15 +126,16 @@ export default function App() {
           <MaterialCommunityIcons
             style={tw``}
             name="chevron-left"
-            size={28}
+            size={15}
             color={`${colorScheme === "dark" ? "#FDFDFF" : "#202020"}`}
           />
           <Text
-            style={tw`font-Inter text-H4 self-center font-normal ${
-              colorScheme === "dark"
-                ? "text-onBackgroundDark"
-                : "text-onBackgroundLight"
-            }`}
+            style={tw`font-Inter text-H4 h-full  font-normal flex self-center text-center mt-0 items-center
+             ${
+               colorScheme === "dark"
+                 ? "text-onBackgroundDark"
+                 : "text-onPrimaryLight"
+             }`}
           >
             Tillbaka
           </Text>

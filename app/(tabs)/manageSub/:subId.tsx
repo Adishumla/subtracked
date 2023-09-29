@@ -244,7 +244,7 @@ const ManageSub = () => {
                   Om abonnemanget
                 </Text>
                 <View
-                  style={tw`flex-row justify-between items-center w-26 mt-4`}
+                  style={tw`flex-row justify-between items-center w-26 mt-4 mb-2`}
                 >
                   <SubscriptionType
                     width={28}
