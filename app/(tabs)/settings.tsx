@@ -49,7 +49,7 @@ export default function App() {
   };
   let [userSettings, setUserSettings] = useState<UserSettings>({
     name: "",
-    push_notifications: false,
+    push_notifications: true,
   });
   useEffect(() => {
     AsyncStorage.getItem("id").then((id) => {
