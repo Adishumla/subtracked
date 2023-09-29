@@ -6,6 +6,8 @@ import supabase from "../../../lib/supabaseStore";
 import SubscriptionType from "../../../components/SubscriptionType";
 import { Link } from "expo-router";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Button } from "react-native-elements";
+import { useRouter } from "expo-router";
 
 // Define an interface for your subscription data
 interface Subscription {
@@ -51,7 +53,7 @@ const ManageSub = () => {
   useEffect(() => {
     getSub();
   }, [subId]);
-
+  const router = useRouter();
   return (
     <ScrollView
       style={tw`${
@@ -419,6 +421,33 @@ const ManageSub = () => {
                   </View>
                 </Link>
               </View>
+              <Button
+                buttonStyle={tw`p-4 rounded-xl  mx-4 ${
+                  colorScheme === "dark"
+                    ? "bg-rose-600 shadow-md"
+                    : "bg-rose-600 shadow-md"
+                }`}
+                titleStyle={tw`${
+                  colorScheme === "dark"
+                    ? "text-onPrimaryDark"
+                    : "text-onPrimaryDark"
+                }`}
+                style={tw`mt-0 mb-16`}
+                title="Ta bort"
+                onPress={async () => {
+                  const { data, error } = await supabase
+                    .from("subscriptions")
+                    .delete()
+                    .eq("id", subId);
+
+                  if (error) {
+                    console.error("Error inserting data:", error);
+                  } else {
+                    console.log("Data inserted successfully:", data);
+                    router.push("/(tabs)/overview");
+                  }
+                }}
+              />
             </View>
           </>
         )}
